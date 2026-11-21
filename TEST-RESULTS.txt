@@ -1,0 +1,4 @@
+34 JS: node --check correcto
+20 pruebas Python: correctas
+7 escenarios de predicción: correctos
+Safari real: pendiente

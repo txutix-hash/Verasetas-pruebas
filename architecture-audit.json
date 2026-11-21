@@ -1,0 +1,82 @@
+{
+  "version": "4.0.0-beta.22",
+  "legacy_overrides": [
+    {
+      "file": "src/legacy/part-02.js",
+      "line": 114,
+      "function": "renderMap"
+    },
+    {
+      "file": "src/legacy/part-02.js",
+      "line": 127,
+      "function": "renderPanel"
+    },
+    {
+      "file": "src/legacy/part-02.js",
+      "line": 144,
+      "function": "gridDraw"
+    },
+    {
+      "file": "src/legacy/part-03.js",
+      "line": 61,
+      "function": "renderPanel"
+    },
+    {
+      "file": "src/legacy/part-04.js",
+      "line": 36,
+      "function": "renderPanel"
+    },
+    {
+      "file": "src/legacy/part-05.js",
+      "line": 44,
+      "function": "renderPanel"
+    },
+    {
+      "file": "src/legacy/part-06.js",
+      "line": 22,
+      "function": "renderPanel"
+    },
+    {
+      "file": "src/legacy/part-08.js",
+      "line": 74,
+      "function": "renderPanel"
+    },
+    {
+      "file": "src/legacy/part-08.js",
+      "line": 89,
+      "function": "renderMap"
+    },
+    {
+      "file": "src/legacy/part-10.js",
+      "line": 18,
+      "function": "gridDraw"
+    },
+    {
+      "file": "src/legacy/part-14.js",
+      "line": 30,
+      "function": "gridDraw"
+    },
+    {
+      "file": "src/legacy/part-19.js",
+      "line": 34,
+      "function": "gridDraw"
+    },
+    {
+      "file": "src/legacy/part-20.js",
+      "line": 41,
+      "function": "gridDraw"
+    },
+    {
+      "file": "src/legacy/part-21.js",
+      "line": 16,
+      "function": "gridDraw"
+    },
+    {
+      "file": "src/legacy/part-22.js",
+      "line": 26,
+      "function": "gridDraw"
+    }
+  ],
+  "count": 15,
+  "note": "17 sobrescrituras heredadas pendientes. Eliminado redibujado climático duplicado en renderMap; gridDraw delega a renderClimateGrid."
+}
