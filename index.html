@@ -1,4 +1,4 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="VeraSetas"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#102b22"><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icon.svg" type="image/svg+xml"><title>VeraSetas · Visor micológico de La Vera</title><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"><style>
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="VeraSetas"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#102b22"><title>VeraSetas · Visor micológico de La Vera</title><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"><style>
 :root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#e9f4eb;background:#0c1e18}*{box-sizing:border-box}body{margin:0}button,input,select{font:inherit}button{cursor:pointer;background:#24513c;color:#fff;border:1px solid #527b63;border-radius:10px;padding:10px}button:hover{background:#336b4d}button.active,.primary{background:#c8e59d;color:#173423;border-color:#c8e59d}header{height:66px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;background:#133427;border-bottom:1px solid #315341}h1{font-size:22px;margin:0}small,.muted{color:#aec5b4}nav{display:flex;gap:7px;padding:10px 16px;background:#102b22}nav button{flex:1;white-space:nowrap}#workspace{display:grid;grid-template-columns:315px minmax(0,1fr);height:calc(100dvh - 126px);min-height:460px}aside{overflow:auto;padding:17px;background:#173529;border-right:1px solid #365b45}h2{font-size:20px;margin:0 0 12px}h3{font-size:16px;margin:12px 0 7px}.field{margin:12px 0}.field label{display:block;font-size:13px;color:#c9ddce;margin-bottom:5px}select,input{width:100%;padding:10px;background:#0c241b;color:#fff;border:1px solid #5a8068;border-radius:8px}input[type=range]{padding:0}input[type=checkbox]{width:auto}.muted{font-size:12px;line-height:1.5}.chip{display:inline-block;padding:5px 8px;background:#2b523e;border-radius:20px;font-size:12px;margin:3px}.card{padding:13px;background:#234735;border:1px solid #3b634a;border-radius:12px;margin:10px 0}.row{display:flex;gap:7px;align-items:center;flex-wrap:wrap}.row>*{flex:1}#mapWrap{position:relative;min-width:0}#map{height:100%;width:100%;background:#193d2c}.mapbuttons{position:absolute;z-index:500;right:12px;bottom:24px;display:flex;flex-direction:column;gap:7px}.mapbuttons button,.floating{width:43px;height:43px;border-radius:12px;background:#173c2c;box-shadow:0 3px 14px #0007;font-size:19px}.floating{position:absolute;z-index:500;left:12px;top:12px;display:none}.mapbuttons .active{background:#c8e59d;color:#123}.layers{position:absolute;z-index:600;right:64px;bottom:25px;width:200px;padding:12px;border-radius:12px;background:#15392c;border:1px solid #678a70;box-shadow:0 6px 30px #0009}.layers label{display:block;margin:9px 0;font-size:14px}.layers input{width:auto}.layers .close{float:right;padding:3px 8px}.hidden{display:none!important}#detail{position:absolute;z-index:550;left:14px;bottom:14px;width:min(350px,calc(100% - 95px));background:#143a2b;border:1px solid #6b9576;padding:13px;border-radius:13px;box-shadow:0 8px 30px #0009}#detail button{float:right;padding:3px 8px}.catalog{display:grid;gap:9px}.spot{padding:10px;background:#254c38;border-radius:10px;margin:8px 0}.spot button{margin:4px 4px 0 0}.legend{position:absolute;z-index:400;left:12px;top:12px;background:#173b2de8;padding:10px;border-radius:10px;font-size:12px;max-width:300px;pointer-events:none}.legend span{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:5px}.notice{font-size:12px;color:#c9d8cb;line-height:1.5}.overlay{display:none}.pill{padding:5px 8px;border-radius:8px;background:#305b42;font-size:12px}.leaflet-control-attribution{font-size:9px!important}@media(max-width:760px){header{height:54px;padding:0 12px}header h1{font-size:18px}nav{position:fixed;bottom:0;left:0;right:0;z-index:900;padding:5px 3px calc(5px + env(safe-area-inset-bottom));gap:2px;box-shadow:0 -3px 15px #0008}nav button{padding:9px 2px;font-size:10px;border-radius:7px}#workspace{height:calc(100dvh - 54px - 61px);min-height:300px;display:block}#mapWrap{height:100%}aside{display:none;position:fixed;z-index:1100;bottom:0;left:0;right:0;max-height:90dvh;border-radius:20px 20px 0 0;box-shadow:0 -12px 50px #000a;padding:22px 17px 40px}aside.open{display:block}.floating{display:block}.overlay.open{display:block;position:fixed;inset:0;z-index:1000;background:#0008}.legend{top:65px;max-width:230px}.mapbuttons{bottom:18px}#detail{bottom:12px}} #detail{max-height:min(77dvh,680px);overflow:auto;width:min(410px,calc(100% - 85px))}.rainbars{height:90px;display:flex;align-items:flex-end;gap:2px;margin:8px 0}.rainbars div{flex:1;min-width:2px;border-radius:2px 2px 0 0}.detailgrid{display:grid;grid-template-columns:1fr 1fr;gap:7px}.detailgrid div{padding:8px;background:#24513c;border-radius:7px}.detailgrid b{display:block;color:#fff}.detailgrid small{display:block}.grid-note{font-size:11px;color:#d4dfd7} </style>
 <style>
 #catalogScreen{display:none;position:fixed;z-index:650;top:126px;bottom:0;left:0;right:0;overflow:auto;background:#0c1e18;padding:22px max(18px,calc((100vw - 1150px)/2))}
@@ -51,53 +51,798 @@ html,body{height:100%;overscroll-behavior:none}button,select,input{touch-action:
  #catalogScreen{top:calc(58px + env(safe-area-inset-top))!important;bottom:calc(65px + env(safe-area-inset-bottom))!important;overflow-y:auto;-webkit-overflow-scrolling:touch}
 }
 @media(max-width:390px){nav button{font-size:9px;padding:6px 1px}header h1{font-size:17px}}
-.area-picker{position:absolute;z-index:700;top:12px;right:12px;background:#143a2beF;border:1px solid #64866e;border-radius:12px;padding:6px 9px;max-width:160px}.area-picker label{font-size:10px;display:block;color:#c8decf}.area-picker select{font-size:13px;padding:6px;background:#173529;color:white;max-width:140px}@media(max-width:760px){.area-picker{top:10px;right:9px;max-width:140px}.area-picker select{max-width:120px}.legend{top:94px!important}} </style></head><body><header><div><h1>🍄 VeraSetas <small>v4.0 beta 22</small></h1><small>La Vera · Gargüera · Cáceres</small></div><button id="userMenu" title="Información">☰</button></header><nav id="tabs"><button data-tab="pred" class="active">Predicción</button><button data-tab="explore">Explora</button><button data-tab="spots">Setales</button><button data-tab="climate">Clima</button><button data-tab="flora">Flora</button><button data-tab="catalog">Catálogo</button></nav><div class="overlay" id="overlay"></div><div id="workspace"><aside id="panel"><div class="row"><h2 id="panelTitle">Predicción</h2><button id="closePanel" style="flex:0 0 auto">✕</button></div><div id="panelBody"></div></aside><div id="mapWrap"><div id="map"></div><button class="floating" id="filters" aria-label="Abrir filtros">☷</button><div class="area-picker"><label for="areaSelect">Zona del mapa</label><select id="areaSelect" aria-label="Ir a zona"><option value="vera">La Vera</option><option value="garguera">Gargüera</option><option value="caceres">Cáceres</option><option value="todo">Toda la zona</option></select></div><div class="legend" id="legend"></div><div id="detail" class="hidden"></div><div class="mapbuttons"><button id="locate" title="Mi posición">◎</button><button id="layersBtn" title="Capas base">▧</button><button id="zoomIn" title="Acercar">+</button><button id="zoomOut" title="Alejar">−</button></div><div class="layers hidden" id="layers"><button class="close" id="closeLayers">✕</button><strong>Mapa base</strong><label><input type="radio" name="base" value="light" checked> Claro</label><label><input type="radio" name="base" value="sat"> Satélite</label><label><input type="radio" name="base" value="topo"> Topográfico</label><label><input type="checkbox" id="relief"> Relieve sombreado</label><label><input type="checkbox" id="trailsToggle"> Caminos y senderos OSM</label><button id="detailRefresh" type="button">Actualizar detalle visible</button><small id="detailStatus" class="muted">Acerca el mapa (zoom 12+) y activa caminos. Los datos son parciales.</small></div></div></div><script src="./src/legacy/part-01.js"></script>
+.area-picker{position:absolute;z-index:700;top:12px;right:12px;background:#143a2beF;border:1px solid #64866e;border-radius:12px;padding:6px 9px;max-width:160px}.area-picker label{font-size:10px;display:block;color:#c8decf}.area-picker select{font-size:13px;padding:6px;background:#173529;color:white;max-width:140px}@media(max-width:760px){.area-picker{top:10px;right:9px;max-width:140px}.area-picker select{max-width:120px}.legend{top:94px!important}} </style></head><body><header><div><h1>🍄 VeraSetas <small>v4.0 beta 22</small></h1><small>La Vera · Gargüera · Cáceres</small></div><button id="userMenu" title="Información">☰</button></header><nav id="tabs"><button data-tab="pred" class="active">Predicción</button><button data-tab="explore">Explora</button><button data-tab="spots">Setales</button><button data-tab="climate">Clima</button><button data-tab="flora">Flora</button><button data-tab="catalog">Catálogo</button></nav><div class="overlay" id="overlay"></div><div id="workspace"><aside id="panel"><div class="row"><h2 id="panelTitle">Predicción</h2><button id="closePanel" style="flex:0 0 auto">✕</button></div><div id="panelBody"></div></aside><div id="mapWrap"><div id="map"></div><button class="floating" id="filters" aria-label="Abrir filtros">☷</button><div class="area-picker"><label for="areaSelect">Zona del mapa</label><select id="areaSelect" aria-label="Ir a zona"><option value="vera">La Vera</option><option value="garguera">Gargüera</option><option value="caceres">Cáceres</option><option value="todo">Toda la zona</option></select></div><div class="legend" id="legend"></div><div id="detail" class="hidden"></div><div class="mapbuttons"><button id="locate" title="Mi posición">◎</button><button id="layersBtn" title="Capas base">▧</button><button id="zoomIn" title="Acercar">+</button><button id="zoomOut" title="Alejar">−</button></div><div class="layers hidden" id="layers"><button class="close" id="closeLayers">✕</button><strong>Mapa base</strong><label><input type="radio" name="base" value="light" checked> Claro</label><label><input type="radio" name="base" value="sat"> Satélite</label><label><input type="radio" name="base" value="topo"> Topográfico</label><label><input type="checkbox" id="relief"> Relieve sombreado</label><label><input type="checkbox" id="trailsToggle"> Caminos y senderos OSM</label><button id="detailRefresh" type="button">Actualizar detalle visible</button><small id="detailStatus" class="muted">Acerca el mapa (zoom 12+) y activa caminos. Los datos son parciales.</small></div></div></div><script>
+
+function verasetasLeafletFailed(){
+ const msg=document.createElement('div');
+ msg.id='mapLoadError';
+ msg.style.cssText='position:absolute;inset:10%;z-index:800;background:#173529;color:white;padding:22px;border:2px solid #e4a867;border-radius:16px;overflow:auto;box-shadow:0 5px 30px #000a';
+ msg.innerHTML='<h2>El mapa no puede iniciarse</h2><p>No se ha cargado la biblioteca cartográfica Leaflet. Comprueba tu conexión a Internet y vuelve a cargar esta página. La app no incluye todavía mapas base sin conexión.</p><button onclick="location.reload()">Reintentar</button>';
+ document.getElementById('mapWrap').appendChild(msg);
+}
+
+</script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js'"></script>
-<script src="./src/weather/cache.js"></script>
-<script src="./src/weather/forecast.js"></script>
-<script src="./src/legacy/part-02.js"></script>
+<script>
+/* VeraSetas 4.0 alpha.6: almacén meteorológico único, API compatible con Safari. */
+(function(){
+ 'use strict';
+ const KEY='verasetas:v4:weather:region16',OLD='verasetas_weather_v399_region_16',COOLDOWN='verasetas_weather_429_until';
+ const storage=()=>{try{return window.localStorage}catch{return null}};
+ function today(){const d=new Date();d.setHours(12,0,0,0);return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')}
+ function valid(v,count){return v&&Number.isFinite(v.savedAt)&&v.savedAt>0&&v.savedAt<=Date.now()+60000&&Array.isArray(v.results)&&v.results.length===count&&v.results.every(r=>Array.isArray(r?.daily?.time))}
+ function read(count){
+  const st=storage();if(!st)return null;
+  try{
+   let v=JSON.parse(st.getItem(KEY)||'null');
+   if(!valid(v,count)){
+    const old=JSON.parse(st.getItem(OLD)||'null');
+    if(!valid(old,count))return null;
+    v={savedAt:old.savedAt,day:new Date(old.savedAt).toLocaleDateString('en-CA',{timeZone:'Europe/Madrid'}),results:old.results};
+    try{st.setItem(KEY,JSON.stringify(v))}catch{}
+   }
+   return v;
+  }catch{return null}
+ }
+ function write(results){const st=storage();if(!st||!valid({savedAt:Date.now(),results},16))return false;try{st.setItem(KEY,JSON.stringify({savedAt:Date.now(),day:today(),results}));return true}catch{return false}}
+ function cooldownUntil(){try{return Number(storage()?.getItem(COOLDOWN)||0)||0}catch{return 0}}
+ function limitForHours(hours){try{storage()?.setItem(COOLDOWN,String(Date.now()+hours*3600000))}catch{}}
+ function clearCooldown(){try{storage()?.removeItem(COOLDOWN)}catch{}}
+ window.VeraSetasWeatherStore=Object.freeze({read,write,cooldownUntil,limitForHours,clearCooldown});
+})();
+
+</script>
+<script>
+/* VeraSetas 4.0 alpha.2: componente meteorológico aislado, sin estado de mapa ni UI. */
+(function(){
+ 'use strict';
+ const ENDPOINT='https://api.open-meteo.com/v1/forecast';
+ async function fetchRegion(points,today){
+  if(!Array.isArray(points)||points.length<1||points.length>16)throw Error('Número de zonas no permitido');
+  const u=new URL(ENDPOINT);
+  Object.entries({latitude:points.map(p=>p.latitude).join(','),longitude:points.map(p=>p.longitude).join(','),daily:'temperature_2m_max,temperature_2m_min,temperature_2m_mean,precipitation_sum,wind_speed_10m_mean,wind_speed_10m_max',hourly:'relative_humidity_2m',timezone:'Europe/Madrid',past_days:61,forecast_days:15}).forEach(([k,v])=>u.searchParams.set(k,v));
+  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),30000);
+  try{
+   const response=await fetch(u,{signal:controller.signal});
+   if(!response.ok){let reason='';try{reason=(await response.json()).reason||''}catch{}const err=Error('Open-Meteo HTTP '+response.status+(reason?': '+reason:''));err.status=response.status;throw err}
+   const json=await response.json(),results=Array.isArray(json)?json:[json];
+   if(results.length!==points.length)throw Error('Número de zonas inesperado');
+   for(const raw of results){if(!Array.isArray(raw?.daily?.time)||!raw.daily.time.includes(today))throw Error('Serie meteorológica incompleta')}
+   return results;
+  }finally{clearTimeout(timer)}
+ }
+ window.VeraSetasWeather=Object.freeze({fetchRegion});
+})();
+
+</script>
+<script>
+
+if(typeof window.L==='undefined'){verasetasLeafletFailed()}else{
+
+const $=id=>document.getElementById(id),esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const towns=[['Jaraíz de la Vera',40.060,-5.754,490],['Cuacos de Yuste',40.106,-5.723,580],['Garganta la Olla',40.110,-5.777,590],['Pasarón de la Vera',40.052,-5.821,610],['Torremenga',40.047,-5.774,520],['Collado de la Vera',40.058,-5.721,510],['Jarandilla de la Vera',40.126,-5.660,590],['Aldeanueva de la Vera',40.127,-5.702,660],['Losar de la Vera',40.122,-5.606,550],['Valverde de la Vera',40.123,-5.494,540],['Villanueva de la Vera',40.130,-5.462,500],['Madrigal de la Vera',40.147,-5.369,400],['Gargüera',40.061256,-5.927652,518],['Cáceres',39.4765,-6.3722,459]];
+const species=[{name:'Boletus edulis',short:'B. edulis',hab:'Robledales, castañares y algunos pinares',months:'Verano–otoño',min:650,max:1600,rain:16,temp:15},
+{name:'Boletus aereus',short:'B. aereus',hab:'Encinares, alcornocales y robledales cálidos',months:'Finales de primavera–otoño',min:250,max:1100,rain:14,temp:21},
+{name:'Boletus pinophilus',short:'B. pinophilus',hab:'Pinares y algunos castañares',months:'Primavera–otoño',min:500,max:1700,rain:15,temp:14},
+{name:'Boletus reticulatus',short:'B. reticulatus',hab:'Robledales, castañares y encinares',months:'Finales de primavera–otoño',min:300,max:1400,rain:13,temp:19},{name:'Lactarius deliciosus',short:'Níscalo',hab:'Pinares',months:'Octubre–diciembre',min:450,max:1400,rain:12,temp:14},{name:'Cantharellus cibarius',short:'Rebozuelo',hab:'Bosques húmedos de frondosas',months:'Mayo–noviembre',min:500,max:1600,rain:18,temp:16},{name:'Macrolepiota procera',short:'Parasol',hab:'Praderas y claros',months:'Septiembre–noviembre',min:350,max:1400,rain:10,temp:17},{name:'Amanita caesarea',short:'Oronja',hab:'Robledales y encinares',months:'Agosto–octubre',min:350,max:1100,rain:15,temp:20},{name:'Amanita muscaria',short:'Matamoscas · tóxica',hab:'Bosques de frondosas y coníferas',months:'Septiembre–noviembre',min:500,max:1600,rain:15,temp:13},
+{name:'Cyclocybe aegerita',short:'Seta de chopo',hab:'Riberas con chopos, álamos y madera de frondosas; requiere hospedador adecuado',months:'Primavera y otoño, con humedad',min:150,max:1200,rain:14,temp:17},
+{name:'Craterellus cornucopioides',short:'Trompeta de los muertos',hab:'Robledales y castañares frescos y húmedos',months:'Otoño–principios de invierno',min:400,max:1500,rain:19,temp:13}];
+let tab='pred',selected=0,dateOffset=0,weather=new Map(),layersOverlay=L.layerGroup(),markers=L.layerGroup(),chosen=null,spots=[],watchId=null,following=false,geoMarker=null,geoAccuracy=null,weatherError='',rainHistory=new Map(),rainWindow=15;try{spots=JSON.parse(localStorage.getItem('verasetas_spots_v02')||localStorage.getItem('verasetas_spots')||'[]')}catch{}if(!Array.isArray(spots))spots=[];
+const map=L.map('map',{zoomControl:false}).setView([40.09,-5.70],11);window.vsLeafletMap=map;const bases={light:L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap contributors',maxZoom:19}),sat:L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'Imagery © Esri',maxZoom:18}),topo:L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',{attribution:'© OpenTopoMap © OpenStreetMap contributors',maxZoom:17})};let base=bases.light;base.addTo(map);
+const areaViews={vera:{center:[40.09,-5.70],zoom:11},garguera:{center:[40.061256,-5.927652],zoom:12},caceres:{center:[39.4765,-6.3722],zoom:12}};
+$('areaSelect').addEventListener('change',e=>{const v=e.target.value;if(v==='todo')map.fitBounds([[39.42,-6.43],[40.20,-5.34]],{padding:[15,15]});else{const a=areaViews[v];if(a)map.setView(a.center,a.zoom)}});
+let tileFailures=0,tileSuccesses=0;
+const tileNotice=document.createElement('div');
+tileNotice.id='tileNotice';tileNotice.style.cssText='display:none;position:absolute;top:75px;right:12px;z-index:650;background:#4b3021;color:#fff;border:1px solid #dcaa73;border-radius:10px;padding:10px;max-width:265px;font-size:12px';
+tileNotice.textContent='No se están descargando las imágenes del mapa. Comprueba Internet, bloqueadores o prueba otra capa con el botón ▧.';
+document.getElementById('mapWrap').appendChild(tileNotice);
+Object.values(bases).forEach(layer=>{layer.on('tileerror',()=>{tileFailures++;if(tileFailures>=4&&tileSuccesses===0)tileNotice.style.display='block'});layer.on('tileload',()=>{tileSuccesses++;tileNotice.style.display='none'})});
+let relief=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Elevation/World_Hillshade/MapServer/tile/{z}/{y}/{x}',{opacity:.35,attribution:'Hillshade contributors',maxZoom:15});layersOverlay.addTo(map);markers.addTo(map);const forestLayer=L.geoJSON(null,{style:f=>({color:forestColor(f.properties.kind),fillColor:forestColor(f.properties.kind),weight:1,fillOpacity:.33}),onEachFeature:(f,l)=>l.bindPopup('<b>'+esc(f.properties.kind)+'</b><br><small>OpenStreetMap · '+esc(f.properties.detail)+'</small>')});let forestData=null,forestStatus='Pulsa «Cargar bosques» para consultar OpenStreetMap.',forestFilter='all';
+function closePanel(){ $('panel').classList.remove('open');$('overlay').classList.remove('open')}function openPanel(){ $('panel').classList.add('open');$('overlay').classList.add('open')}$('filters').onclick=openPanel;$('closePanel').onclick=closePanel;$('overlay').onclick=closePanel;document.addEventListener('keydown',e=>{if(e.key==='Escape'){closePanel();$('layers').classList.add('hidden');$('detail').classList.add('hidden')}});$('userMenu').onclick=()=>{alert('VeraSetas v3.4 · Prototipo sin cuentas de usuario. Tus setales se guardan en este navegador. No compartimos tu posición.')} ;$('zoomIn').onclick=()=>map.zoomIn();$('zoomOut').onclick=()=>map.zoomOut();$('layersBtn').onclick=()=>$('layers').classList.toggle('hidden');$('closeLayers').onclick=()=>$('layers').classList.add('hidden');document.querySelectorAll('input[name=base]').forEach(x=>x.onchange=()=>{map.removeLayer(base);base=bases[x.value];base.addTo(map);base.bringToBack()});$('relief').onchange=e=>{if(e.target.checked)relief.addTo(map);else map.removeLayer(relief)};map.on('dragstart',()=>{following=false});
+function setTab(t){tab=t;document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));$('locate').classList.toggle('hidden',!['pred','explore','climate','flora'].includes(t));$('layersBtn').classList.toggle('hidden',!['pred','explore','flora'].includes(t));$('layers').classList.add('hidden');$('detail').classList.add('hidden');renderPanel();renderMap();closePanel();setTimeout(()=>map.invalidateSize(),50)}document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>setTab(b.dataset.tab));
+function dayStr(i){let d=new Date();d.setDate(d.getDate()+i);return d.toLocaleDateString('es-ES',{weekday:'short',day:'numeric',month:'short'})}function number(v){return v!==null&&v!==undefined&&Number.isFinite(+v)?Number(v).toFixed(1):'—'}function optSpecies(){return species.map((s,i)=>`<option value="${i}" ${i===selected?'selected':''}>${esc(s.short)}</option>`).join('')}
+function renderPanel(){let html='';if(tab==='pred'){html=`<p class="muted">Selecciona especie, fecha y lluvia previa (7, 15 o 30 días). Datos de Open-Meteo: histórico reciente modelizado y previsión, no pluviómetros oficiales. El índice es experimental y los círculos representan núcleos urbanos, no setales.</p><div class="field"><label>Especie</label><select id="spSelect">${optSpecies()}</select></div><div class="field"><label>Fecha</label><select id="dateSelect">${Array.from({length:15},(_,i)=>`<option value="${i}" ${i===dateOffset?'selected':''}>${dayStr(i)}</option>`).join('')}</select></div><div class="field"><label>Lluvia acumulada antes de la fecha</label><select id="rainWindow"><option value="7">7 días</option><option value="15">15 días</option><option value="30">30 días</option></select></div><button class="primary" id="apply">Generar mapa de condiciones</button><button type="button" id="vsForestPred">🌳 Cruzar con bosques OSM visibles</button><p class="notice" id="vsForestPredStatus">Para mejorar el índice, acerca el mapa (zoom 11+) y carga bosques de la zona visible. Los bosques sin especie etiquetada quedan como desconocidos.</p><div class="card" id="forecastInfo"></div>`}else if(tab==='explore'){html=`<p class="muted">Filtra las localidades según los valores meteorológicos disponibles y la altitud aproximada del núcleo urbano. No es un mapa continuo del terreno.</p><div class="field"><label>Temperatura máxima: <b id="tempValue">25</b> °C</label><input id="tempLimit" type="range" min="0" max="40" value="25"></div><div class="field"><label>Precipitación mínima: <b id="rainValue">2</b> mm</label><input id="rainLimit" type="range" min="0" max="50" value="2"></div><div class="field"><label>Altitud mínima: <b id="altValue">400</b> m</label><input id="altLimit" type="range" min="300" max="1200" step="50" value="400"></div><button class="primary" id="apply">Aplicar filtros</button>`}else if(tab==='climate'){html=`<p class="muted">Comparación de la previsión meteorológica por municipios. No son capas de observaciones históricas ni estaciones AEMET/SAIH.</p><div class="field"><label>Variable</label><select id="climateVar"><option value="rain">Precipitación prevista (mm)</option><option value="hum">Humedad relativa (%)</option><option value="wind">Viento máximo (km/h)</option></select></div><div class="field"><label>Fecha</label><select id="climateDate">${Array.from({length:15},(_,i)=>`<option value="${i}" ${i===dateOffset?'selected':''}>${dayStr(i)}</option>`).join('')}</select></div><button class="primary" id="apply">Actualizar mapa</button>`}else if(tab==='flora'){html=`<p class="muted">Masas forestales dibujadas por colaboradores de OpenStreetMap. La especie solo se indica cuando está etiquetada; cobertura incompleta y no oficial. En Predicción, los bosques identificados próximos a un municipio pueden modificar ligeramente su índice, sin localizar fructificaciones.</p><div class="field"><label>Tipo de vegetación</label><select id="forest"><option value="all">Todos</option><option value="roble">Robledales</option><option value="castano">Castañares</option><option value="pino">Pinares</option><option value="encina">Encinares</option><option value="otro">Bosque sin especie identificada / otros</option></select></div><button class="primary" id="loadForest">Cargar bosques de la zona</button><p class="notice" id="forestStatus">${esc(forestStatus)}</p><label><input id="ph" type="checkbox" disabled> Filtrar por pH (pendiente de datos)</label>`}else if(tab==='spots'){html=`<p class="muted">Tus puntos permanecen en este navegador. Exporta una copia GPX para conservarlos.</p><div class="field"><label>Nombre del setal</label><input id="spotName" placeholder="Mi setal"></div><div class="field"><label>Latitud</label><input id="spotLat" type="number" step="any" placeholder="40.060"></div><div class="field"><label>Longitud</label><input id="spotLon" type="number" step="any" placeholder="-5.754"></div><button class="primary" id="addSpot">Guardar setal</button> <button id="exportGpx">Exportar GPX</button><p class="muted">También puedes pulsar el mapa y guardar el punto desde su ficha.</p><div id="spotList"></div>`}else{html=`<p class="muted">Temporadas y hábitats aproximados. Temporadas orientativas y no verificadas para cada municipio. Nunca uses esta información para decidir si una seta es comestible.</p><div class="catalog">${species.map((s,i)=>`<div class="card"><b>${esc(s.name)}</b><p>${esc(s.hab)}<br><small>${esc(s.months)} · ${s.min}–${s.max} m orientativos</small></p><button data-species="${i}">Ver en mapa</button></div>`).join('')}</div>`} $('panelTitle').textContent=({pred:'Predicción',explore:'Explora',spots:'Mis setales',climate:'Clima',flora:'Flora',catalog:'Catálogo'})[tab];$('panelBody').innerHTML=html;
+if(tab==='pred'){$('rainWindow').value=String(rainWindow);$('rainWindow').onchange=e=>rainWindow=+e.target.value;$('spSelect').onchange=e=>{selected=+e.target.value};$('dateSelect').onchange=e=>dateOffset=+e.target.value;$('apply').onclick=()=>{renderMap();closePanel()};const s=species[selected];$('forecastInfo').innerHTML=`<b>${esc(s.short)}</b><p>${esc(s.hab)}<br>${esc(s.months)}<br>Altitud habitual aproximada: ${s.min}–${s.max} m</p>`}if(tab==='explore'){['temp','rain','alt'].forEach(n=>{$(n+'Limit').oninput=e=>$(n+'Value').textContent=e.target.value});$('apply').onclick=()=>{renderMap();closePanel()}}if(tab==='climate'){$('climateDate').onchange=e=>dateOffset=+e.target.value;$('apply').onclick=()=>{renderMap();closePanel()}}if(tab==='flora'){$('forest').value=forestFilter;$('forest').onchange=e=>{forestFilter=e.target.value;renderMap()};$('loadForest').onclick=loadForests;}if(tab==='spots'){ $('addSpot').onclick=()=>{let lat=+$('spotLat').value,lon=+$('spotLon').value,name=$('spotName').value.trim();if(!name||!$('spotLat').value||!$('spotLon').value||Math.abs(lat)>90||Math.abs(lon)>180)return alert('Indica nombre y coordenadas válidas');saveSpot(name,lat,lon)};$('exportGpx').onclick=exportGpx;renderSpots()}if(tab==='catalog')document.querySelectorAll('[data-species]').forEach(b=>b.onclick=()=>{selected=Math.max(0,species.findIndex(x=>x.name===CAT_SPECIES[+b.dataset.species]?.scientific));setTab('pred')})}
+function daily(t){return weather.get(t[0])?.[dateOffset]||null}
+function rainBefore(t,offset=dateOffset,days=rainWindow){const rows=rainHistory.get(t[0]);if(!rows)return null;const target=new Date();target.setHours(12,0,0,0);target.setDate(target.getDate()+offset);let sum=0,count=0;for(let i=1;i<=days;i++){const d=new Date(target);d.setDate(d.getDate()-i);const key=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');const v=rows.get(key);if(Number.isFinite(v)){sum+=v;count++}}return count===days?Math.round(sum*10)/10:null}
+function compatibleForest(t){if(!forestData)return null;const wanted=selected===0?['roble','castano']:selected===1?['pino']:selected===2?['roble','castano']:selected===3?[]:selected===4?['roble','encina']:['roble','pino','castano'];if(!wanted.length)return null;let near=false;for(const f of forestData.features){if(!wanted.includes(f.properties.kind))continue;const coords=f.geometry.coordinates?.[0]||[];if(!coords.length)continue;const avg=coords.reduce((a,c)=>(a[0]+=c[0],a[1]+=c[1],a),[0,0]).map(x=>x/coords.length);const km=Math.hypot((avg[0]-t[2])*85,(avg[1]-t[1])*111);if(km<7){near=true;break}}return near}
+function score(t,d){if(!d)return null;const s=species[selected],temp=(d.max+d.min)/2,acc=rainBefore(t);if(acc===null)return null;let sc=32+Math.min(35,acc/(s.rain*2)*35)-Math.abs(temp-s.temp)*2.5-(t[3]<s.min||t[3]>s.max?16:0);const forest=compatibleForest(t);if(forest===true)sc+=9;return Math.max(0,Math.min(100,Math.round(sc)))}
+function markerColor(n){return n==null?'#8c9b95':n>=65?'#56be70':n>=40?'#f1c45b':'#d87965'}function renderMap(){layersOverlay.clearLayers();markers.clearLayers();if(tab!=='flora'&&map.hasLayer(forestLayer))map.removeLayer(forestLayer);const isCatalog=tab==='catalog',isSpots=tab==='spots';$('legend').innerHTML=isSpots?'📍 Setales privados':isCatalog?'🍄 Catálogo de especies':tab==='flora'?'🌳 Bosques OSM · verde: roble · naranja: castaño · azul: pino · oliva: encina · gris: otros':tab==='explore'?'🟢 Cumple filtros · ⚪ No cumple · gris: sin datos':tab==='climate'?'🌦️ Previsión municipal · tamaño proporcional al valor':`🍄 ${esc(species[selected].short)} · ${dayStr(dateOffset)} · lluvia previa ${rainWindow} días · índice experimental<div><span style="background:#56be70"></span>Más favorable <span style="background:#f1c45b"></span>Intermedio <span style="background:#d87965"></span>Menos favorable</div>`;
+if(isSpots){spots.forEach((s,i)=>{if(!Number.isFinite(+s.lat)||!Number.isFinite(+s.lon))return;L.marker([s.lat,s.lon]).addTo(markers).bindPopup(esc(s.name)).on('click',()=>detailSpot(i))});return}if(isCatalog)return;
+if(tab==='flora'){renderForests();return;}
+const limit=(id,fallback)=>$(id)?+$(id).value:fallback,climateVar=$('climateVar')?.value||'rain';towns.forEach((t,i)=>{const d=daily(t);let val=null,color='#8c9b95',radius=8,opacity=.85;if(tab==='pred'){val=score(t,d);color=markerColor(val);radius=val==null?7:7+val/11}else if(tab==='explore'){val=d?d.max<=limit('tempLimit',25)&&d.rain>=limit('rainLimit',2)&&t[3]>=limit('altLimit',400):null;color=val===null?'#8c9b95':val?'#5bc579':'#c6c9c6';radius=val?12:7}else if(tab==='climate'){val=d?d[climateVar]:null;color=climateVar==='rain'?'#5ca6ec':climateVar==='hum'?'#5fd0b0':'#f3c46e';radius=val==null?6:7+Math.min(18,Math.max(0,val)/ (climateVar==='hum'?7:climateVar==='wind'?4:2))}L.circleMarker([t[1],t[2]],{radius,color:'#fff',weight:1.5,fillColor:color,fillOpacity:opacity}).addTo(layersOverlay).bindTooltip(t[0]).on('click',()=>showDetail(t,i))})}
+function forestKind(tags){const v=[tags.species,tags['species:es'],tags.genus,tags['genus:es'],tags.name,tags['leaf_type']].filter(Boolean).join(' ').toLowerCase();if(/quercus pyrenaica|quercus robur|roble|robled/.test(v))return 'roble';if(/castanea|castaño|castan/.test(v))return 'castano';if(/pinus|pino|pinar/.test(v))return 'pino';if(/quercus ilex|encina|encinar/.test(v))return 'encina';return 'otro'}
+function forestColor(k){return {roble:'#54b46b',castano:'#e7a257',pino:'#61a5d7',encina:'#9caa52',otro:'#a1a9a1'}[k]||'#a1a9a1'}
+function renderForests(){forestLayer.clearLayers();if(tab!=='flora'){if(map.hasLayer(forestLayer))map.removeLayer(forestLayer);return}if(!map.hasLayer(forestLayer))forestLayer.addTo(map);if(forestData)forestLayer.addData({type:'FeatureCollection',features:forestData.features.filter(f=>forestFilter==='all'||f.properties.kind===forestFilter)});forestLayer.bringToFront()}
+async function loadForests(){
+ const statusEl=()=>document.getElementById('vsForestPredStatus')||document.getElementById('forestStatus');
+ const report=msg=>{forestStatus=msg;const el=statusEl();if(el)el.textContent=msg};
+ const leafletMap=window.vsLeafletMap;
+ if(!leafletMap||typeof leafletMap.getBounds!=='function'){report('❌ No se ha inicializado el mapa Leaflet. Recarga VeraSetas e inténtalo de nuevo.');return false}
+ if(leafletMap.getZoom()<11){report('🔎 Acerca el mapa hasta zoom 11 o superior y vuelve a pulsar.');return false}
+ const bounds=leafletMap.getBounds();
+ const bbox=[bounds.getSouth(),bounds.getWest(),bounds.getNorth(),bounds.getEast()].map(v=>v.toFixed(5)).join(',');
+ if(bounds.getNorth()-bounds.getSouth()>0.30||bounds.getEast()-bounds.getWest()>0.40){report('🔎 La zona visible es demasiado grande. Acerca más el mapa.');return false}
+ report('⏳ Consultando bosques de OpenStreetMap…');
+ const query=`[out:json][timeout:30];(way["landuse"="forest"](${bbox});way["natural"="wood"](${bbox}););out geom;`;
+ const servers=['https://overpass.kumi.systems/api/interpreter','https://overpass-api.de/api/interpreter','https://overpass.nchc.org.tw/api/interpreter'];
+ let data=null,lastError=null;
+ for(const url of servers){
+  try{const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),25000);
+   let response;try{response=await fetch(url,{method:'POST',body:new URLSearchParams({data:query}),signal:controller.signal})}finally{clearTimeout(timeout)}
+   if(!response.ok)throw Error('HTTP '+response.status);data=await response.json();if(!Array.isArray(data.elements))throw Error('Respuesta inválida');break
+  }catch(err){lastError=err;console.warn('OSM Overpass',url,err)}
+ }
+ if(!data){report('❌ No se pudieron consultar bosques OSM. Comprueba Internet o prueba más tarde.');return false}
+ const features=data.elements.filter(x=>x.geometry?.length>=4&&x.geometry[0].lat===x.geometry[x.geometry.length-1].lat&&x.geometry[0].lon===x.geometry[x.geometry.length-1].lon).slice(0,2500).map(x=>({type:'Feature',properties:{kind:forestKind(x.tags||{}),detail:Object.entries(x.tags||{}).filter(([k])=>['species','genus','name','leaf_type','landuse','natural'].includes(k)).map(([k,v])=>k+': '+v).join(' · ')||'Sin identificación de especie'},geometry:{type:'Polygon',coordinates:[x.geometry.map(c=>[c.lon,c.lat])]}}));
+ forestData={type:'FeatureCollection',features};
+ renderForests();renderMap();
+ report('✅ '+features.length+' polígonos forestales cargados (OSM, cobertura parcial). '+(features.length?'Índice actualizado.':'No se encontraron polígonos cerrados en esta vista.'));
+ return true;
+}
+function showDetail(t,i){const d=daily(t),sc=score(t,d);$('detail').classList.remove('hidden');$('detail').innerHTML=`<button id="hideDetail">✕</button><b>${esc(t[0])}</b><div class="notice">Altitud del núcleo: ~${t[3]} m<br>${d?`🌡️ ${number(d.min)}–${number(d.max)} °C · 🌧️ ${number(d.rain)} mm<br>💧 ${number(d.hum)} % · 💨 ${number(d.wind)} km/h`:'Sin datos meteorológicos disponibles'}<br>${tab==='pred'&&sc!=null?'Índice experimental: '+sc+'/100 · lluvia previa '+rainWindow+' días: '+number(rainBefore(t))+' mm':''}</div><button id="saveHere">Guardar como setal</button>`;$('hideDetail').onclick=()=>$('detail').classList.add('hidden');$('saveHere').onclick=()=>{const name=prompt('Nombre del setal',t[0]);if(name)saveSpot(name.trim(),t[1],t[2])}}function detailSpot(i){const s=spots[i];$('detail').classList.remove('hidden');$('detail').innerHTML=`<button id="hideDetail">✕</button><b>${esc(s.name)}</b><p class="notice">${(+s.lat).toFixed(5)}, ${(+s.lon).toFixed(5)}<br>Setal privado guardado en el navegador.</p><button id="deleteSpot">Eliminar</button>`;$('hideDetail').onclick=()=>$('detail').classList.add('hidden');$('deleteSpot').onclick=()=>{if(confirm('¿Eliminar este setal?')){spots.splice(i,1);persist();renderMap();renderPanel();$('detail').classList.add('hidden')}}}map.on('click',e=>{if(tab==='catalog')return;chosen=e.latlng;$('detail').classList.remove('hidden');$('detail').innerHTML=`<button id="hideDetail">✕</button><b>Punto del mapa</b><p class="notice">${chosen.lat.toFixed(5)}, ${chosen.lng.toFixed(5)}<br>Sin pronóstico puntual calculado en esta versión.</p><button id="saveHere">Guardar setal</button>`;$('hideDetail').onclick=()=>$('detail').classList.add('hidden');$('saveHere').onclick=()=>{let n=prompt('Nombre del setal','Nuevo setal');if(n)saveSpot(n.trim(),chosen.lat,chosen.lng)}});
+function persist(){localStorage.setItem('verasetas_spots_v02',JSON.stringify(spots))}function saveSpot(name,lat,lon){if(!name)return;spots.push({name,lat:+lat,lon:+lon});persist();renderMap();if(tab==='spots')renderPanel();alert('Setal guardado en este navegador')}function renderSpots(){if(!$('spotList'))return;$('spotList').innerHTML=spots.length?spots.map((s,i)=>`<div class="spot"><b>${esc(s.name)}</b><p class="muted">${(+s.lat).toFixed(5)}, ${(+s.lon).toFixed(5)}</p><button data-view="${i}">Ver mapa</button><button data-delete="${i}">Eliminar</button></div>`).join(''):'Aún no hay setales.';$('spotList').querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>{let s=spots[+b.dataset.view];map.setView([s.lat,s.lon],14);detailSpot(+b.dataset.view);closePanel()});$('spotList').querySelectorAll('[data-delete]').forEach(b=>b.onclick=()=>{if(confirm('¿Eliminar este setal?')){spots.splice(+b.dataset.delete,1);persist();renderMap();renderSpots()}})}function exportGpx(){if(!spots.length)return alert('No hay setales');const xml=s=>String(s).replace(/[<>&"']/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]));const body=spots.map(s=>`<wpt lat="${+s.lat}" lon="${+s.lon}"><name>${xml(s.name)}</name></wpt>`).join('');let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([`<?xml version="1.0" encoding="UTF-8"?><gpx version="1.1" creator="VeraSetas" xmlns="http://www.topografix.com/GPX/1/1">${body}</gpx>`],{type:'application/gpx+xml'}));a.download='verasetas-setales.gpx';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500)}
+function stopGeo(){if(watchId!==null)navigator.geolocation.clearWatch(watchId);watchId=null;following=false;if(geoMarker)map.removeLayer(geoMarker);if(geoAccuracy)map.removeLayer(geoAccuracy);geoMarker=geoAccuracy=null;$('locate').classList.remove('active')}$('locate').onclick=()=>{if(watchId!==null){if(!following){following=true;if(geoMarker)map.setView(geoMarker.getLatLng(),Math.max(map.getZoom(),14));$('locate').classList.add('active')}else stopGeo();return}if(!navigator.geolocation)return alert('Geolocalización no disponible');following=true;$('locate').classList.add('active');watchId=navigator.geolocation.watchPosition(p=>{let ll=[p.coords.latitude,p.coords.longitude];if(!geoMarker){geoMarker=L.circleMarker(ll,{radius:8,color:'#fff',weight:3,fillColor:'#318cf0',fillOpacity:1}).addTo(map);geoAccuracy=L.circle(ll,{radius:p.coords.accuracy,color:'#318cf0',fillOpacity:.08,weight:1}).addTo(map)}else{geoMarker.setLatLng(ll);geoAccuracy.setLatLng(ll).setRadius(p.coords.accuracy)}if(following)map.setView(ll,Math.max(map.getZoom(),14))},e=>{stopGeo();alert('No se pudo acceder a la ubicación. Requiere permiso y HTTPS.')},{enableHighAccuracy:true,maximumAge:10000})};
+async function loadWeather(){ /* Los municipios usan la consulta regional; sin peticiones individuales. */ }
+renderPanel();renderMap();/* v3.9.9: las localidades reutilizan la única consulta regional; sin 14 peticiones adicionales. */
+
+// v1.1: cuadrículas de 2.2–2.7 km aprox.; sin falsa precisión subcuadrícula.
+const gridCells=[],gridLayer=L.layerGroup().addTo(map),gridBounds={south:39.42,north:40.20,west:-6.43,east:-5.34},gridRows=8,gridCols=8;
+let gridLoaded=0,gridBusy=false,gridErrorCount=0;
+for(let row=0;row<gridRows;row++)for(let col=0;col<gridCols;col++){
+ const dy=(gridBounds.north-gridBounds.south)/gridRows,dx=(gridBounds.east-gridBounds.west)/gridCols;
+ const south=gridBounds.south+row*dy,west=gridBounds.west+col*dx,lat=south+dy/2,lon=west+dx/2;
+ gridCells.push({id:row*gridCols+col,t:['Cuadrícula '+(row+1)+'-'+(col+1),lat,lon,null],bounds:[[south,west],[south+dy,west+dx]],row,col,ready:false});
+}
+function nearestTown(lat,lon){return towns.reduce((a,t)=>Math.hypot(t[1]-lat,(t[2]-lon)*.76)<Math.hypot(a[1]-lat,(a[2]-lon)*.76)?t:a,towns[0])}
+function cellFor(lat,lon){return gridCells.find(c=>lat>=c.bounds[0][0]&&lat<c.bounds[1][0]&&lon>=c.bounds[0][1]&&lon<c.bounds[1][1])||gridCells.reduce((a,c)=>Math.hypot(c.t[1]-lat,c.t[2]-lon)<Math.hypot(a.t[1]-lat,a.t[2]-lon)?c:a,gridCells[0])}
+function dateKey(offset=0){const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()+offset);return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')}
+function forestAt(lat,lon){if(!forestData)return ['Sin cartografía cargada'];const hits=[];for(const f of forestData.features){if(f.geometry?.type!=='Polygon')continue;const ring=f.geometry.coordinates?.[0];if(!ring)continue;let inside=false;for(let i=0,j=ring.length-1;i<ring.length;j=i++){const a=ring[i],b=ring[j];if(((a[1]>lat)!==(b[1]>lat))&&(lon<(b[0]-a[0])*(lat-a[1])/(b[1]-a[1])+a[0]))inside=!inside}if(inside)hits.push(f.properties.kind)}return [...new Set(hits)].length?[...new Set(hits)]:['No identificado']}
+/* v3.1: evidencia forestal por intersección espacial aproximada, no cercanía al pueblo.
+   Se muestrean 9 posiciones de cada celda; no se afirma resolución por parcela. */
+function forestEvidence(c){
+ if(!forestData)return {state:'unknown',reason:'Bosques no cargados'};
+ const wants=selected===0?['roble','castano']:selected===1?['pino']:selected===2?['roble','castano']:selected===3?[]:selected===4?['encina','roble']:['roble','pino','castano'];
+ if(!wants.length)return {state:'neutral',reason:'Hábitat abierto o variado'};
+ const b=c.bounds,counts={};let matched=0,identified=0;
+ for(const dy of [.2,.5,.8])for(const dx of [.2,.5,.8]){
+  const lat=b[0][0]+(b[1][0]-b[0][0])*dy,lon=b[0][1]+(b[1][1]-b[0][1])*dx;
+  const kinds=forestAt(lat,lon).filter(k=>!['No identificado','Sin cartografía cargada','otro'].includes(k));
+  if(kinds.length){identified++;for(const k of kinds)counts[k]=(counts[k]||0)+1;if(kinds.some(k=>wants.includes(k)))matched++}
+ }
+ if(matched)return {state:'match',matched,identified,reason:'Arbolado compatible etiquetado en '+matched+'/9 muestras de la celda'};
+ if(identified)return {state:'different',matched:0,identified,reason:'Arbolado identificado, sin coincidencias en las muestras'};
+ return {state:'unknown',reason:'Sin especies arbóreas identificadas en las muestras'};
+}
+function gridScore(c){
+ const d=daily(c.t),alt=c.t[3],s=species[selected];if(!d||!Number.isFinite(alt))return null;
+ const acc=rainBefore(c.t);if(acc===null)return null;
+ const temp=(d.max+d.min)/2;
+ // Se conserva la escala experimental, eliminando el antiguo bono por bosque cercano a un municipio.
+ let n=32+Math.min(35,acc/(s.rain*2)*35)-Math.abs(temp-s.temp)*2.5-(alt<s.min||alt>s.max?16:0);
+ const ev=forestEvidence(c);
+ if(ev.state==='match')n+=Math.min(18,6+ev.matched*2);
+ if(ev.state==='different')n-=8;
+ return Math.max(0,Math.min(100,Math.round(n)));
+}
+
+function gridDraw(){gridLayer.clearLayers();if(!['pred','explore','climate'].includes(tab))return;for(const c of gridCells){const d=daily(c.t),n=gridScore(c);let color='#76847c';if(tab==='pred')color=markerColor(n);else if(tab==='explore'){const temp=Number($('tempLimit')?.value||25),rain=Number($('rainLimit')?.value||2),alt=Number($('altLimit')?.value||400);color=!d?'#76847c':d.max<=temp&&d.rain>=rain&&c.t[3]>=alt?'#56be70':'#d87965'}else if(tab==='climate'){const k=$('climateVar')?.value||'rain',v=d?.[k];color=v==null?'#76847c':k==='rain'?(v>=8?'#2563eb':v>=2?'#60a5fa':'#bfdbfe'):k==='hum'?(v>=75?'#0d9488':v>=55?'#5eead4':'#d1fae5'):(v>=30?'#c2410c':v>=15?'#f59e0b':'#fde68a')}
+ L.rectangle(c.bounds,{color:'#152b22',weight:.7,fillColor:color,fillOpacity:.49,interactive:tab==='pred'}).addTo(gridLayer);
+}gridLayer.eachLayer(layer=>{if(typeof layer.bringToFront==="function")layer.bringToFront()});$('legend').innerHTML=tab==='pred'?`🍄 ${esc(species[selected].short)} · ${dayStr(dateOffset)} · cuadrículas regionales ~8–12 km · índice experimental (${gridLoaded}/${gridCells.length} cargadas)`:tab==='explore'?'🗺️ Cuadrículas que cumplen filtros · verde sí, rojo no, gris sin datos':'🌧️ Clima por cuadrícula · aproximación por centro';}
+const oldRenderMap=renderMap;renderMap=function(){oldRenderMap();if(['pred','explore','climate'].includes(tab)){layersOverlay.clearLayers();gridDraw()}else gridLayer.clearLayers()};
+function rainProductive(c){const hist=rainHistory.get(c.t[0]);if(!hist)return null;const target=new Date(dateKey(dateOffset)+'T12:00:00');let total=0,valid=0;for(let days=7;days<=28;days++){const d=new Date(target);d.setDate(d.getDate()-days);const k=[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');const mm=hist.get(k);if(Number.isFinite(mm)){total+=Math.max(0,mm-1.7);valid++}}return valid>=14?Math.round(total*10)/10:null}
+function rainChart(c){const hist=rainHistory.get(c.t[0]);if(!hist)return '<p class="grid-note">Sin serie de lluvia.</p>';const target=new Date(dateKey(dateOffset)+'T12:00:00'),arr=[];for(let j=rainWindow;j>=1;j--){const d=new Date(target);d.setDate(d.getDate()-j);const k=[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');arr.push({date:k,mm:hist.get(k)})}const max=Math.max(1,...arr.map(x=>x.mm||0));return '<div class="rainbars" aria-label="Precipitación diaria">'+arr.map(x=>`<div title="${x.date}: ${number(x.mm)} mm" style="height:${Math.max(2,Math.round((x.mm||0)/max*88))}px;background:${x.date>dateKey()?'#e6a548':'#53b979'}"></div>`).join('')+'</div><small>Verde: histórico/modelo · ámbar: previsión. Pasa el cursor sobre las barras.</small>'}
+function showGridDetail(lat,lon){const c=cellFor(lat,lon),d=daily(c.t),hist=rainHistory.get(c.t[0]),start=new Date(dateKey(dateOffset)+'T12:00:00'),series=[];for(let j=rainWindow;j>=1;j--){const dt=new Date(start);dt.setDate(dt.getDate()-j);const k=[dt.getFullYear(),String(dt.getMonth()+1).padStart(2,'0'),String(dt.getDate()).padStart(2,'0')].join('-');series.push({k,mm:hist?.get(k)})}const windDays=null;const town=nearestTown(lat,lon),flora=forestAt(lat,lon),prod=rainProductive(c),rain=rainBefore(c.t),n=gridScore(c);$('detail').classList.remove('hidden');$('detail').innerHTML=`<button id="hideDetail" aria-label="Cerrar ficha">✕</button><b>📍 ${esc(town[0])}, Cáceres</b><p class="grid-note">Localidad de referencia aproximada (no geocodificación oficial). Punto: ${lat.toFixed(5)}, ${lon.toFixed(5)}. Datos climáticos y altitud del centro de la cuadrícula, no del punto exacto.</p><div class="detailgrid"><div><small>Lluvia acumulada · ${rainWindow} días</small><b>${number(rain)} mm</b></div><div><small>Lluvia productiva · estimación simplificada 7–28 días</small><b style="color:${prod==null?'#ddd':prod>=species[selected].rain?'#75e29b':'#f4a69c'}">${number(prod)} mm</b></div><div><small>Temperatura diaria mín–máx</small><b>${d?number(d.min)+'–'+number(d.max)+' °C':'—'}</b></div><div><small>Humedad media estimada</small><b>${d?number(d.hum)+' %':'—'}</b></div><div><small>Altitud centro de cuadrícula</small><b>${c.t[3]==null?'—':Math.round(c.t[3])+' m'}</b></div><div><small>Días viento sostenido >30 km/h</small><b>No disponible</b></div><div><small>pH suelo (0–5 cm)</small><b>No disponible</b></div><div><small>Orientación de ladera</small><b>${slopeLabel(c)}</b></div></div><h3>Lluvia diaria</h3>${rainChart(c)}<h3>Flora cartografiada</h3><p>${flora.map(f=>`<span class="chip">${esc(f)}</span>`).join('')}</p>${tab==='pred'?`<div class="card"><b>Predicción · ${esc(species[selected].short)}</b><p>Índice experimental: ${n==null?'Sin datos':n+'/100'}. No es una probabilidad calibrada ni garantiza setas.</p></div>`:''}<button id="saveHere">+ Añadir setal</button>`;$('hideDetail').onclick=()=>$('detail').classList.add('hidden');$('saveHere').onclick=()=>{const name=prompt('Nombre del setal',town[0]);if(name?.trim())saveSpot(name.trim(),lat,lon)}}
+function slopeLabel(c){const at=(r,col)=>gridCells.find(x=>x.row===r&&x.col===col)?.t[3];const e=at(c.row,c.col+1),w=at(c.row,c.col-1),n=at(c.row+1,c.col),s=at(c.row-1,c.col);if(![e,w,n,s].every(Number.isFinite))return 'Sin datos';const ew=e-w,ns=n-s;if(Math.hypot(ew,ns)<35)return 'Suave / indeterminada';const angle=(Math.atan2(-ew,-ns)*180/Math.PI+360)%360;return ['N','NE','E','SE','S','SO','O','NO'][Math.round(angle/45)%8]+' (aprox.)'}
+map.off('click');map.on('click',e=>{if(tab==='catalog')return;chosen=e.latlng;showGridDetail(chosen.lat,chosen.lng)});
+async function fetchGrid(c){const u=new URL('https://api.open-meteo.com/v1/forecast');Object.entries({latitude:c.t[1],longitude:c.t[2],daily:'temperature_2m_max,temperature_2m_min,precipitation_sum,wind_speed_10m_max',hourly:'relative_humidity_2m',timezone:'Europe/Madrid',past_days:35,forecast_days:15}).forEach(([k,v])=>u.searchParams.set(k,v));const r=await fetch(u,{signal:AbortSignal.timeout(18000)});if(!r.ok)throw Error('HTTP '+r.status);const raw=await r.json(),d=raw.daily,idx=d.time.indexOf(dateKey());if(idx<0)throw Error('Fecha ausente');c.t[3]=Number.isFinite(raw.elevation)?raw.elevation:null;rainHistory.set(c.t[0],new Map(d.time.map((x,i)=>[x,d.precipitation_sum[i]])));weather.set(c.t[0],d.time.slice(idx,idx+15).map((_,j)=>{const i=idx+j,hum=(raw.hourly?.relative_humidity_2m||[]).slice(i*24,(i+1)*24).filter(Number.isFinite);return {min:d.temperature_2m_min[i],max:d.temperature_2m_max[i],rain:d.precipitation_sum[i],wind:d.wind_speed_10m_max?.[i],hum:hum.length?hum.reduce((a,b)=>a+b,0)/hum.length:null}}));c.ready=true;gridLoaded++}
+async function loadGrid(){if(gridBusy)return;gridBusy=true;let next=0;async function worker(){while(next<gridCells.length){const c=gridCells[next++];try{await fetchGrid(c)}catch(e){gridErrorCount++;console.warn('Cuadrícula '+c.id,e)}if(gridLoaded%4===0||next>=gridCells.length)gridDraw()}}await Promise.all(Array.from({length:4},worker));gridBusy=false;gridDraw();if(gridErrorCount)$('legend').innerHTML+=` · ${gridErrorCount} cuadrículas sin datos`}
+
+// VeraSetas 0.6 — exploración estricta, sin selección de especie.
+const exploreSettings={days:15,rain:20,wind:8,tmin:3,tmax:25,humidity:55,amin:400,amax:1400};
+const exploreSeries=new Map();
+const originalPanel=renderPanel;
+renderPanel=function(){
+ if(tab!=='explore')return originalPanel();
+ $('panelTitle').textContent='EXPLORACIÓN · PARÁMETROS';
+ $('panelBody').innerHTML=`<p class="muted">Sin especie. Cada cuadrícula debe cumplir TODOS los criterios. Se usan datos meteorológicos modelizados de Open-Meteo, no observaciones de estaciones. El viento es velocidad media diaria, no rachas.</p>
+ <h3>Ventana temporal</h3><div class="field"><label for="ex-days">Días hacia atrás · <b id="v-days"></b></label><input id="ex-days" type="range" min="1" max="60" step="1"></div>
+ <h3>Clima</h3><div class="field"><label for="ex-rain">Lluvia mínima acumulada · <b id="v-rain"></b> mm</label><input id="ex-rain" type="range" min="0" max="400" step="5"></div>
+ <div class="field"><label for="ex-wind">Máx. días con viento medio diario &gt; 30 km/h · <b id="v-wind"></b></label><input id="ex-wind" type="range" min="1" max="30" step="1"></div>
+ <div class="field"><label>Rango de temperatura media diaria (°C)</label><div class="row"><input id="ex-tmin" type="number" min="-10" max="40" step="1" aria-label="Temperatura mínima"><input id="ex-tmax" type="number" min="-10" max="40" step="1" aria-label="Temperatura máxima"></div><small class="muted">Todos los días deben estar dentro del rango.</small></div>
+ <div class="field"><label for="ex-humidity">Humedad media diaria mínima · <b id="v-humidity"></b> %</label><input id="ex-humidity" type="range" min="0" max="100" step="1"></div>
+ <h3>Orografía</h3><div class="field"><label>Rango de altitud (m)</label><div class="row"><input id="ex-amin" type="number" min="0" max="3000" step="50" aria-label="Altitud mínima"><input id="ex-amax" type="number" min="0" max="3000" step="50" aria-label="Altitud máxima"></div></div>
+ <button class="primary" id="ex-apply">Generar mapa de criterios</button><p class="muted" id="ex-summary"></p>`;
+ for(const k of Object.keys(exploreSettings)){const el=$('ex-'+k);el.value=exploreSettings[k];const show=()=>{if($('v-'+k))$('v-'+k).textContent=el.value};show();el.addEventListener('input',show)}
+ $('ex-apply').onclick=()=>{const next={};for(const k of Object.keys(exploreSettings))next[k]=Number($('ex-'+k).value);if(next.tmin>next.tmax||next.amin>next.amax){alert('El mínimo no puede superar al máximo.');return}Object.assign(exploreSettings,next);gridDraw();closePanel()};
+ $('ex-summary').textContent='Los resultados desconocidos quedan en gris. No se confunden con zonas que incumplen.';
+};
+function evaluateExplore(c){const days=exploreSeries.get(c.id),e=exploreSettings;if(!days||!Number.isFinite(c.t[3]))return null;const end=dateKey(),selectedDays=days.filter(d=>d.date<end).slice(-e.days);if(selectedDays.length!==e.days||selectedDays.some(d=>![d.rain,d.temp,d.hum,d.wind].every(Number.isFinite)))return null;const rain=selectedDays.reduce((a,d)=>a+d.rain,0),wind=selectedDays.filter(d=>d.wind>30).length;return {pass:rain>=e.rain&&wind<=e.wind&&selectedDays.every(d=>d.temp>=e.tmin&&d.temp<=e.tmax&&d.hum>=e.humidity)&&c.t[3]>=e.amin&&c.t[3]<=e.amax,rain,wind,minTemp:Math.min(...selectedDays.map(d=>d.temp)),maxTemp:Math.max(...selectedDays.map(d=>d.temp)),minHum:Math.min(...selectedDays.map(d=>d.hum))};}
+const previousGridDraw=gridDraw;
+gridDraw=function(){if(tab!=='explore')return previousGridDraw();gridLayer.clearLayers();let yes=0,no=0,unknown=0;const results=gridCells.map(c=>evaluateExplore(c));const cellByPosition=new Map(gridCells.map(c=>[c.row+','+c.col,c]));const cellIndex=new Map(gridCells.map((c,i)=>[c,i]));for(let i=0;i<gridCells.length;i++){const c=gridCells[i],r=results[i];if(!r){unknown++;continue}if(!r.pass){no++;continue}yes++;const neighbors=[];for(let dr=-1;dr<=1;dr++)for(let dc=-1;dc<=1;dc++){const neighbor=cellByPosition.get((c.row+dr)+','+(c.col+dc));if(neighbor)neighbors.push(neighbor)}const density=neighbors.filter(x=>results[cellIndex.get(x)]?.pass).length/neighbors.length;L.rectangle(c.bounds,{color:'#28654a',weight:.6,fillColor:'#40cf83',fillOpacity:.20+.65*density,interactive:false}).addTo(gridLayer)}gridLayer.eachLayer(layer=>{if(typeof layer.bringToFront==="function")layer.bringToFront()});$('legend').innerHTML=`<b>AJUSTE DE CRITERIOS</b><br>Verde: cumple los 5 filtros · intensidad: densidad de cuadrículas vecinas, no calidad.<br>${yes} cumplen · ${no} no cumplen · ${unknown} sin datos<br><small>Historial ${exploreSettings.days} días · malla regional ~8–12 km · cálculo experimental</small>`;};
+const oldFetchGrid=fetchGrid;
+fetchGrid=async function(c){const u=new URL('https://api.open-meteo.com/v1/forecast');Object.entries({latitude:c.t[1],longitude:c.t[2],daily:'temperature_2m_max,temperature_2m_min,temperature_2m_mean,precipitation_sum,wind_speed_10m_mean,wind_speed_10m_max',hourly:'relative_humidity_2m',timezone:'Europe/Madrid',past_days:61,forecast_days:15}).forEach(([k,v])=>u.searchParams.set(k,v));const response=await fetch(u,{signal:AbortSignal.timeout(22000)});if(!response.ok)throw Error('HTTP '+response.status);const raw=await response.json(),d=raw.daily,idx=d.time.indexOf(dateKey());if(idx<0)throw Error('Fecha ausente');c.t[3]=Number.isFinite(raw.elevation)?raw.elevation:null;const hums=raw.hourly?.relative_humidity_2m||[];const series=d.time.map((date,i)=>{const hh=hums.slice(i*24,(i+1)*24).filter(Number.isFinite);return {date,rain:d.precipitation_sum[i],temp:d.temperature_2m_mean?.[i],wind:d.wind_speed_10m_mean?.[i],windMax:d.wind_speed_10m_max?.[i],hum:hh.length?hh.reduce((a,b)=>a+b,0)/hh.length:null}});exploreSeries.set(c.id,series);rainHistory.set(c.t[0],new Map(series.map(x=>[x.date,x.rain])));weather.set(c.t[0],d.time.slice(idx,idx+15).map((_,j)=>{const i=idx+j;return {min:d.temperature_2m_min[i],max:d.temperature_2m_max[i],rain:d.precipitation_sum[i],wind:d.wind_speed_10m_max?.[i],hum:series[i].hum}}));c.ready=true;gridLoaded++};
+const oldGridDetail=showGridDetail;
+showGridDetail=function(lat,lon){oldGridDetail(lat,lon);if(tab!=='explore')return;const c=cellFor(lat,lon),r=evaluateExplore(c),block=document.createElement('div');block.className='card';block.innerHTML=r?`<b>Explora · ${r.pass?'CUMPLE':'NO CUMPLE'}</b><p>Lluvia: ${r.rain.toFixed(1)} mm · Días de viento: ${r.wind}<br>Temperatura media diaria: ${r.minTemp.toFixed(1)} a ${r.maxTemp.toFixed(1)} °C<br>Día más seco (humedad media): ${r.minHum.toFixed(1)} %</p>`:'<b>Explora · DATOS INSUFICIENTES</b><p>No se puede evaluar toda la ventana seleccionada.</p>';$('detail').appendChild(block)};
+
+
+/* v3.9.9: consulta meteorológica regional de bajo consumo y caché persistente.
+   16 centros de referencia en una sola consulta, compartidos con 64 casillas.
+   Las subcasillas son únicamente una representación visual, NO datos de 1 km. */
+let vsGridLastError='';
+const vsWeatherCacheAge=24*60*60*1000;
+const vsCacheRead=()=>window.VeraSetasWeatherStore.read(16);
+const vsCacheWrite=results=>window.VeraSetasWeatherStore.write(results);
+let vsLastUpdated=null,vsWeatherStale=false,vsRateLimited=false;
+const vsAnchorCells=gridCells.filter(c=>c.row%2===1&&c.col%2===1);
+function vsAnchorFor(c){return vsAnchorCells.reduce((best,a)=>Math.hypot(a.t[1]-c.t[1],(a.t[2]-c.t[2])*.76)<Math.hypot(best.t[1]-c.t[1],(best.t[2]-c.t[2])*.76)?a:best,vsAnchorCells[0])}
+function vsApplyGridWeather(c,raw){
+ const d=raw?.daily;
+ if(!Array.isArray(d?.time))throw Error('Respuesta sin serie diaria');
+ const idx=d.time.indexOf(dateKey());
+ if(idx<0)throw Error('La fecha de hoy no figura en los datos');
+ const elev=raw.elevation;
+ c.t[3]=elev===null||elev===undefined?null:Number(elev);
+ if(!Number.isFinite(c.t[3]))c.t[3]=null;
+ const hums=raw.hourly?.relative_humidity_2m||[];
+ const series=d.time.map((date,i)=>{
+  const hh=hums.slice(i*24,(i+1)*24).filter(Number.isFinite);
+  return {date,rain:d.precipitation_sum?.[i],temp:d.temperature_2m_mean?.[i],wind:d.wind_speed_10m_mean?.[i],windMax:d.wind_speed_10m_max?.[i],hum:hh.length?hh.reduce((a,b)=>a+b,0)/hh.length:null};
+ });
+ exploreSeries.set(c.id,series);
+ rainHistory.set(c.t[0],new Map(series.map(x=>[x.date,x.rain])));
+ weather.set(c.t[0],d.time.slice(idx,idx+15).map((_,j)=>{const i=idx+j;return {min:d.temperature_2m_min?.[i],max:d.temperature_2m_max?.[i],rain:d.precipitation_sum?.[i],wind:d.wind_speed_10m_max?.[i],hum:series[i].hum}}));
+ if(!c.ready){c.ready=true;gridLoaded++}
+}
+function vsApplyRegion(results){
+ for(const c of gridCells){const a=vsAnchorFor(c),i=vsAnchorCells.indexOf(a);vsApplyGridWeather(c,results[i])}
+ // Municipios: misma serie meteorológica de referencia, sin solicitudes propias.
+ for(const t of towns){const a=vsAnchorCells.reduce((best,x)=>Math.hypot(x.t[1]-t[1],(x.t[2]-t[2])*.76)<Math.hypot(best.t[1]-t[1],(best.t[2]-t[2])*.76)?x:best,vsAnchorCells[0]);
+  const history=rainHistory.get(a.t[0]),dailyWeather=weather.get(a.t[0]);
+  if(history)rainHistory.set(t[0],history);
+  if(dailyWeather)weather.set(t[0],dailyWeather);
+ }
+ gridDraw();
+}
+function vsWeatherStatus(){
+ const when=vsLastUpdated?new Date(vsLastUpdated).toLocaleString('es-ES',{dateStyle:'short',timeStyle:'short'}):'sin datos';
+ const status=vsRateLimited?' · límite Open-Meteo 429; sin reintentos automáticos':vsWeatherStale?' · datos guardados, pendientes de actualizar':' · datos guardados';
+ const msg='Clima: '+gridLoaded+'/'+gridCells.length+' casillas · actualización '+when+status+' · 16 zonas meteorológicas de referencia';
+ const el=document.getElementById('healthText');if(el)el.textContent=msg;
+ const legend=document.getElementById('legend');if(legend&&tab==='pred'){
+  const note=document.createElement('div');note.style.cssText='margin-top:5px;font-size:11px;line-height:1.35';
+  note.textContent='Datos de 16 zonas de referencia compartidos por 64 casillas; no hay precisión meteorológica de 1 km. '+(vsWeatherStale?'Última descarga: '+when+' (datos anteriores).':'Última descarga: '+when+'.')+(vsRateLimited?' Open-Meteo limita las consultas.':'');
+  legend.appendChild(note);
+ }
+}
+async function vsFetchRegion(){return window.VeraSetasWeather.fetchRegion(vsAnchorCells.map(c=>({latitude:c.t[1],longitude:c.t[2]})),dateKey())}
+fetchGrid=async function(){throw Error('Las consultas individuales están desactivadas para evitar el límite de Open-Meteo')};
+loadGrid=async function(force=false){
+ if(gridBusy)return;
+ const cached=vsCacheRead(),fresh=cached&&Date.now()-cached.savedAt<vsWeatherCacheAge&&cached.day===dateKey();
+ if(cached){try{vsApplyRegion(cached.results);vsLastUpdated=cached.savedAt;vsWeatherStale=!fresh}catch(e){console.warn('Caché meteorológica incompatible con la fecha actual',e);vsWeatherStale=true}}
+ if(fresh&&!force){vsWeatherStatus();return}
+ if(!navigator.onLine){vsWeatherStale=Boolean(gridLoaded);vsWeatherStatus();return}
+ const until=window.VeraSetasWeatherStore.cooldownUntil();
+ if(Date.now()<until){vsRateLimited=true;vsWeatherStale=Boolean(gridLoaded);vsWeatherStatus();return}
+ // No repetir peticiones en cada redibujado ni al volver de una pestaña.
+ gridBusy=true;vsGridLastError='';
+ try{
+  const results=await vsFetchRegion();vsApplyRegion(results);vsCacheWrite(results);
+  vsLastUpdated=Date.now();vsWeatherStale=false;vsRateLimited=false;gridErrorCount=0;document.dispatchEvent(new CustomEvent('vs:weather:updated',{detail:{savedAt:vsLastUpdated,cells:gridLoaded}}));window.VeraSetasWeatherStore.clearCooldown()
+ }catch(e){vsGridLastError=String(e.message||e);vsRateLimited=e.status===429;vsWeatherStale=Boolean(gridLoaded);
+  gridErrorCount=gridCells.length-gridLoaded;if(vsRateLimited)window.VeraSetasWeatherStore.limitForHours(6);console.warn('Meteorología regional (sin reintentos)',e);document.dispatchEvent(new CustomEvent('vs:weather:error',{detail:{message:vsGridLastError,rateLimited:vsRateLimited}}));
+ }finally{gridBusy=false;gridDraw();vsWeatherStatus()}
+};
+loadGrid();
+// Actualización controlada: al volver a la app, al recuperar conexión y cada hora
+// mientras esté abierta. Solo consulta si no existe caché vigente del día actual.
+function vsRefreshIfDue(){
+ if(document.hidden||!navigator.onLine||gridBusy)return;
+ const cached=vsCacheRead();
+ if(cached&&cached.day===dateKey()&&Date.now()-cached.savedAt<vsWeatherCacheAge)return;
+ if(Date.now()<window.VeraSetasWeatherStore.cooldownUntil()){vsRateLimited=true;vsWeatherStatus();return}
+ vsRateLimited=false;loadGrid();
+}
+document.addEventListener('visibilitychange',vsRefreshIfDue);
+window.addEventListener('online',vsRefreshIfDue);
+setInterval(vsRefreshIfDue,60*60*1000);
+// Puente explícito: los scripts posteriores no pueden ver funciones declaradas dentro del bloque if en Safari.
+window.vsLoadForests=()=>loadForests();
+
+}
+
+</script>
 <div id="catalogScreen" aria-label="Catálogo de setas y hábitats"></div>
-<script src="./src/legacy/part-03.js"></script>
+<script>
+
+const CAT_MONTHS=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+const HABITATS=[
+{id:'ribera',name:'Riberas y choperas',family:'Frondosas',color:'#65a5a1',map:null,alt:'150–1.200 m',soil:'Húmedo, variable',slope:'Vegas y márgenes de cursos de agua',where:'Riberas y choperas de La Vera y Extremadura',why:'La madera muerta o debilitada de frondosas puede servir de sustrato para hongos saprófitos, como la seta de chopo.',desc:'Chopos, álamos y otros árboles de ribera; no hay capa forestal específica validada.'},
+{id:'roble',name:'Robledales',family:'Frondosas',color:'#70a96b',map:'roble',alt:'500–1.700 m',soil:'Ácido o ligeramente ácido',slope:'Umbrías y laderas frescas',where:'Laderas y sierras de La Vera; distribución variable en la Península',why:'La hojarasca conserva humedad y las raíces establecen asociaciones micorrícicas con distintas setas.',desc:'Robles y rebollos en laderas de montaña.'},
+{id:'castano',name:'Castañares',family:'Frondosas',color:'#bb8b4f',map:'castano',alt:'400–1.400 m',soil:'Preferentemente ácido',slope:'Frescas, con humedad',where:'Castañares de La Vera y otras sierras del oeste peninsular',why:'Las raíces del castaño se asocian con hongos micorrícicos; la cubierta de hojas retiene humedad.',desc:'Castaños y suelo de hojarasca.'},
+{id:'haya',name:'Hayedos',family:'Frondosas',color:'#79bd93',map:null,alt:'700–1.800 m',soil:'Variable, a menudo fresco y profundo',slope:'Preferencia por umbrías',where:'Principalmente montañas del norte de la Península; muy escasos en La Vera',why:'La sombra y el mantillo generan microclimas húmedos.',desc:'Bosques húmedos de haya.'},
+{id:'pino',name:'Pinares',family:'Coníferas',color:'#438e7c',map:'pino',alt:'300–1.900 m',soil:'Variable según pino',slope:'Variable',where:'Amplia distribución peninsular, incluidos enclaves de La Vera',why:'Numerosas setas forman micorrizas con pinos.',desc:'Pinos y suelos con acículas.'},
+{id:'encina',name:'Encinares',family:'Mediterráneos',color:'#9eae59',map:'encina',alt:'100–1.200 m',soil:'Muy variable',slope:'Frecuentemente solanas',where:'Gran parte de la Península mediterránea',why:'Las encinas forman micorrizas y generan suelos con hojarasca y materia orgánica.',desc:'Encinas en bosque mediterráneo.'},
+{id:'dehesa',name:'Dehesa',family:'Mediterráneos',color:'#c4aa69',map:null,alt:'150–1.000 m',soil:'Variable',slope:'Terrenos suaves y abiertos',where:'Especialmente Extremadura y oeste peninsular',why:'La combinación de árboles dispersos y pastizal permite hongos de pradera y micorrícicos.',desc:'Bosque abierto con pasto; categoría Jarales en la nomenclatura solicitada, no equivalente botánico.'},
+{id:'pradera',name:'Prados y pastos',family:'Abiertos',color:'#b3ca68',map:null,alt:'0–1.800 m',soil:'Variable, a menudo rico en materia orgánica',slope:'Llanos y claros',where:'Distribuidos por toda la Península',why:'La materia orgánica del suelo alimenta hongos saprótrofos.',desc:'Praderas y claros sin necesidad de árboles.'},
+{id:'eucalipto',name:'Eucaliptales',family:'Otros',color:'#6b8e92',map:null,alt:'0–900 m',soil:'Variable',slope:'Variable',where:'Plantaciones de varias regiones peninsulares',why:'Ninguna de las especies seleccionadas está asociada aquí como hábitat de referencia; consulta bosques próximos.',desc:'Plantaciones de eucalipto.'},
+{id:'sabina',name:'Sabinares',family:'Otros',color:'#86948a',map:null,alt:'500–1.800 m',soil:'Frecuentemente calizo',slope:'Expuestas y secas',where:'Zonas interiores y montañosas peninsulares',why:'Ninguna de las especies de este catálogo reducido tiene este hábitat como referencia; explora otros bosques cercanos.',desc:'Sabinas en terrenos frecuentemente secos.'}
+];
+const CAT_SPECIES=[
+{common:'Boleto común',scientific:'Boletus edulis',description:'Micorrícico de bosques húmedos; no identificar para consumo solo con fotos.',hab:['roble','castano','haya','pino'],levels:[0,0,0,0,0,1,1,1,2,3,3,1],image:'https://commons.wikimedia.org/wiki/Special:FilePath/Boletus_edulis_1.jpg'},
+{common:'Hongo negro',scientific:'Boletus aereus',description:'Asociado a frondosas mediterráneas, especialmente encinas, alcornoques y robles.',hab:['encina','alcornoque','roble','dehesa'],levels:[0,0,0,0,1,2,1,1,2,3,2,0],image:'https://commons.wikimedia.org/wiki/Special:FilePath/Boletus_aereus.jpg'},
+{common:'Boleto de pino',scientific:'Boletus pinophilus',description:'Asociado a pinos y también a otras frondosas en algunos lugares.',hab:['pino','castano','roble'],levels:[0,0,0,1,2,2,1,1,2,3,2,0],image:'https://commons.wikimedia.org/wiki/Special:FilePath/Boletus_pinophilus.jpg'},
+{common:'Boleto de verano',scientific:'Boletus reticulatus',description:'Asociado a robles, castaños y otras frondosas.',hab:['roble','castano','encina'],levels:[0,0,0,0,1,2,3,2,2,2,1,0],image:'https://commons.wikimedia.org/wiki/Special:FilePath/Boletus_reticulatus.jpg'},
+{common:'Níscalo',scientific:'Lactarius deliciosus',description:'Especie asociada a distintas especies de pinos.',hab:['pino'],levels:[0,0,0,0,0,0,0,0,1,3,3,2],image:'https://commons.wikimedia.org/wiki/Special:FilePath/Lactarius_deliciosus.jpg'},
+{common:'Rebozuelo',scientific:'Cantharellus cibarius',description:'Hongo micorrícico de bosques frescos.',hab:['roble','castano','haya'],levels:[0,0,0,0,1,2,2,2,3,2,1,0],image:'https://commons.wikimedia.org/wiki/Special:FilePath/Cantharellus_cibarius.jpg'},
+{common:'Parasol',scientific:'Macrolepiota procera',description:'Suele aparecer en prados, pastos y claros.',hab:['pradera','dehesa'],levels:[0,0,0,0,1,1,0,1,2,3,2,0],image:'https://commons.wikimedia.org/wiki/Special:FilePath/Macrolepiota_procera.jpg'},
+{common:'Oronja',scientific:'Amanita caesarea',description:'Micorrícica de bosques templados mediterráneos.',hab:['roble','encina','dehesa'],levels:[0,0,0,0,0,0,1,2,3,3,1,0],image:'https://commons.wikimedia.org/wiki/Special:FilePath/Amanita_caesarea.jpg'},
+{common:'Matamoscas',scientific:'Amanita muscaria',description:'Especie tóxica de bosques de coníferas y frondosas.',hab:['pino','roble','castano','haya'],levels:[0,0,0,0,0,0,0,1,2,3,3,1],image:'https://commons.wikimedia.org/wiki/Special:FilePath/Amanita_muscaria.jpg'},
+{common:'Seta de chopo',scientific:'Cyclocybe aegerita',description:'Saprófita de madera de chopos, álamos y otras frondosas. La presencia de bosque no confirma madera hospedadora; índice de baja confianza.',hab:['ribera'],levels:[0,0,1,2,2,1,0,0,1,2,3,1],image:'https://commons.wikimedia.org/wiki/Special:FilePath/Cyclocybe_aegerita.jpg'},
+{common:'Trompeta de los muertos',scientific:'Craterellus cornucopioides',description:'Asociada a bosques húmedos de frondosas, especialmente robles y castaños. No confundir nombre común con toxicidad.',hab:['roble','castano','haya'],levels:[0,0,0,0,0,0,0,1,1,2,3,2],image:'https://commons.wikimedia.org/wiki/Special:FilePath/Craterellus_cornucopioides.jpg'}
+];
+let catalogView='setas',catalogMonth=-1,catalogHab=null,catalogSpeciesFocus=null;
+let favorites=new Set();try{favorites=new Set(JSON.parse(localStorage.getItem('verasetas_favorites')||'[]'))}catch{}
+const activeMonth=()=>new Date().getMonth();
+function monthBar(levels){return `<div class="monthbar" title="Frecuencia estacional orientativa; no es una probabilidad calibrada">${levels.map((v,i)=>`<span data-level="${v}" class="${i===activeMonth()?'current':''}" title="${CAT_MONTHS[i]}: ${['sin temporada habitual','ocasional','moderada','frecuente'][v]}"></span>`).join('')}</div><div class="monthlabels"><span>Ene</span><span>Jun</span><span>Dic</span></div>`}
+function habLevels(id){return CAT_MONTHS.map((_,m)=>Math.max(0,...CAT_SPECIES.filter(s=>s.hab.includes(id)).map(s=>s.levels[m])))}
+function catalogGoMap(type,value){if(type==='pred'){selected=value;setTab('pred');return}if(value){forestFilter=value;setTab('flora');if(!forestData)loadForests();}else{setTab('flora');}}
+function renderCatalog(){
+const root=$('catalogScreen');if(!root)return;
+const months=`<div class="catalog-months" aria-label="Filtrar por mes"><button data-month="-1" class="${catalogMonth===-1?'active':''}">Todos</button>${CAT_MONTHS.map((m,i)=>`<button data-month="${i}" class="${catalogMonth===i?'active':''}">${m}</button>`).join('')}</div>`;
+let content='';
+if(catalogHab){const h=HABITATS.find(x=>x.id===catalogHab),matches=CAT_SPECIES.map((s,i)=>({...s,i})).filter(s=>s.hab.includes(h.id)),shared=HABITATS.filter(x=>x.id!==h.id).map(x=>({...x,n:matches.filter(s=>s.hab.includes(x.id)).length})).filter(x=>x.n).sort((a,b)=>b.n-a.n).slice(0,3);
+content=`<button data-back="1">← Hábitats</button><h2 style="margin-top:14px">${esc(h.name)}</h2><p>${esc(h.desc)}</p><div class="spec-grid"><div class="card"><b>Setas del catálogo</b><p>${matches.length}</p></div><div class="card"><b>Temporada orientativa</b>${monthBar(habLevels(h.id))}</div><div class="card"><b>Altura habitual</b><p>${esc(h.alt)}</p></div><div class="card"><b>Suelo</b><p>${esc(h.soil)}</p></div></div><p class="catalog-small">Nombre en Flora: ${esc(h.id==='dehesa'?'Jarales (etiqueta solicitada; no equivale a dehesa)':h.id==='pradera'?'Praderas':h.name)}. La cartografía actual no distingue todos estos hábitats.</p>${h.map?`<button class="primary catalog-action" data-hab-map="${h.map}">Ver ${esc(h.name.toLowerCase())} en el mapa Flora</button>`:'<p class="notice">Sin capa específica de este hábitat en el mapa actual.</p>'}<h3>Qué setas salen</h3>${matches.length?matches.map(s=>`<div class="card"><button data-focus="${s.i}">${esc(s.common)} · ${esc(s.scientific)}</button>${monthBar(s.levels)}</div>`).join(''):'<p>No hay especies vinculadas en este catálogo reducido.</p>'}<h3>Por qué da setas</h3><p>${esc(h.why)}</p><h3>Dónde están</h3><p>${esc(h.where)}</p><h3>Altura, suelo y ladera</h3><p>${esc(h.alt)} · ${esc(h.soil)} · ${esc(h.slope)}</p><h3>Bosques que comparten sus setas</h3><p>${shared.length?shared.map(x=>`<button data-hab="${x.id}">${esc(x.name)} (${x.n})</button>`).join(' '):'Sin coincidencias en el catálogo actual.'}</p><h3>Permisos</h3><p class="notice">Comprueba propiedad, autorizaciones, límites de recolección y restricciones del espacio protegido antes de entrar o recolectar. La presencia de un bosque en el mapa no implica acceso público.</p>`;
+}else if(catalogView==='setas'){
+let entries=CAT_SPECIES.map((s,i)=>({...s,i})).filter(s=>catalogMonth===-1||s.levels[catalogMonth]>0);
+if(catalogMonth===-1)entries.sort((a,b)=>b.levels[activeMonth()]-a.levels[activeMonth()]);
+content=`<div class="spec-grid">${entries.map(s=>`<article class="spec-card" id="species-${s.i}"><div class="spec-head"><img loading="lazy" src="${s.image}" alt="Fotografía orientativa de ${esc(s.common)}" onerror="this.style.display='none'"><div style="flex:1"><h3>${esc(s.common)}</h3><em>${esc(s.scientific)}</em><p class="catalog-small">${esc(s.description)}</p></div><button aria-label="Favorito" title="Marcar favorito" data-fav="${s.i}">${favorites.has(s.i)?'★':'☆'}</button></div><p><span class="chip">Temporada: ${esc(species[s.i].months)}</span> <span class="chip">Altitud: ${species[s.i].min}–${species[s.i].max} m</span></p><b class="catalog-small">ESTACIONALIDAD ORIENTATIVA · NO PROBABILIDAD</b>${monthBar(s.levels)}<h3>HÁBITAT</h3>${s.hab.map(id=>`<button data-hab="${id}">${esc(HABITATS.find(h=>h.id===id).name)}</button>`).join(' ')}<div><button class="primary catalog-action" data-map="${s.i}">Ver condiciones favorables</button></div>${!s.levels[activeMonth()]?'<p class="notice">Fuera de su temporada habitual: el calendario puede reducir la actividad estimada. No equivale a ausencia de datos.</p>':''}</article>`).join('')}</div>${!entries.length?'<p>No hay especies de este catálogo para el mes seleccionado.</p>':''}`;
+}else{
+const groups=[...new Set(HABITATS.map(h=>h.family))];
+content=groups.map(group=>`<h3>${esc(group)}</h3>${HABITATS.filter(h=>h.family===group).sort((a,b)=>catalogMonth===-1?0:habLevels(b.id)[catalogMonth]-habLevels(a.id)[catalogMonth]).map(h=>{const count=CAT_SPECIES.filter(s=>s.hab.includes(h.id)).length,hot=catalogMonth>=0&&habLevels(h.id)[catalogMonth]>0;return `<button class="hab-row ${hot?'active':''}" data-hab="${h.id}"><span class="hab-swatch" style="background:${h.color}"></span><span style="flex:1"><b>${esc(h.name)}</b><br><small>${esc(h.desc)} · ${count} setas</small></span>${monthBar(habLevels(h.id))}</button>`}).join('')}`).join('');
+}
+root.innerHTML=`<div class="catalog-head"><div><h2>🍄 Catálogo de La Vera</h2><p class="catalog-small">Estacionalidad y hábitats orientativos; no identifican comestibilidad ni garantizan fructificación.</p></div></div><div class="catalog-tabs"><button data-view="setas" class="${catalogView==='setas'&&!catalogHab?'active':''}">Setas</button><button data-view="habitats" class="${catalogView==='habitats'&&!catalogHab?'active':''}">Hábitats</button></div>${months}${content}`;
+root.querySelectorAll('[data-month]').forEach(b=>b.onclick=()=>{catalogMonth=+b.dataset.month;renderCatalog()});
+root.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>{catalogView=b.dataset.view;catalogHab=null;renderCatalog()});
+root.querySelectorAll('[data-hab]').forEach(b=>b.onclick=()=>{catalogHab=b.dataset.hab;catalogView='habitats';renderCatalog();root.scrollTop=0});
+root.querySelectorAll('[data-back]').forEach(b=>b.onclick=()=>{catalogHab=null;renderCatalog()});
+root.querySelectorAll('[data-fav]').forEach(b=>b.onclick=()=>{let i=+b.dataset.fav;favorites.has(i)?favorites.delete(i):favorites.add(i);localStorage.setItem('verasetas_favorites',JSON.stringify([...favorites]));renderCatalog()});
+root.querySelectorAll('[data-map]').forEach(b=>b.onclick=()=>catalogGoMap('pred',+b.dataset.map));
+root.querySelectorAll('[data-hab-map]').forEach(b=>b.onclick=()=>catalogGoMap('flora',b.dataset.habMap));
+root.querySelectorAll('[data-focus]').forEach(b=>b.onclick=()=>{catalogHab=null;catalogView='setas';catalogMonth=-1;renderCatalog();document.getElementById('species-'+b.dataset.focus)?.scrollIntoView({block:'center'})});
+}
+const previousSetTab=setTab;
+setTab=function(t){previousSetTab(t);document.body.classList.toggle('catalog-mode',t==='catalog');if(t==='catalog')renderCatalog()};
+const previousRenderPanel=renderPanel;
+renderPanel=function(){previousRenderPanel();if(tab==='pred'&&$('spSelect')){const wrap=document.createElement('div');wrap.className='field';wrap.innerHTML='<label><input type="checkbox" id="favoritesOnly"> Mostrar solo favoritas</label>';$('spSelect').parentNode.after(wrap);const s=$('spSelect');function filterFav(){let only=$('favoritesOnly').checked;s.innerHTML=species.map((sp,i)=>!only||favorites.has(i)?`<option value="${i}">${esc(sp.short)}${favorites.has(i)?' ★':''}</option>`:'').join('');if(!s.options.length){s.innerHTML='<option value="">Sin favoritas</option>';s.disabled=true}else{s.disabled=false;if([...s.options].some(o=>+o.value===selected))s.value=selected;else{selected=+s.options[0].value;s.value=selected}}}filterFav();$('favoritesOnly').onchange=filterFav;s.onchange=e=>{if(e.target.value!=='')selected=+e.target.value}}};
+
+</script>
 
 <style>
 .climate-mode-row{display:flex;gap:7px;flex-wrap:wrap}
 .climate-mode-row button.active{background:#276f56;border-color:#a7d9ad}
 .climate-station-status{padding:12px;border:1px solid #617467;border-radius:10px;margin-top:8px;font-size:12px}
 </style>
-<script src="./src/legacy/part-04.js"></script>
+<script>
+
+/* Climate v1.1: weather is modelled by Open-Meteo. No fabricated station data. */
+let climateLayer='rain',climateFrom=-7,climateTo=-1;
+let stationsEnabled=false,stationNetwork='AEMET';
+try{stationsEnabled=localStorage.getItem('verasetas_stations_on')==='true';stationNetwork=localStorage.getItem('verasetas_station_network')||'AEMET'}catch{}
+const climateLegend={
+ rain:'Precipitación · mm (1 mm = 1 L/m²) · suma del intervalo',
+ wind:'Viento máximo diario · km/h · media de máximos del intervalo',
+ hum:'Humedad relativa media diaria · % · media del intervalo'
+};
+function climateValue(c){
+ const rows=exploreSeries.get(c.id);if(!rows)return null;
+ const chosen=rows.filter(x=>x.date>=dateKey(climateFrom)&&x.date<=dateKey(climateTo));
+ if(chosen.length!==climateTo-climateFrom+1)return null;
+ const vals=chosen.map(x=>climateLayer==='rain'?x.rain:climateLayer==='wind'?x.windMax:x.hum);
+ if(vals.some(x=>!Number.isFinite(x)))return null;
+ return climateLayer==='rain'?vals.reduce((a,b)=>a+b,0):vals.reduce((a,b)=>a+b,0)/vals.length;
+}
+function climateColor(v){
+ if(v==null)return '#78857e';
+ if(climateLayer==='rain')return v>=80?'#1e3a8a':v>=40?'#2563eb':v>=15?'#60a5fa':v>=3?'#bfdbfe':'#eff6ff';
+ if(climateLayer==='wind')return v>=45?'#991b1b':v>=30?'#ea580c':v>=15?'#facc15':'#bbf7d0';
+ return v>=85?'#065f46':v>=70?'#059669':v>=50?'#5eead4':'#fef3c7';
+}
+function renderClimateGrid(){
+ gridLayer.clearLayers();layersOverlay.clearLayers();
+ for(const c of gridCells){const val=climateValue(c);
+ const shape=L.rectangle(c.bounds,{color:'#172d24',weight:.65,fillColor:climateColor(val),fillOpacity:val==null?.22:.67}).addTo(gridLayer);
+ shape.on('click',e=>{if(typeof showGridDetail==='function')showGridDetail(c,e.latlng);else if(typeof showCellDetail==='function')showCellDetail(c,e.latlng)});
+ shape.bindTooltip(`${c.t[0]}: ${val==null?'sin datos':val.toFixed(1)+(climateLayer==='hum'?' %':climateLayer==='wind'?' km/h':' mm')}`);
+ }
+ gridLayer.eachLayer(layer=>{if(typeof layer.bringToFront==="function")layer.bringToFront()});
+ $('legend').textContent=climateLegend[climateLayer]+' · gris: datos incompletos · modelo Open-Meteo';
+}
+const climateOldPanel=renderPanel;
+renderPanel=function(){
+ climateOldPanel();
+ if(tab!=='climate')return;
+ const dates=Array.from({length:76},(_,i)=>{const offset=i-60;return `<option value="${offset}">${dateKey(offset)}</option>`}).join('');
+ $('panelBody').innerHTML=`
+ <p class="muted">Datos meteorológicos modelizados, independientes de cualquier especie. La fecha y el intervalo se aplican a cada cuadrícula de La Vera.</p>
+ <h3>CAPA DEL MAPA</h3>
+ <div class="field"><label>Variable</label><select id="climateLayerSelect"><option value="rain">Precipitación</option><option value="wind">Viento</option><option value="hum">Humedad</option></select></div>
+ <p class="muted" id="climateLayerDesc"></p>
+ <div class="field"><label>Desde</label><select id="climateFrom">${dates}</select></div>
+ <div class="field"><label>Hasta</label><select id="climateTo">${dates}</select></div>
+ <button class="primary" id="climateApply">Actualizar mapa climático</button>
+ <h3>ESTACIONES REALES</h3>
+ <label><input type="checkbox" id="stationsToggle"> Pluviómetros <b id="stationsIndicator"></b></label>
+ <div class="field"><label>Red</label><select id="stationsNetwork"><option>AEMET</option><option>SAIH</option><option>Meteocat</option><option>Euskalmet</option></select></div>
+ <div class="climate-station-status" id="stationsStatus"></div>`;
+ $('climateLayerSelect').value=climateLayer;
+ $('climateFrom').value=String(climateFrom);$('climateTo').value=String(climateTo);
+ $('stationsToggle').checked=stationsEnabled;$('stationsNetwork').value=stationNetwork;
+ const updateDesc=()=>{$('climateLayerDesc').textContent=climateLegend[$('climateLayerSelect').value]};
+ const updateStation=()=>{
+ $('stationsIndicator').textContent=stationsEnabled?'ON':'OFF';
+ $('stationsStatus').textContent=stationsEnabled
+ ?`Red seleccionada: ${stationNetwork}. Pendiente de integrar y verificar la fuente oficial. No se muestran estaciones ni mediciones inventadas.`
+ :'Estaciones desactivadas. Los colores del mapa son datos modelizados, no pluviómetros.';
+ };
+ $('climateLayerSelect').onchange=updateDesc;updateDesc();
+ $('climateApply').onclick=()=>{
+ const a=+$('climateFrom').value,b=+$('climateTo').value;
+ if(a>b){alert('La fecha inicial debe ser anterior o igual a la final');return}
+ climateFrom=a;climateTo=b;climateLayer=$('climateLayerSelect').value;
+ renderClimateGrid();closePanel();
+ };
+ $('stationsToggle').onchange=e=>{stationsEnabled=e.target.checked;try{localStorage.setItem('verasetas_stations_on',String(stationsEnabled))}catch{}updateStation()};
+ $('stationsNetwork').onchange=e=>{stationNetwork=e.target.value;try{localStorage.setItem('verasetas_station_network',stationNetwork)}catch{}updateStation()};
+ updateStation();
+};
+// Beta 8: el renderizado climático se canaliza por gridDraw (part-10).
+// renderMap ya llama a gridDraw; no es necesario volver a pintar aquí.
+
+</script>
 <style>
 .flora-group{border:1px solid #496b57;border-radius:10px;margin:7px 0;padding:9px}.flora-row{display:flex;align-items:center;gap:8px}.flora-row input{width:18px;height:18px}.flora-row summary{cursor:pointer;flex:1}.flora-sub{padding:6px 0 0 26px}.flora-sub label{display:block;padding:5px 0;font-size:12px}.flora-dot{width:14px;height:14px;border-radius:50%;display:inline-block}.ph-card{position:absolute;z-index:600;left:12px;top:12px;background:#142e24;color:white;border:1px solid #67826b;border-radius:12px;padding:10px;max-width:250px;box-shadow:0 2px 12px #0006}.ph-card input[type=range]{width:100%}.ph-card small{display:block;opacity:.8}.ph-card button{padding:3px 8px}.flora-disabled{opacity:.6}
 </style>
 <div class="ph-card hidden" id="floraPhCard"><div style="display:flex;justify-content:space-between;gap:8px"><b>pH del suelo</b><button id="phFold" aria-label="Plegar pH">▾</button></div><label><input type="checkbox" id="phEnabled"> Activar filtro</label><div id="phControls"><small>Rango seleccionado: <b id="phRange">3,0–9,0</b></small><label>ÁCIDO · mínimo <input id="phMin" type="range" min="3" max="9" step="0.1" value="3"></label><label>CALIZO · máximo <input id="phMax" type="range" min="3" max="9" step="0.1" value="9"></label></div><small id="phMessage">Sin datos de pH superficial georreferenciados: filtro no aplicable todavía.</small></div>
-<script src="./src/legacy/part-05.js"></script>
+<script>
+
+/* Flora v1.1: multi-select on partial OSM mapping, no invented official forestry/pH coverage. */
+const FLORA_GROUPS=[
+ ['pino','Pinos','#61a5d7',['Pino silvestre','Pino carrasco','Pino resinero','Pino piñonero','Otros pinos']],
+ ['roble','Robles','#54b46b',['Rebollo','Roble común','Quejigo','Otros robles']],
+ ['encina','Encinas','#9caa52',['Encina']],
+ ['haya','Hayas','#83b6a3',['Haya']],
+ ['castano','Castaños','#e7a257',['Castaño']],
+ ['abedul','Abedules','#b1d9cb',['Abedul']],
+ ['alcornoque','Alcornoques','#b3a16b',['Alcornoque']],
+ ['pradera','Praderas','#c0d276',['Pastizales','Prados','Herbazales']],
+ ['abeto','Abetos','#527b85',['Abeto blanco','Pinsapo']],
+ ['jaral','Jarales','#b39b7c',['Jaras','Matorral de jara']],
+ ['eucalipto','Eucaliptos','#78a5a0',['Eucalipto']],
+ ['ribera','Ribera','#58c7c2',['Chopo','Álamo','Sauce','Aliso','Fresno']],
+ ['sabina','Sabinares','#8c9e91',['Sabina albar','Sabina mora']]
+];
+const floraSelection=new Map(FLORA_GROUPS.map(([k,, ,sp])=>[k,new Set(sp)]));
+let floraActive=new Set(['pino','roble','encina','castano']);
+const floraDetail=f=>String(f.properties.detail||'').toLowerCase();
+function floraKind(f){let k=f.properties.kind,txt=floraDetail(f);
+ if(/eucalyptus|eucalipt/.test(txt))return 'eucalipto';
+ if(/betula|abedul/.test(txt))return 'abedul';
+ if(/fagus sylvatica|haya|hayed/.test(txt))return 'haya';
+ if(/abies|pinsapo|abeto/.test(txt))return 'abeto';
+ if(/quercus suber|alcornoque/.test(txt))return 'alcornoque';
+ if(/populus|salix|alnus|fraxinus|chopo|álamo|sauce|aliso|fresno/.test(txt))return 'ribera';
+ if(/juniperus|sabina/.test(txt))return 'sabina';
+ return k==='otro'?null:k;
+}
+function floraSpecies(f,k){let t=floraDetail(f);
+ const patterns={pino:[[/sylvestris|silvestre/,'Pino silvestre'],[/halepensis|carrasco/,'Pino carrasco'],[/pinaster|resinero/,'Pino resinero'],[/pinea|piñonero/,'Pino piñonero']],roble:[[/pyrenaica|rebollo/,'Rebollo'],[/robur|roble común/,'Roble común'],[/faginea|quejigo/,'Quejigo']],ribera:[[/populus nigra|chopo/,'Chopo'],[/populus alba|álamo/,'Álamo'],[/salix|sauce/,'Sauce'],[/alnus|aliso/,'Aliso'],[/fraxinus|fresno/,'Fresno']]};
+ const match=(patterns[k]||[]).find(([re])=>re.test(t));if(match)return match[1];
+ const fallback={pino:'Otros pinos',roble:'Otros robles',encina:'Encina',castano:'Castaño',haya:'Haya',abedul:'Abedul',alcornoque:'Alcornoque',eucalipto:'Eucalipto',abeto:'Abeto blanco',sabina:'Sabina albar'};
+ return fallback[k]||null;
+}
+function floraIncluded(f){let k=floraKind(f);if(!k||!floraActive.has(k))return false;let sp=floraSpecies(f,k);return sp&&floraSelection.get(k)?.has(sp)}
+function drawFlora(){forestLayer.clearLayers();if(tab!=='flora'){map.removeLayer(forestLayer);return}if(!map.hasLayer(forestLayer))forestLayer.addTo(map);
+ if(forestData)forestLayer.addData({type:'FeatureCollection',features:forestData.features.filter(floraIncluded).map(f=>({...f,properties:{...f.properties,kind:floraKind(f)}}))});
+ let counts=FLORA_GROUPS.filter(([k])=>floraActive.has(k)).map(([k,name,color])=>`<span style="color:${color}">●</span> ${name}`);
+ $('legend').innerHTML=`<b>FLORA · OSM parcial</b><div>${counts.join(' · ')||'Sin capas activas'}</div><small>Las masas sin especie identificable no se asignan a una clase.</small>`;
+}
+const oldFloraPanel=renderPanel;
+renderPanel=function(){oldFloraPanel();if(tab!=='flora')return;
+ $('panelBody').innerHTML=`<p class="muted">Arbolado identificado en OpenStreetMap, no cartografía forestal oficial. Cobertura parcial. Puedes encender varios tipos y desplegar sus especies; solo se dibujan las identificables.</p><h3>ARBOLADO</h3><div id="floraGroups"></div><button class="primary" id="loadForest">Cargar bosques de la zona visible</button><p class="notice" id="forestStatus">${esc(forestStatus)}</p><p class="muted">El pH necesita una capa georreferenciada y no se representa sin datos reales.</p>`;
+ const wrap=$('floraGroups');wrap.innerHTML=FLORA_GROUPS.map(([k,name,color,sp])=>`<div class="flora-group"><div class="flora-row"><input type="checkbox" data-group="${k}" ${floraActive.has(k)?'checked':''}><span class="flora-dot" style="background:${color}"></span><details style="flex:1"><summary>${name} <small id="status-${k}"></small></summary><div class="flora-sub">${sp.map((s,i)=>`<label><input type="checkbox" data-specgroup="${k}" data-specindex="${i}" ${floraSelection.get(k).has(s)?'checked':''}> ${s}</label>`).join('')}</div></details></div></div>`).join('');
+ function status(){for(let [k,,,sp] of FLORA_GROUPS){let n=floraSelection.get(k).size;$('status-'+k).textContent=!floraActive.has(k)?'○':n===sp.length?'●':n?'◐':'○'}}
+ wrap.querySelectorAll('[data-group]').forEach(el=>el.onchange=()=>{el.checked?floraActive.add(el.dataset.group):floraActive.delete(el.dataset.group);status();drawFlora()});
+ wrap.querySelectorAll('[data-specgroup]').forEach(el=>el.onchange=()=>{let k=el.dataset.specgroup,s=FLORA_GROUPS.find(x=>x[0]===k)[3][+el.dataset.specindex];el.checked?floraSelection.get(k).add(s):floraSelection.get(k).delete(s);if(el.checked)floraActive.add(k);wrap.querySelector(`[data-group="${k}"]`).checked=floraActive.has(k);status();drawFlora()});
+ $('loadForest').onclick=async()=>{await loadForests();drawFlora()};status();
+};
+/* Flora map update is now coordinated in part-08 to avoid a renderMap override. */
+/* loadForests already calls renderMap() on success, which updates Flora.
+   Avoid wrapping this async function: preserve its boolean result and errors. */
+$('phFold').onclick=()=>{$('phControls').classList.toggle('hidden');$('phFold').textContent=$('phControls').classList.contains('hidden')?'▸':'▾'};
+function updatePh(){let a=+$('phMin').value,b=+$('phMax').value;if(a>b){if(document.activeElement===$('phMin'))$('phMax').value=a;else $('phMin').value=b;a=+$('phMin').value;b=+$('phMax').value} $('phRange').textContent=a.toFixed(1).replace('.',',')+'–'+b.toFixed(1).replace('.',',');$('phMessage').textContent=$('phEnabled').checked?'Filtro solicitado, pero sin datos de pH superficial (0–5 cm). No se pintan zonas inventadas.':'Filtro desactivado. Sin capa de pH disponible.'}
+['phMin','phMax'].forEach(id=>$(id).oninput=updatePh);$('phEnabled').onchange=updatePh;updatePh();
+/* Retain habitat navigation from catalog: select one layer rather than reset all. */
+const oldCatalogGoMap=catalogGoMap;
+catalogGoMap=function(type,value){if(type==='flora'&&value){floraActive=new Set([value]);if(!floraSelection.has(value)){floraActive.clear()}forestFilter=value;setTab('flora');if(!forestData)loadForests();return}oldCatalogGoMap(type,value)};
+
+</script>
 <style>
 .official-source{margin:10px 0;padding:12px;border:1px solid #55765c;border-radius:10px;background:#1b382b}
 .official-source label{display:block;margin:8px 0}
 .official-source small{color:#d1ddcd}
 </style>
-<script src="./src/legacy/part-06.js"></script>
+<script>
+
+/* v1.1: independently switchable authoritative raster WMS layers.
+   MFE layer names must be confirmed against GetCapabilities before production use.
+   SoilGrids WMS depicts model estimates, not laboratory measurements. */
+let officialMfeOn=false,officialPhOn=false;
+const officialMfe=L.tileLayer.wms('https://wms.mapama.gob.es/sig/Biodiversidad/MFE',{
+ layers:'LC.LandCoverSurfaces',format:'image/png',transparent:true,version:'1.1.1',
+ opacity:.45,attribution:'Mapa Forestal de España · MITECO (WMS)',maxZoom:19
+});
+const officialPh=L.tileLayer.wms('https://dev-maps.isric.org/mapserv/phh2o',{
+ layers:'phh2o_0-5cm_mean',format:'image/png',transparent:true,version:'1.1.1',
+ opacity:.58,attribution:'SoilGrids © ISRIC · pH modelizado 0–5 cm',maxZoom:18
+});
+officialMfe.on('tileerror',()=>{const s=document.getElementById('mfeWmsStatus');if(s)s.textContent='No se ha podido cargar alguna tesela MFE. Comprueba disponibilidad y nombre de capa WMS.'});
+officialPh.on('tileerror',()=>{const s=document.getElementById('phWmsStatus');if(s)s.textContent='No se ha podido cargar alguna tesela de SoilGrids.'});
+function syncOfficialLayers(){
+ if(!['flora','pred'].includes(tab)){map.removeLayer(officialMfe);map.removeLayer(officialPh);return}
+ if(officialMfeOn){if(!map.hasLayer(officialMfe))officialMfe.addTo(map)}else map.removeLayer(officialMfe);
+ if(officialPhOn&&tab==='flora'){if(!map.hasLayer(officialPh))officialPh.addTo(map)}else map.removeLayer(officialPh);
+}
+const officialOldPanel=renderPanel;
+renderPanel=function(){
+ officialOldPanel();
+ if(!['flora','pred'].includes(tab))return;
+ const block=document.createElement('div');
+ block.className='official-source';
+ block.innerHTML=`<h3>🌳 MAPA FORESTAL OFICIAL (MITECO)</h3>
+ <label><input type="checkbox" id="mfeWmsToggle" ${officialMfeOn?'checked':''}> Mapa Forestal de España · MITECO (WMS)</label>
+ <small>Capa visual WMS oficial para contrastar el mapa de colores con el bosque cartografiado. No modifica automáticamente la puntuación: para eso hacen falta polígonos y especies verificadas.</small>
+ <p id="mfeWmsStatus" class="muted">Fuente: MITECO, Mapa Forestal de España. Requiere Internet y disponibilidad del servicio.</p>
+ <label><input type="checkbox" id="phWmsToggle" ${officialPhOn?'checked':''}> pH superficial · SoilGrids (0–5 cm)</label>
+ <small>Estimación espacial modelizada, no medición local. La imagen WMS se puede superponer; el rango 3–9 todavía no recorta píxeles.</small>
+ <p id="phWmsStatus" class="muted">Fuente: ISRIC SoilGrids. Disponibilidad externa no garantizada.</p>`;
+ if(tab==='pred'){const soil=block.querySelector('#phWmsToggle');if(soil){const label=soil.closest('label');if(label)label.remove();const status=block.querySelector('#phWmsStatus');if(status)status.remove();block.querySelectorAll('small').forEach(el=>{if(el.textContent.includes('Estimación espacial modelizada'))el.remove()})}}
+ $('panelBody').prepend(block);
+ // El bloque WMS ya existe: el verificador se monta aquí, no en un wrapper previo.
+ if(tab==='flora'){
+  const info=document.createElement('div');
+  info.id='officialDiagnostics';
+  info.innerHTML='<button id="verifyOfficialBtn">Comprobar servicios WMS</button><p>La superposición visual no identifica automáticamente especies ni valores de pH por cuadrícula. El filtro de pH seguirá inactivo hasta disponer de datos numéricos fiables.</p>';
+  block.append(info);
+  document.getElementById('verifyOfficialBtn').onclick=verifyOfficialSources;
+ }
+
+ $('mfeWmsToggle').onchange=e=>{officialMfeOn=e.target.checked;syncOfficialLayers()};
+ if($('phWmsToggle'))$('phWmsToggle').onchange=e=>{officialPhOn=e.target.checked;syncOfficialLayers()};
+};
+// Las capas WMS se sincronizan desde el único adaptador cartográfico posterior (part-08).
+
+</script>
 
 <style>
 #officialDiagnostics{font-size:12px;line-height:1.5;border:1px solid #78917b;border-radius:9px;padding:10px;margin-top:8px}
 #officialDiagnostics button{margin:5px 3px}
 </style>
-<script src="./src/legacy/part-07.js"></script>
+<script>
+
+/* Official-source validation: browser-side, with explicit CORS/network errors. */
+const mfeCapabilities='https://wms.mapama.gob.es/sig/Biodiversidad/MFE?service=WMS&request=GetCapabilities';
+const soilCapabilities='https://dev-maps.isric.org/mapserv/phh2o?service=WMS&request=GetCapabilities';
+async function verifyWms(url,desired){
+ const res=await fetch(url,{signal:AbortSignal.timeout(12000)});
+ if(!res.ok)throw Error('HTTP '+res.status);
+ const doc=new DOMParser().parseFromString(await res.text(),'text/xml');
+ if(doc.querySelector('parsererror'))throw Error('Respuesta no XML');
+ const names=[...doc.getElementsByTagName('Name')].map(n=>n.textContent.trim());
+ if(!names.includes(desired))throw Error('La capa '+desired+' no figura en GetCapabilities');
+ return 'Servicio accesible; capa '+desired+' confirmada';
+}
+async function verifyOfficialSources(){
+ const status=document.getElementById('officialDiagnostics');if(!status)return;
+ status.textContent='Comprobando servicios oficiales desde tu navegador…';
+ const results=await Promise.allSettled([verifyWms(mfeCapabilities,'LC.LandCoverSurfaces'),verifyWms(soilCapabilities,'phh2o_0-5cm_mean')]);
+ status.innerHTML=results.map((r,i)=>`<p><b>${i?'ISRIC SoilGrids':'MITECO MFE'}:</b> ${r.status==='fulfilled'?r.value:'No verificable: '+String(r.reason?.message||r.reason)+'. Puede ser red, CORS o servicio no disponible.'}</p>`).join('');
+}
+
+</script>
 <style>
 #verifiedForestBox{margin:12px 0;padding:12px;border:1px solid #87a18c;border-radius:10px;background:#153527}
 #verifiedForestBox input[type=file]{max-width:100%;font-size:12px}
 #verifiedForestBox label{display:block;margin:9px 0}
 #verifiedForestBox p{font-size:12px;line-height:1.5}
 </style>
-<script src="./src/legacy/part-08.js"></script>
+<script>
 
-<script src="./src/legacy/part-09.js"></script>
+/* Verified offline geospatial inputs. Does not silently treat OSM as MFE25. */
+let mfeFeatures=[],mfeLayer=L.geoJSON(null),mfeImportName='',phSamples=[],phByCell=new Map();
+const MFE_CODES={
+ '21':['pino','Pino silvestre'],'24':['pino','Pino carrasco'],'26':['pino','Pino resinero'],'23':['pino','Pino piñonero'],
+ '41':['roble','Rebollo'],'45':['roble','Roble común'],'44':['roble','Quejigo'],
+ '46':['haya','Haya'],'72':['castano','Castaño'],'43':['encina','Encina'],'42':['alcornoque','Alcornoque']
+};
+/* Codes above are illustrative candidates ONLY: require explicit name confirmation in input, never infer species from them. */
+const mfeNames={
+ 'pinus sylvestris':['pino','Pino silvestre'],'pinus halepensis':['pino','Pino carrasco'],
+ 'pinus pinaster':['pino','Pino resinero'],'pinus pinea':['pino','Pino piñonero'],
+ 'quercus pyrenaica':['roble','Rebollo'],'quercus robur':['roble','Roble común'],
+ 'quercus faginea':['roble','Quejigo'],'quercus ilex':['encina','Encina'],
+ 'castanea sativa':['castano','Castaño'],'quercus suber':['alcornoque','Alcornoque'],
+ 'fagus sylvatica':['haya','Haya'],'betula pendula':['abedul','Abedul'],
+ 'populus nigra':['ribera','Chopo'],'alnus glutinosa':['ribera','Aliso'],
+ 'fraxinus angustifolia':['ribera','Fresno'],'salix alba':['ribera','Sauce']
+};
+function speciesFromProps(props){
+ if(typeof props._veraKind==='string'&&typeof props._veraSpecies==='string')return [props._veraKind,props._veraSpecies];
+ const fields=['scientific_name','scientificName','species_name','especie_nombre','NOMBRE','ESPECIE_NOMBRE','taxon'];
+ const values=fields.map(k=>props[k]).filter(v=>typeof v==='string').map(v=>v.toLowerCase().trim());
+ for(const v of values)for(const [name,pair] of Object.entries(mfeNames))if(v===name||v.startsWith(name+' '))return pair;
+ return null;
+}
+function insidePolygon(point,geom){if(!geom)return false;
+ function ringHit(ring){let inside=false;for(let i=0,j=ring.length-1;i<ring.length;j=i++){
+ const [xi,yi]=ring[i],[xj,yj]=ring[j],x=point[0],y=point[1];
+ if((yi>y)!==(yj>y)&&x<(xj-xi)*(y-yi)/(yj-yi)+xi)inside=!inside;
+ }return inside}
+ function polyHit(rings){return rings?.length&&ringHit(rings[0])&&!rings.slice(1).some(ringHit)}
+ return geom.type==='Polygon'?polyHit(geom.coordinates):geom.type==='MultiPolygon'?geom.coordinates.some(polyHit):false;
+}
+function importMfeGeojson(obj,filename){
+ if(obj?.type!=='FeatureCollection'||!Array.isArray(obj.features))throw Error('Se requiere un GeoJSON FeatureCollection');
+ const filtered=obj.features.filter(f=>['Polygon','MultiPolygon'].includes(f.geometry?.type)).map(f=>{
+ const pair=speciesFromProps(f.properties||{});return pair?{...f,properties:{...f.properties,_veraKind:pair[0],_veraSpecies:pair[1]}}:null;
+ }).filter(Boolean);
+ mfeFeatures=filtered;mfeImportName=filename;
+ redrawVerifiedForest();return {total:obj.features.length,recognized:filtered.length};
+}
+function redrawVerifiedForest(){
+ mfeLayer.clearLayers();if(tab!=='flora'){map.removeLayer(mfeLayer);return}
+ if(!map.hasLayer(mfeLayer))mfeLayer.addTo(map);
+ const selectedFeatures=mfeFeatures.filter(f=>floraActive.has(f.properties._veraKind)&&floraSelection.get(f.properties._veraKind)?.has(f.properties._veraSpecies));
+ mfeLayer.addData({type:'FeatureCollection',features:selectedFeatures});
+ mfeLayer.setStyle(f=>({color:FLORA_GROUPS.find(g=>g[0]===f.properties._veraKind)?.[2]||'#777',weight:1.3,fillOpacity:.48}));
+ mfeLayer.eachLayer(layer=>layer.bindPopup('<b>'+esc(layer.feature.properties._veraSpecies)+'</b><br>Importación local: '+esc(mfeImportName)+'<br>Fuente declarada por el usuario; sin validación de procedencia.'));
+ if(mfeFeatures.length){$('legend').innerHTML+='<br><small>Polígonos importados: '+selectedFeatures.length+' visibles · '+mfeFeatures.length+' reconocidos</small>'}
+}
+function parsePhCsv(text){
+ const lines=text.trim().split(/\r?\n/);if(lines.length<2)throw Error('CSV vacío');
+ const delim=lines[0].includes(';')?';':',';const header=lines.shift().split(delim).map(x=>x.trim().toLowerCase());
+ const ix=header.indexOf('lat'),iy=header.indexOf('lon'),iz=header.indexOf('ph');
+ if([ix,iy,iz].some(x=>x<0))throw Error('Se requieren columnas lat,lon,ph');
+ const samples=[];
+ for(const line of lines){const a=line.split(delim);const lat=Number(a[ix]),lon=Number(a[iy]),ph=Number(a[iz]);
+ if(Number.isFinite(lat)&&Number.isFinite(lon)&&ph>=0&&ph<=14&&lat>39&&lat<41&&lon>-7&&lon<-4)samples.push({lat,lon,ph})}
+ if(!samples.length)throw Error('No hay puntos válidos de pH en La Vera');
+ phSamples=samples;phByCell=new Map();for(const c of gridCells){const v=samples.filter(p=>p.lat>=c.bounds[0][0]&&p.lat<c.bounds[1][0]&&p.lon>=c.bounds[0][1]&&p.lon<c.bounds[1][1]);if(v.length)phByCell.set(c.id,v.reduce((a,b)=>a+b.ph,0)/v.length)}
+ drawVerifiedPh();return {samples:samples.length,cells:phByCell.size};
+}
+const phFilterLayer=L.layerGroup();
+function drawVerifiedPh(){phFilterLayer.clearLayers();if(tab!=='flora'||!$('phEnabled')?.checked||!phByCell.size){map.removeLayer(phFilterLayer);return}
+ const lo=Number($('phMin').value),hi=Number($('phMax').value);let count=0;
+ for(const c of gridCells){const p=phByCell.get(c.id);if(p==null||p<lo||p>hi)continue;count++;
+ const color=p<5?'#de7e43':p<6?'#f2bf6c':p<7?'#b2c86c':p<8?'#5fb8a7':'#4b91d1';
+ L.rectangle(c.bounds,{color,weight:1,fillColor:color,fillOpacity:.35,interactive:false}).addTo(phFilterLayer)}
+ if(!map.hasLayer(phFilterLayer))phFilterLayer.addTo(map);
+ $('phMessage').textContent=count?`${count} cuadrículas con muestras importadas en el rango. Media de puntos, no cobertura continua.`:'Ninguna zona cae en este rango (entre las cuadrículas con muestras).';
+}
+const importedOldPanel=renderPanel;
+renderPanel=function(){importedOldPanel();if(!['flora','pred'].includes(tab))return;
+ const block=document.createElement('div');block.id='verifiedForestBox';
+ block.innerHTML=`<h3>DATOS VECTORIALES Y pH NUMÉRICO</h3>
+ <p>Importa un GeoJSON <b>en EPSG:4326</b> con polígonos y un campo de nombre científico. Los códigos MFE no se interpretan automáticamente: sin diccionario verificado se omiten para evitar clasificaciones falsas.</p>
+ <label>Polígonos forestales GeoJSON <input id="mfeGeoInput" type="file" accept=".geojson,.json,application/geo+json"></label>
+ <p id="mfeImportStatus">${mfeFeatures.length} polígonos identificados en memoria. Solo se reconocen nombres científicos explícitos.</p>
+ <label>pH superficial, CSV con columnas lat,lon,ph <input id="phCsvInput" type="file" accept=".csv,text/csv"></label>
+ <p id="phImportStatus">${phSamples.length} muestras · ${phByCell.size} cuadrículas. pH en escala 0–14, no pH×10.</p>
+ <p>Para SoilGrids, exporta los valores numéricos de 0–5 cm y divide entre diez los valores codificados como pH×10. No se imputan cuadrículas sin datos.</p>`;
+ if(tab==='pred'){const soil=block.querySelector('#phWmsToggle');if(soil){const label=soil.closest('label');if(label)label.remove();const status=block.querySelector('#phWmsStatus');if(status)status.remove();block.querySelectorAll('small').forEach(el=>{if(el.textContent.includes('Estimación espacial modelizada'))el.remove()})}}
+ $('panelBody').prepend(block);
+ $('mfeGeoInput').onchange=async e=>{try{const f=e.target.files[0];if(!f)return;const r=importMfeGeojson(JSON.parse(await f.text()),f.name);$('mfeImportStatus').textContent=`${r.recognized} de ${r.total} polígonos reconocidos por nombre científico. Fuente no autenticada.`}catch(err){$('mfeImportStatus').textContent='Error: '+err.message}};
+ $('phCsvInput').onchange=async e=>{try{const f=e.target.files[0];if(!f)return;const r=parsePhCsv(await f.text());$('phImportStatus').textContent=`${r.samples} muestras, ${r.cells} cuadrículas con datos.`}catch(err){$('phImportStatus').textContent='Error: '+err.message}};
+};
+const importedOldMap=renderMap;
+renderMap=function(){importedOldMap();const floraPhCard=$('floraPhCard');if(floraPhCard)floraPhCard.classList.toggle('hidden',tab!=='flora');if(tab==='flora')drawFlora();syncOfficialLayers();redrawVerifiedForest();drawVerifiedPh()};
+const importedOldDrawFlora=drawFlora;
+drawFlora=function(){importedOldDrawFlora();redrawVerifiedForest();drawVerifiedPh()};
+['phMin','phMax','phEnabled'].forEach(id=>$(id).addEventListener(id==='phEnabled'?'change':'input',()=>drawVerifiedPh()));
+
+</script>
+
+<script>
+
+/* v1.8: carga automática de datos ya procesados y servidos junto a la aplicación.
+   No sustituye la adquisición y procesamiento de los archivos oficiales. */
+async function loadProcessedSources(){
+ const status=document.createElement('div');status.id='processedStatus';
+ status.style.cssText='position:absolute;right:12px;bottom:64px;z-index:850;background:#163527;color:#d8e9d9;padding:7px 10px;border-radius:8px;font-size:11px;max-width:260px;pointer-events:none';
+ document.body.appendChild(status);
+ const messages=[];
+ try{
+  const r=await fetch('./data/manifest.json',{cache:'no-store'});
+  if(!r.ok)throw Error('Sin datos procesados');
+  const m=await r.json();
+  if(m.forest!=='no disponible'){
+   const f=await fetch('./data/mfe_lavera.geojson');if(!f.ok)throw Error('No se pudo leer GeoJSON MFE');
+   const obj=await f.json();const result=importMfeGeojson(obj,'MFE25 procesado');
+   messages.push('MFE: '+result.recognized+' polígonos con taxón identificado');
+  }
+  if(m.ph!=='no disponible'){
+   const r=await fetch('./data/ph_lavera.csv');if(!r.ok)throw Error('No se pudo leer CSV pH');
+   const result=parsePhCsv(await r.text());
+   messages.push('SoilGrids: '+result.cells+' cuadrículas con pH estimado');
+  }
+  status.textContent=messages.length?messages.join(' · '):'Sin archivos de MFE/pH procesados';
+ }catch(e){status.textContent='Fuentes espaciales no precargadas; usa importación manual o ejecutar procesar_fuentes.py';console.info(e)}
+}
+if(location.protocol!=='file:')loadProcessedSources();
+
+</script>
 <style>
 #appHealth{position:fixed;left:12px;bottom:83px;z-index:960;background:#102d23;color:#f2f6f0;border:1px solid #648b70;border-radius:10px;padding:8px 12px;font:12px system-ui;max-width:280px;box-shadow:0 2px 12px #0006}
 #appHealth button{margin-left:7px;background:#284d39;color:white;border:1px solid #789b80;border-radius:6px;padding:4px}
 #appHealth.offline{border-color:#d9b565}
 </style>
 <div id="appHealth" role="status" aria-live="polite"><span id="healthText">Preparando mapa…</span><button id="healthClose" aria-label="Ocultar estado">×</button></div>
-<script src="./src/legacy/part-10.js"></script><style>
+<script>
+
+/* v1.8 stability and usability: preserve existing data and avoid fabricated readings. */
+(function(){
+ const panel=document.getElementById('appHealth'),out=document.getElementById('healthText');
+ document.getElementById('healthClose').onclick=()=>panel.remove();
+ function status(){if(!panel.isConnected)return;const online=navigator.onLine;
+ panel.classList.toggle('offline',!online);
+ out.textContent=(online?'Conectado':'Sin conexión')+' · clima '+gridLoaded+'/'+gridCells.length+' cuadrículas'+(gridErrorCount?' · '+gridErrorCount+' errores':'');
+ }
+ window.addEventListener('online',status);window.addEventListener('offline',status);
+ window.addEventListener('unhandledrejection',e=>{console.error('VeraSetas',e.reason);status()});
+ window.addEventListener('error',e=>{console.error('VeraSetas',e.message);status()});
+ const previousFetch=fetchGrid;
+ fetchGrid=async function(c){try{return await previousFetch(c)}finally{status()}};
+ status();
+ // A single daily date is a valid interval; other dates must be fully available.
+ const previousDraw=gridDraw;
+ gridDraw=function(){if(tab==='climate'){renderClimateGrid();return}previousDraw()};
+ // Climate cards show the exact aggregated model value and data provenance.
+ const previousDetail=showGridDetail;
+ showGridDetail=function(lat,lon){previousDetail(lat,lon);if(tab!=='climate')return;
+ const c=cellFor(lat,lon),v=climateValue(c),u=climateLayer==='rain'?'mm':climateLayer==='wind'?'km/h':'%';
+ const el=document.createElement('div');el.className='card';
+ el.innerHTML='<b>Clima · '+(climateLayer==='rain'?'Precipitación':climateLayer==='wind'?'Viento':'Humedad')+'</b><p>'+(v==null?'Datos insuficientes para el intervalo':v.toFixed(1)+' '+u)+'</p><small>Open-Meteo · datos modelizados en el centro de la cuadrícula · '+dateKey(climateFrom)+' a '+dateKey(climateTo)+'</small>';
+ document.getElementById('detail').appendChild(el);
+ };
+ // Provide a working climate legend and click action for the entire grid.
+ renderClimateGrid=function(){
+ gridLayer.clearLayers();layersOverlay.clearLayers();
+ for(const c of gridCells){const val=climateValue(c);
+ const shape=L.rectangle(c.bounds,{color:'#172d24',weight:.65,fillColor:climateColor(val),fillOpacity:val==null?.22:.67}).addTo(gridLayer);
+ shape.on('click',e=>showGridDetail(e.latlng.lat,e.latlng.lng));
+ shape.bindTooltip(`${c.t[0]}: ${val==null?'sin datos':val.toFixed(1)+(climateLayer==='hum'?' %':climateLayer==='wind'?' km/h':' mm')}`);
+ }
+ gridLayer.eachLayer(layer=>{if(typeof layer.bringToFront==="function")layer.bringToFront()});
+ document.getElementById('legend').textContent=climateLegend[climateLayer]+' · gris: datos incompletos · modelo Open-Meteo';
+ };
+ // Show measured / estimated pH in the existing clicked-cell detail, only if imported.
+ const phDetail=showGridDetail;
+ showGridDetail=function(lat,lon){phDetail(lat,lon);const c=cellFor(lat,lon),v=phByCell.get(c.id);
+ if(v==null||!['pred','flora','explore'].includes(tab))return;
+ const card=document.createElement('div');card.className='card';card.innerHTML='<b>pH superficial estimado</b><p>'+v.toFixed(1)+' · 0–5 cm</p><small>Media de muestras importadas o raster procesado; no es una medición in situ.</small>';
+ document.getElementById('detail').appendChild(card);
+ };
+ // Add a retry action for climate without requiring a full reload.
+ const healthButton=document.createElement('button');healthButton.textContent='Reintentar';healthButton.title='Volver a consultar cuadrículas fallidas';
+ healthButton.onclick=async()=>{if(gridBusy)return;const pending=gridCells.filter(c=>!c.ready);if(!pending.length){status();return}
+ gridErrorCount=0;gridBusy=true;let i=0;async function work(){while(i<pending.length){const c=pending[i++];try{await fetchGrid(c)}catch(e){gridErrorCount++;console.warn(e)}}}
+ try{await Promise.all(Array.from({length:3},work))}finally{gridBusy=false;gridDraw();status()}};
+ if(panel.isConnected)panel.appendChild(healthButton);
+ if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(console.warn);
+})();
+
+</script><style>
 #iphoneHelp{position:fixed;inset:0;z-index:3000;background:#07160edc;display:none;align-items:center;justify-content:center;padding:16px}
 #iphoneHelp.visible{display:flex}#iphoneHelp .sheet{width:min(440px,100%);max-height:85dvh;overflow:auto;border:1px solid #679576;border-radius:20px;padding:22px;background:#173c2b;box-shadow:0 12px 45px #0009}
 #iphoneHelp .sheet p{line-height:1.55;font-size:14px}#iphoneHelp button{min-height:44px;width:100%}
@@ -105,12 +850,68 @@ html,body{height:100%;overscroll-behavior:none}button,select,input{touch-action:
 </style>
 <div id="iphoneHelp" role="dialog" aria-modal="true" aria-label="Ayuda de VeraSetas"><div class="sheet"><h2>🍄 VeraSetas para iPhone</h2><p><b>Usar el mapa:</b> pulsa ☷ para abrir los filtros; usa ◎ para pedir permiso de ubicación; ▧ cambia entre mapas base.</p><p><b>Instalar:</b> publica esta carpeta en un alojamiento HTTPS, ábrela en Safari, toca Compartir y elige «Añadir a pantalla de inicio».</p><p><b>Sin Internet:</b> el catálogo y la interfaz pueden conservarse tras una primera visita instalada, pero los mapas y la meteorología requieren conexión.</p><p><b>Datos:</b> la predicción micológica es experimental. Los datos oficiales MFE, pH y pluviómetros siguen incompletos.</p><button id="iphoneHelpClose">Cerrar</button></div></div>
 <div id="iosStatus" role="status" aria-live="polite"></div>
-<script src="./src/legacy/part-11.js"></script>
+<script>
+
+(function(){
+ const help=document.getElementById('iphoneHelp'),close=document.getElementById('iphoneHelpClose'),menu=document.getElementById('userMenu');
+ menu.onclick=()=>help.classList.add('visible');close.onclick=()=>help.classList.remove('visible');
+ help.addEventListener('click',e=>{if(e.target===help)help.classList.remove('visible')});
+ const status=document.getElementById('iosStatus');
+ function connection(){status.style.display=navigator.onLine?'none':'block';status.textContent='Sin conexión: mapas y meteorología no disponibles'}
+ window.addEventListener('online',connection);window.addEventListener('offline',connection);connection();
+ function resize(){if(typeof map!=='undefined'&&map&&typeof map.invalidateSize==='function')map.invalidateSize({pan:false})}
+ window.addEventListener('resize',()=>requestAnimationFrame(resize));
+ if(window.visualViewport)window.visualViewport.addEventListener('resize',()=>requestAnimationFrame(resize));
+ document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>setTimeout(resize,100)));
+ window.addEventListener('pageshow',()=>setTimeout(resize,200));
+})();
+
+</script>
 <style>
 #detailStatus{display:block;margin-top:7px;line-height:1.4}.layers{width:min(260px,calc(100vw - 90px));max-height:65dvh;overflow-y:auto}.layers button#detailRefresh{width:100%;font-size:13px;padding:9px}.leaflet-pane.leaflet-overlay-pane path{stroke-linecap:round;stroke-linejoin:round}
 @media(max-width:760px){.layers{max-height:56dvh}.mapbuttons button{min-width:44px;min-height:44px}}
 </style>
-<script src="./src/legacy/part-12.js"></script>
+<script>
+
+/* Detalle cartográfico bajo demanda: los caminos proceden de OSM y NO se infieren de la malla climática. */
+(function(){
+ const toggle=document.getElementById('trailsToggle'),refresh=document.getElementById('detailRefresh'),note=document.getElementById('detailStatus');
+ if(!toggle||typeof window.L==='undefined'||typeof map==='undefined')return;
+ const routes=L.layerGroup();let busy=false,loadedKey='',lastFeatures=0;
+ const escTrail=t=>String(t||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+ function info(t){note.textContent=t}
+ async function loadTrails(force=false){
+   if(!toggle.checked){map.removeLayer(routes);return}
+   if(map.getZoom()<12){info('Acerca el mapa al nivel 12 o superior para ver caminos detallados.');return}
+   const b=map.getBounds();
+   if((b.getNorth()-b.getSouth())>.20||(b.getEast()-b.getWest())>.30){info('La vista es demasiado amplia: acerca un poco más el mapa.');return}
+   const bbox=[b.getSouth(),b.getWest(),b.getNorth(),b.getEast()].map(x=>x.toFixed(5)).join(',');
+   if(!force&&loadedKey===bbox&&lastFeatures){routes.addTo(map);return}
+   if(busy)return;busy=true;info('Consultando caminos de OpenStreetMap…');
+   const q=`[out:json][timeout:25];way["highway"~"^(path|track|footway|bridleway)$"](${bbox});out geom;`;
+   try{
+     const urls=['https://overpass.kumi.systems/api/interpreter','https://overpass-api.de/api/interpreter'];
+     let data=null,err=null;
+     for(const url of urls){try{const r=await fetch(url,{method:'POST',body:new URLSearchParams({data:q}),signal:AbortSignal.timeout(28000)});if(!r.ok)throw Error('HTTP '+r.status);data=await r.json();break}catch(e){err=e}}
+     if(!data)throw err||Error('Servidor no disponible');
+     routes.clearLayers();lastFeatures=0;
+     for(const e of (data.elements||[]).slice(0,1600)){
+       if(!e.geometry||e.geometry.length<2)continue;
+       const tag=e.tags||{},type=tag.highway||'path';
+       const line=L.polyline(e.geometry.map(pt=>[pt.lat,pt.lon]),{color:type==='track'?'#df8b33':'#d9e854',weight:type==='track'?3.5:2.7,opacity:.93,dashArray:type==='track'?null:'5 5'});
+       const title=type==='track'?'Pista':type==='footway'?'Camino peatonal':type==='bridleway'?'Camino ecuestre':'Sendero';
+       line.bindPopup('<b>'+title+'</b><p>'+escTrail(tag.name||'Sin nombre')+'</p><small>OpenStreetMap · trazado colaborativo. No garantiza acceso público ni transitabilidad.</small>');
+       line.addTo(routes);lastFeatures++;
+     }
+     loadedKey=bbox;routes.addTo(map);info(lastFeatures+' caminos o senderos cargados en la vista. Fuente OSM, cobertura parcial.');
+   }catch(e){info('No se pudieron consultar los caminos. Prueba más tarde o utiliza el mapa Topográfico.');console.warn('Caminos OSM',e)}finally{busy=false}
+ }
+ toggle.onchange=()=>{if(toggle.checked)loadTrails(true);else{map.removeLayer(routes);info('Caminos desactivados.')} };
+ refresh.onclick=()=>{if(toggle.checked)loadTrails(true);else info('Activa primero «Caminos y senderos OSM».')};
+ map.on('moveend',()=>{if(toggle.checked){loadedKey='';routes.clearLayers();info('Vista cambiada. Pulsa «Actualizar detalle visible» para consultar los caminos aquí.')}});
+})();
+
+</script>
 
 <style>
 .vs-backup{margin-top:16px;padding:13px;border:1px solid #668a71;border-radius:12px;background:#18392b}
@@ -120,7 +921,85 @@ html,body{height:100%;overscroll-behavior:none}button,select,input{touch-action:
 .vs-backup input[type=file]{display:none}
 .vs-backup .vs-message{min-height:18px;margin-top:8px;color:#e3d69e;font-size:12px}
 </style>
-<script src="./src/legacy/part-13.js"></script>
+<script>
+
+/* v2.1: Copia de seguridad local de setales e importación GPX.
+   No transmite ubicaciones a ningún servidor. */
+(function(){
+ if(typeof renderSpots!=='function'||typeof spots==='undefined')return;
+ const previousRenderSpots=renderSpots;
+ const safeSpot=(s)=>{const lat=Number(s.lat),lon=Number(s.lon);
+   if(!Number.isFinite(lat)||!Number.isFinite(lon)||Math.abs(lat)>90||Math.abs(lon)>180)return null;
+   const name=String(s.name||'Setal sin nombre').trim().slice(0,100);
+   return {name:name||'Setal sin nombre',lat,lon};
+ };
+ const download=(name,content,type)=>{
+   const url=URL.createObjectURL(new Blob([content],{type}));
+   const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();
+   setTimeout(()=>URL.revokeObjectURL(url),6000);
+ };
+ function attach(){
+   const root=document.getElementById('spotList');
+   if(!root||root.querySelector('.vs-backup'))return;
+   const box=document.createElement('section');box.className='vs-backup';
+   box.innerHTML='<h3>🔒 Mis setales: copia de seguridad</h3>'+
+     '<p>Los setales se guardan solo en este navegador. Si borras los datos de Safari, puedes perderlos. Exporta una copia y guárdala en Archivos o iCloud. No compartas tus coordenadas privadas.</p>'+
+     '<div class="vs-actions"><button type="button" id="vsJsonExport">⬇ Copia JSON</button><button type="button" id="vsGpxExport">⬇ Exportar GPX</button>'+
+     '<button type="button" id="vsJsonImport">⬆ Importar JSON</button><button type="button" id="vsGpxImport">⬆ Importar GPX</button></div>'+
+     '<input id="vsJsonFile" type="file" accept=".json,application/json"><input id="vsGpxFile" type="file" accept=".gpx,application/gpx+xml,application/xml,text/xml">'+
+     '<div id="vsBackupMessage" class="vs-message" role="status" aria-live="polite"></div>';
+   root.appendChild(box);
+   const msg=t=>{const el=document.getElementById('vsBackupMessage');if(el)el.textContent=t};
+   document.getElementById('vsJsonExport').onclick=()=>{
+     download('verasetas-setales-'+new Date().toISOString().slice(0,10)+'.json',
+       JSON.stringify({app:'VeraSetas',version:1,exportedAt:new Date().toISOString(),spots:spots.map(safeSpot).filter(Boolean)},null,2),
+       'application/json');msg('Copia generada. Guárdala en un lugar privado.');
+   };
+   document.getElementById('vsGpxExport').onclick=()=>{if(!spots.length){msg('No hay setales que exportar.');return}exportGpx()};
+   document.getElementById('vsJsonImport').onclick=()=>document.getElementById('vsJsonFile').click();
+   document.getElementById('vsGpxImport').onclick=()=>document.getElementById('vsGpxFile').click();
+   async function handle(file,format){
+     if(!file)return;
+     try{
+       if(file.size>2_000_000)throw Error('El archivo supera 2 MB.');
+       const raw=await file.text();let imported=[];
+       if(format==='json'){
+         const data=JSON.parse(raw);
+         if(data.app!=='VeraSetas'||!Array.isArray(data.spots))throw Error('No es una copia de VeraSetas válida.');
+         imported=data.spots;
+       }else{
+         const doc=new DOMParser().parseFromString(raw,'application/xml');
+         if(doc.querySelector('parsererror'))throw Error('El GPX contiene XML incorrecto.');
+         const root=doc.documentElement;
+         if(root.localName!=='gpx')throw Error('El archivo no es GPX.');
+         imported=Array.from(doc.getElementsByTagNameNS('*','wpt')).map(el=>({
+           lat:el.getAttribute('lat'),lon:el.getAttribute('lon'),
+           name:Array.from(el.children).find(c=>c.localName==='name')?.textContent||'Setal GPX'
+         }));
+       }
+       if(imported.length>1000)throw Error('Máximo 1000 puntos por archivo.');
+       const valid=imported.map(safeSpot).filter(Boolean);
+       if(!valid.length)throw Error('No se encontraron puntos válidos.');
+       if(!confirm('¿Importar '+valid.length+' setales? Se conservarán los que ya tienes.'))return;
+       const keys=new Set(spots.map(s=>[Number(s.lat).toFixed(5),Number(s.lon).toFixed(5),String(s.name).trim().toLowerCase()].join('|')));
+       let added=0;
+       for(const s of valid){
+         const key=[s.lat.toFixed(5),s.lon.toFixed(5),s.name.toLowerCase()].join('|');
+         if(keys.has(key))continue;
+         spots.push(s);keys.add(key);added++;
+       }
+       persist();renderMap();renderSpots();
+       const result=document.getElementById('vsBackupMessage');if(result)result.textContent=added+' setales importados; duplicados omitidos.';
+     }catch(e){msg('No se pudo importar: '+e.message)}
+   }
+   document.getElementById('vsJsonFile').onchange=e=>{handle(e.target.files?.[0],'json');e.target.value=''};
+   document.getElementById('vsGpxFile').onchange=e=>{handle(e.target.files?.[0],'gpx');e.target.value=''};
+ }
+ renderSpots=function(){previousRenderSpots();attach()};
+ if(document.getElementById('spotList'))attach();
+})();
+
+</script>
 
 <style>
 #vsHotspots{position:absolute;z-index:750;right:10px;bottom:104px;max-width:min(300px,85vw);background:#133225f2;color:#f2fff5;border:1px solid #87b494;border-radius:14px;box-shadow:0 5px 18px #0006;padding:11px;font-size:12px}
@@ -133,18 +1012,121 @@ html,body{height:100%;overscroll-behavior:none}button,select,input{touch-action:
 #vsRoute{display:block;margin:10px 0;padding:12px;border-radius:9px;background:#267249;color:white;text-align:center;text-decoration:none;font-weight:700;min-height:44px}
 @media(max-width:600px){#vsHotspots{bottom:108px;right:8px}}
 </style>
-<script src="./src/legacy/part-14.js"></script>
+<script>
+
+/* v2.2: mapa de favorabilidad orientativa y salto a coordenadas de referencia.
+   Nunca se representa el índice como probabilidad calibrada ni como lugar de recolección permitido. */
+(function(){
+ if(typeof map==='undefined'||typeof gridCells==='undefined'||typeof gridScore!=='function')return;
+ const wrap=document.getElementById('mapWrap');if(!wrap)return;
+ const pane=document.createElement('section');pane.id='vsHotspots';pane.setAttribute('aria-label','Zonas más favorables');
+ pane.innerHTML='<button type="button" class="vsHotspotToggle" aria-expanded="false">🍄 Ver zonas favorables</button><div class="vsHotspotList" hidden></div>';
+ wrap.appendChild(pane);
+ const toggle=pane.querySelector('.vsHotspotToggle'),list=pane.querySelector('.vsHotspotList');
+ const candidateList=()=>gridCells.map(c=>({c,n:gridScore(c)})).filter(x=>Number.isFinite(x.n)).sort((a,b)=>b.n-a.n);
+ const appleMaps=(lat,lon)=>'https://maps.apple.com/?ll='+lat.toFixed(5)+','+lon.toFixed(5)+'&q=Zona%20orientativa%20VeraSetas';
+ function openCell(c){map.setView([c.t[1],c.t[2]],Math.max(map.getZoom(),12));showGridDetail(c.t[1],c.t[2]);}
+ function refresh(){
+   pane.hidden=tab!=='pred';if(tab!=='pred')return;
+   const candidates=candidateList();const inView=candidates.filter(x=>map.getBounds().contains([x.c.t[1],x.c.t[2]]));
+   const chosen=(inView.length?inView:candidates).slice(0,5);
+   list.replaceChildren();
+   const desc=document.createElement('small');desc.textContent='Índice experimental, no probabilidad real. La meteorología tiene resolución regional (~8–12 km). No indica accesos ni permisos de recolección.';list.appendChild(desc);
+   if(!chosen.length){const e=document.createElement('p');e.textContent='Esperando datos meteorológicos. Comprueba la conexión y vuelve a intentarlo.';list.appendChild(e);return}
+   for(const {c,n} of chosen){
+     const b=document.createElement('button');b.type='button';
+     const color=markerColor(n);const sw=document.createElement('span');sw.className='vs-swatch';sw.style.background=color;b.appendChild(sw);
+     b.appendChild(document.createTextNode(n+' / 100 · '+nearestTown(c.t[1],c.t[2])[0]+' (sector '+(c.row+1)+'-'+(c.col+1)+')'));
+     b.onclick=()=>{openCell(c);list.hidden=true;toggle.setAttribute('aria-expanded','false')};list.appendChild(b)
+   }
+ }
+ toggle.onclick=()=>{list.hidden=!list.hidden;toggle.setAttribute('aria-expanded',String(!list.hidden));if(!list.hidden)refresh()};
+ const originalDraw=gridDraw;
+ gridDraw=function(){originalDraw();if(tab==='pred'){
+   gridLayer.eachLayer(l=>{if(typeof l.on!=='function'||typeof l.getBounds!=='function')return;
+     l.options.interactive=true;
+     l.on('click',e=>{if(e.originalEvent&&L.DomEvent)L.DomEvent.stopPropagation(e.originalEvent);showGridDetail(e.latlng.lat,e.latlng.lng)});
+   });
+   const legend=document.getElementById('legend');if(legend){legend.innerHTML+=' · <span style="color:#56be70">● alto</span> <span style="color:#f1c45b">● medio</span> <span style="color:#d87965">● bajo</span> <span style="color:#8c9b95">● sin datos</span>'}
+ }refresh()};
+ const oldDetail=showGridDetail;
+ showGridDetail=function(lat,lon){oldDetail(lat,lon);if(tab!=='pred')return;
+   const c=cellFor(lat,lon),el=document.getElementById('detail');if(!el)return;
+   const n=c?gridScore(c):null;const note=document.createElement('p');note.className='grid-note';note.textContent='Este punto representa el centro de una cuadrícula meteorológica, no un setal comprobado. Comprueba caminos, propiedad privada, restricciones de recolección y seguridad antes de desplazarte.';el.appendChild(note);
+   if(c&&Number.isFinite(n)){const a=document.createElement('a');a.id='vsRoute';a.href=appleMaps(c.t[1],c.t[2]);a.target='_blank';a.rel='noopener noreferrer';a.textContent='📍 Ver sector en Mapas del iPhone';el.appendChild(a)}
+ };
+ // Alpha 4: refresh() ya se ejecuta desde gridDraw y moveend; se elimina el envoltorio de renderMap.
+ map.on('moveend',()=>{if(!list.hidden)refresh()});
+ refresh();
+})();
+
+</script>
 
 <style>
 #vsForestPred{width:100%;margin-top:9px;background:#365c42;border-color:#81a78b;min-height:44px}
 #vsForestPredStatus{margin:7px 0 12px}
 .vs-evidence{padding:9px 11px;background:#214b36;border-radius:9px;margin:9px 0;font-size:12px;line-height:1.6}
 </style>
-<script src="./src/legacy/part-15.js"></script>
+<script>
+
+/* v3.1: consulta voluntaria de OSM y transparencia de lluvia + evidencia por celda. */
+(function(){
+ if(typeof gridScore!=='function'||typeof map==='undefined')return;
+ document.addEventListener('click',async e=>{
+  if(e.target?.id!=='vsForestPred')return;
+  const btn=e.target;btn.disabled=true;btn.textContent='🌳 Consultando bosques…';
+  try{if(typeof window.vsLoadForests!=='function')throw Error('El cargador de bosques no está disponible. Recarga la página.');const loaded=await window.vsLoadForests();if(loaded&&typeof gridDraw==='function')gridDraw()}catch(err){console.error('Bosques OSM',err);const status=document.getElementById('vsForestPredStatus');if(status)status.textContent='❌ Error al procesar bosques: '+String(err.message||err)}
+  finally{btn.disabled=false;btn.textContent='🌳 Cruzar con bosques OSM visibles'}
+ });
+ const oldShow=showGridDetail;
+ showGridDetail=function(lat,lon){oldShow(lat,lon);if(tab!=='pred')return;
+  const c=cellFor(lat,lon),box=document.getElementById('detail');if(!box)return;
+  const rain=rainBefore(c.t),ev=forestEvidence(c),el=document.createElement('div');el.className='vs-evidence';
+  el.textContent='🌧️ Lluvia acumulada ('+rainWindow+' días): '+(rain===null?'sin datos completos':rain.toFixed(1)+' mm')+' · Open-Meteo, datos modelizados. 🌳 Hábitat: '+ev.reason+' · OpenStreetMap, cobertura parcial. Índice orientativo; no señala setales ni garantiza accesos.';
+  box.appendChild(el);
+ };
+})();
+
+</script>
 <style>
 #vsMfeStatus{margin:8px 0;padding:10px;background:#234737;border-radius:10px;font-size:12px;line-height:1.5}
 </style>
-<script src="./src/legacy/part-16.js"></script>
+<script>
+
+/* v3.1: official MFE polygon evidence only when verified taxon names are available.
+   No unverified MFE numeric codes are mapped to species. */
+(function(){
+ if(typeof forestEvidence!=='function'||typeof insidePolygon!=='function'||typeof mfeFeatures==='undefined')return;
+ const oldEvidence=forestEvidence;
+ const habitat={0:['roble','castano'],1:['pino'],2:['roble','castano'],3:[],4:['encina','roble'],5:['roble','pino','castano'],9:[],10:['roble','castano']};
+ const samples=c=>{const b=c.bounds,out=[];for(const dy of [.2,.5,.8])for(const dx of [.2,.5,.8])out.push([b[0][1]+(b[1][1]-b[0][1])*dx,b[0][0]+(b[1][0]-b[0][0])*dy]);return out};
+ function officialEvidence(c){
+   if(!mfeFeatures.length)return null;
+   const wants=habitat[selected]||['roble','pino','castano'];
+   if(!wants.length)return {state:'neutral',source:'MFE25',reason:'Especie con hábitat variado: sin bonificación forestal'};
+   let matched=0,identified=0;
+   for(const point of samples(c)){
+     const kinds=new Set();
+     for(const f of mfeFeatures){if(insidePolygon(point,f.geometry))kinds.add(f.properties._veraKind)}
+     if(kinds.size){identified++;if([...kinds].some(k=>wants.includes(k)))matched++}
+   }
+   if(matched)return {state:'match',matched,identified,source:'MFE25',reason:'MFE25: '+matched+'/9 muestras con especie compatible'};
+   if(identified)return {state:'different',matched:0,identified,source:'MFE25',reason:'MFE25: '+identified+'/9 muestras identificadas, ninguna compatible'};
+   return {state:'unknown',source:'MFE25',reason:'MFE25 disponible, sin especies identificadas en las muestras'};
+ }
+ forestEvidence=function(c){const official=officialEvidence(c);if(official&&official.state!=='unknown')return official;const osm=oldEvidence(c);return {...osm,source:'OpenStreetMap',reason:official&&osm.state==='unknown'?'MFE25 y OSM: sin especies identificadas en las muestras':osm.reason}};
+ const oldImport=importMfeGeojson;
+ importMfeGeojson=function(obj,filename){const result=oldImport(obj,filename);if(typeof gridDraw==='function')gridDraw();return result};
+ const oldDetail=showGridDetail;
+ showGridDetail=function(lat,lon){oldDetail(lat,lon);if(tab!=='pred')return;
+   const c=cellFor(lat,lon),ev=forestEvidence(c),root=document.getElementById('detail');if(!root)return;
+   const block=document.createElement('p');block.id='vsMfeStatus';
+   block.textContent='🌳 Fuente forestal usada en el índice: '+ev.source+'. '+ev.reason+'. '+(mfeFeatures.length?'Polígonos MFE con taxón reconocido: '+mfeFeatures.length+'.':'Aún no se han cargado polígonos MFE25 interpretables; la capa WMS solo se muestra visualmente.');
+   root.appendChild(block);
+ };
+})();
+
+</script>
 
 <style>
 .vs-explain{margin:12px 0;padding:12px;border:1px solid #6d927b;border-radius:12px;background:#18382c;color:#f3f7f0}
@@ -153,7 +1135,49 @@ html,body{height:100%;overscroll-behavior:none}button,select,input{touch-action:
 .vs-explain dt{color:#d6e6d9}.vs-explain dd{margin:0;font-weight:650;text-align:right}
 .vs-explain .vs-warning{border-top:1px solid #567362;padding-top:8px;color:#f1dfad}
 </style>
-<script src="./src/legacy/part-17.js"></script>
+<script>
+
+/* v3.1: trazabilidad de la puntuación, no nueva predicción ni probabilidad. */
+(function(){
+ if(typeof gridScore!=='function'||typeof showGridDetail!=='function'||typeof gridCells==='undefined')return;
+ function label(n){return n>=65?'Alto':n>=40?'Intermedio':'Bajo'}
+ function explain(c){
+  const s=species[selected],d=daily(c.t),rain=rainBefore(c.t),alt=c.t[3],ev=forestEvidence(c),n=gridScore(c);
+  if(n===null||!d||rain===null||!Number.isFinite(alt))return null;
+  const temp=(d.max+d.min)/2;
+  const base=32,rainBonus=Math.min(35,rain/(s.rain*2)*35),tempPenalty=Math.abs(temp-s.temp)*2.5,altPenalty=(alt<s.min||alt>s.max)?16:0;
+  const forestAdjustment=ev.state==='match'?Math.min(18,6+ev.matched*2):ev.state==='different'?-8:0;
+  return {s,d,rain,alt,ev,n,temp,base,rainBonus,tempPenalty,altPenalty,forestAdjustment};
+ }
+ const previous=showGridDetail;
+ showGridDetail=function(lat,lon){
+  previous(lat,lon);
+  if(tab!=='pred')return;
+  const c=cellFor(lat,lon),v=explain(c),el=document.getElementById('detail');if(!el)return;
+  const section=document.createElement('section');section.className='vs-explain';
+  const title=document.createElement('h3');title.textContent='🔎 ¿Por qué este color?';section.appendChild(title);
+  const paragraph=t=>{const p=document.createElement('p');p.textContent=t;section.appendChild(p)};
+  if(!v){paragraph('No hay suficientes datos meteorológicos y de altitud para justificar una puntuación. Esta zona debe mostrarse como sin datos.');el.appendChild(section);return}
+  paragraph('Índice '+v.n+'/100 ('+label(v.n)+'). Escala heurística experimental: no es un porcentaje de probabilidad de encontrar setas.');
+  const dl=document.createElement('dl');
+  function metric(k,value){const dt=document.createElement('dt'),dd=document.createElement('dd');dt.textContent=k;dd.textContent=value;dl.append(dt,dd)}
+  metric('Lluvia previa ('+rainWindow+' días)',v.rain.toFixed(1)+' mm');
+  metric('Aporte por lluvia','+'+v.rainBonus.toFixed(1)+' puntos');
+  metric('Temperatura media estimada',v.temp.toFixed(1)+' °C');
+  metric('Penalización térmica','−'+v.tempPenalty.toFixed(1)+' puntos');
+  metric('Altitud de la celda',Math.round(v.alt)+' m');
+  metric('Penalización por altitud','−'+v.altPenalty.toFixed(0)+' puntos');
+  metric('Bosque: ajuste', (v.forestAdjustment>=0?'+':'')+v.forestAdjustment+' puntos');
+  section.appendChild(dl);
+  paragraph('Evidencia forestal: '+v.ev.reason+'. Fuente disponible: '+(typeof verifiedForestData!=='undefined'&&verifiedForestData?'cartografía forestal importada / OSM según cobertura':'OpenStreetMap o datos importados, si se han cargado')+'.');
+  const warning=document.createElement('p');warning.className='vs-warning';
+  warning.textContent='Fiabilidad limitada: cuadrícula regional (~8–12 km), lluvia modelizada y cartografía forestal incompleta o variable. No se ha validado este índice con observaciones de fructificación. El color no verifica accesos ni permisos.';
+  section.appendChild(warning);
+  const route=el.querySelector('#vsRoute');if(route)el.insertBefore(section,route);else el.appendChild(section);
+ };
+})();
+
+</script>
 
 <style>
 #vsModeControl{position:absolute;z-index:695;top:12px;left:68px;background:#143a2bef;color:#f4f7f1;border:1px solid #64866e;border-radius:12px;padding:6px 9px;box-shadow:0 3px 12px #0003}
@@ -169,9 +1193,99 @@ html,body{height:100%;overscroll-behavior:none}button,select,input{touch-action:
 .vs-best-list{padding:10px 12px;background:#18382c;border:1px solid #6d927b;border-radius:12px;margin:10px 0;font-size:12px;color:#f3f7f0}
 .vs-best-list p{margin:5px 0}
 </style>
-<script src="./src/legacy/part-18.js"></script>
+<script>
+
+/* v3.5: estacionalidad aplicada a todas las puntuaciones, también a rankings. */
+(function(){
+ if(typeof gridScore!=='function'||typeof CAT_SPECIES==='undefined')return;
+ const beforeSeason=gridScore;
+ const caps=[20,45,75,100];
+ function predictionMonth(){const d=new Date();d.setDate(d.getDate()+dateOffset);return d.getMonth()}
+ function seasonInfo(i){const m=predictionMonth(),name=species[i]?.name;
+  const cat=CAT_SPECIES.find(x=>x.scientific===name);
+  if(!cat||!Array.isArray(cat.levels)||cat.levels.length!==12)return null;
+  const level=cat.levels[m];if(!Number.isInteger(level)||level<0||level>=caps.length)return null;return {month:m,level,cap:caps[level],name:['fuera de temporada habitual','aparición ocasional','temporada secundaria','temporada principal'][level]};
+ }
+ gridScore=function(c){const raw=beforeSeason(c);if(!Number.isFinite(raw))return null;
+  const season=seasonInfo(selected);return season?Math.min(raw,season.cap):raw;
+ };
+ const oldDetail=showGridDetail;
+ showGridDetail=function(lat,lon){oldDetail(lat,lon);if(tab!=='pred')return;
+  const el=document.getElementById('detail'),info=seasonInfo(selected);if(!el||!info)return;
+  const p=document.createElement('p');p.className='vs-season-note';
+  p.textContent='📅 Estacionalidad de '+species[selected].short+': '+info.name+'. Tope estacional del índice: '+info.cap+'/100. Se aplica a la fecha elegida y a la comparación de todas las especies. Calendario orientativo para la zona; puede variar según el año, la altitud y las lluvias.';
+  el.appendChild(p);
+ };
+ window.veraSeasonForTest=undefined;
+})();
+
+</script>
 <style>.vs-season-note{padding:10px 12px;border:1px solid #91a77e;border-radius:10px;background:#213b30;color:#f2f5e9;font-size:12px;line-height:1.5}</style>
-<script src="./src/legacy/part-19.js"></script>
+<script>
+
+/* v3.3: modos Mi especie / Todas las setas. Índice heurístico, no probabilidad. */
+(function(){
+ if(typeof gridDraw!=='function'||typeof gridScore!=='function'||typeof species==='undefined')return;
+ const labels=L.layerGroup().addTo(map);
+ const baseGridScore=gridScore;
+ // Caché efímera: solo válida hasta el siguiente redibujado.
+ let rankingCache=new WeakMap();
+ let viewMode='mine';
+ const modeControl=document.createElement('div');
+ modeControl.id='vsModeControl';
+ modeControl.innerHTML='<label for="vsModeSelect">Mostrar favorabilidad</label><select id="vsModeSelect" aria-label="Modo de favorabilidad"><option value="mine">Mi especie</option><option value="all">Todas las setas</option></select>';
+ document.getElementById('mapWrap').appendChild(modeControl);
+ const modeSelect=modeControl.querySelector('select');
+ modeSelect.onchange=()=>{viewMode=modeSelect.value==='all'?'all':'mine';gridDraw();};
+ gridScore=function(c){if(viewMode==='mine'||tab!=='pred')return baseGridScore(c);const r=rankings(c);return r.length?r[0].n:null;};
+ const safeSpecies=species.map((s,i)=>i).filter(i=>!/t[oó]xic|venenos|muscaria|phalloides|pantherina/i.test(species[i].name+' '+species[i].short));
+ function rankings(c){
+  if(!c)return [];
+  if(rankingCache.has(c))return rankingCache.get(c);
+  const previous=selected,arr=[];
+  try{for(const i of safeSpecies){selected=i;const n=baseGridScore(c);if(Number.isFinite(n))arr.push({i,n})}}
+  finally{selected=previous}
+  arr.sort((a,b)=>b.n-a.n);rankingCache.set(c,arr);return arr;
+ }
+ function redrawLabels(){
+  labels.clearLayers();if(tab!=='pred')return;
+  const zoom=map.getZoom();if(zoom<10)return;
+  // Beta 9: solo calcular rankings y etiquetas para celdas dentro de la vista.
+  const visible=map.getBounds().pad(.10);
+  for(const c of gridCells){
+   const b=c.bounds;
+   if(b[0][0]>visible.getNorth()||b[1][0]<visible.getSouth()||b[0][1]>visible.getEast()||b[1][1]<visible.getWest())continue;
+   // En 'Mi especie' no se necesitan rankings salvo para el detalle visible al ampliar.
+   const current=viewMode==='all'?null:baseGridScore(c);
+   const rank=(viewMode==='all'||zoom>=12)?rankings(c):[];
+   const best=rank[0];
+   const score=viewMode==='all'?(best?.n??null):current;
+   const name=viewMode==='all'?(best?species[best.i].short:'Sin datos'):species[selected].short;
+   const center=[(c.bounds[0][0]+c.bounds[1][0])/2,(c.bounds[0][1]+c.bounds[1][1])/2];
+   const html=Number.isFinite(score)?'<div class="vs-cell-label"><div class="vs-cell-pct">'+score+'%*</div><div class="vs-cell-name">🍄 '+esc(name)+'</div>'+(zoom>=12?'<div class="vs-cell-sub">'+(viewMode==='all'?'Mejor índice':best?'Mejor: '+best.n+'/100':'Mi especie')+'</div>':'')+'</div>':'<div class="vs-cell-label vs-empty">Sin datos</div>';
+   L.marker(center,{icon:L.divIcon({className:'vs-cell-icon',html,iconSize:[102,54],iconAnchor:[51,27]}),interactive:false,keyboard:false}).addTo(labels);
+  }
+ }
+ const oldDraw=gridDraw;
+ gridDraw=function(){rankingCache=new WeakMap();modeControl.style.display=tab==='pred'?'block':'none';oldDraw();redrawLabels();if(tab==='pred'){
+  const legend=document.getElementById('legend');if(legend){if(viewMode==='all')legend.innerHTML=legend.innerHTML.replace('🍄 '+esc(species[selected].short)+' ·','🍄 Todas las setas ·');legend.innerHTML+=' · 📅 Índice limitado por temporada de cada especie · <b>%* = '+(viewMode==='all'?'mejor índice entre las especies':'favorabilidad de la especie seleccionada')+'</b> · 🍄 = especie con mayor índice (no probabilidad real)';}
+ }};
+ const oldDetail=showGridDetail;
+ showGridDetail=function(lat,lon){oldDetail(lat,lon);if(tab!=='pred')return;
+  const c=cellFor(lat,lon),rank=rankings(c),el=document.getElementById('detail');if(!el)return;
+  const block=document.createElement('section');block.className='vs-best-list';
+  const mode=document.createElement('p');mode.textContent=viewMode==='all'?'Modo Todas las setas: el color y porcentaje corresponden a la especie mejor puntuada, no a una probabilidad de hallazgo.':'Modo Mi especie: el color y porcentaje corresponden a '+species[selected].name+'.';block.appendChild(mode);
+  const h=document.createElement('strong');h.textContent='🍄 Especies con condiciones más favorables';block.appendChild(h);
+  if(!rank.length){const p=document.createElement('p');p.textContent='No hay datos suficientes para comparar especies.';block.appendChild(p)}
+  for(const item of rank.slice(0,3)){const p=document.createElement('p');p.textContent=species[item.i].name+' · '+item.n+'/100 de favorabilidad';block.appendChild(p)}
+  const warning=document.createElement('p');warning.textContent='* Porcentaje del índice experimental, NO probabilidad de presencia. No implica que haya setas ni que sean seguras para consumo.';block.appendChild(warning);
+  el.appendChild(block);
+ };
+ map.on('zoomend moveend',()=>{rankingCache=new WeakMap();redrawLabels()});
+ redrawLabels();
+})();
+
+</script>
 
 <style>
 .vs-confidence{font:700 10px/1.2 system-ui,-apple-system,sans-serif;color:#fff;background:#20392fe8;border:1px solid #b4c9b8;border-radius:7px;padding:3px 5px;white-space:nowrap;text-align:center;box-shadow:0 1px 3px #0005}
@@ -179,15 +1293,387 @@ html,body{height:100%;overscroll-behavior:none}button,select,input{touch-action:
 .vs-confidence-detail{padding:11px 12px;margin:10px 0;border:1px solid #829c88;border-radius:11px;background:#18382c;color:#f1f5ef;font-size:12px;line-height:1.5}
 .vs-confidence-detail strong{font-size:13px}.vs-confidence-detail ul{margin:7px 0;padding-left:19px}.vs-confidence-detail p{margin:6px 0}
 </style>
-<script src="./src/legacy/part-20.js"></script>
-<script src="./src/map/visualGrid.js"></script>
-<script src="./src/legacy/part-21.js"></script>
+<script>
 
-<script src="./src/legacy/part-22.js"></script>
+/* v3.6: confidence in input coverage, NOT probability or accuracy of the mushroom model. */
+(function(){
+ if(typeof gridDraw!=='function'||typeof showGridDetail!=='function'||typeof gridCells==='undefined')return;
+ const layer=L.layerGroup().addTo(map);
+ function confidence(c){
+  if(!c||!c.t)return {level:'Baja',weatherOK:false,altitudeOK:false,forestOK:false,source:'Sin celda regional',issues:['No hay una cuadrícula regional válida para esta ubicación.']};
+  const d=daily(c.t),rain=rainBefore(c.t),alt=c.t[3];
+  const weatherOK=!!d&&Number.isFinite(d.max)&&Number.isFinite(d.min)&&Number.isFinite(rain);
+  const altitudeOK=Number.isFinite(alt);
+  // The underlying grid is regional and unvalidated, so do not present 'high confidence'.
+  let source='Sin vegetación identificada',forestOK=false,official=false;
+  if(typeof mfeFeatures!=='undefined'&&mfeFeatures.length){
+   const ev=forestEvidence(c);
+   if(ev.source==='MFE25'&&['match','different'].includes(ev.state)){
+    official=true;forestOK=true;source='MFE25 vectorial importado';
+   }
+  }
+  if(!forestOK&&typeof forestData!=='undefined'&&forestData){
+   const ev=forestEvidence(c);
+   if(['match','different'].includes(ev.state)){forestOK=true;source='OpenStreetMap (cobertura parcial)'}
+  }
+  const issues=[];
+  if(!weatherOK)issues.push('Faltan temperatura o lluvia acumulada completas para la fecha seleccionada.');
+  if(!altitudeOK)issues.push('No hay altitud válida para la celda.');
+  if(!forestOK)issues.push('No se ha identificado vegetación arbórea para esta celda.');
+  else if(!official)issues.push('La identificación forestal procede de OSM, con cobertura incompleta.');
+  if(weatherOK&&altitudeOK)issues.push('Meteorología modelizada y resolución regional (~8–12 km), no mediciones en el setal.');
+  const level=(!weatherOK||!altitudeOK)?'Baja':official?'Media':'Baja';
+  return {level,weatherOK,altitudeOK,forestOK,source,issues};
+ }
+ function redraw(){
+  layer.clearLayers();if(tab!=='pred'||map.getZoom()<11)return;
+  for(const c of gridCells){
+   if(!c?.bounds||!map.getBounds().intersects(L.latLngBounds(c.bounds)))continue;
+   const q=confidence(c),b=c.bounds;
+   const lat=b[1][0]-(b[1][0]-b[0][0])*.12,lon=b[0][1]+(b[1][1]-b[0][1])*.14;
+   const html='<div class="vs-confidence">Datos: '+q.level+'</div>';
+   L.marker([lat,lon],{icon:L.divIcon({className:'vs-confidence-icon',html,iconSize:[94,22],iconAnchor:[0,0]}),interactive:false,keyboard:false}).addTo(layer);
+  }
+ }
+ const oldDraw=gridDraw;
+ gridDraw=function(){oldDraw();redraw();if(tab==='pred'){
+  const el=document.getElementById('legend');if(el)el.innerHTML+=' · Datos: baja/media = cobertura de fuentes, no certeza de hallar setas';
+ }};
+ const oldDetail=showGridDetail;
+ showGridDetail=function(lat,lon){oldDetail(lat,lon);if(tab!=='pred')return;
+  const c=cellFor(lat,lon),q=confidence(c),el=document.getElementById('detail');if(!el)return;
+  const section=document.createElement('section');section.className='vs-confidence-detail';
+  const h=document.createElement('strong');h.textContent='🛡️ Confianza en los datos: '+q.level;section.appendChild(h);
+  const p=document.createElement('p');p.textContent='Meteorología: '+(q.weatherOK?'completa':'incompleta')+' · Altitud: '+(q.altitudeOK?'disponible':'no disponible')+' · Bosque: '+q.source+'.';section.appendChild(p);
+  const ul=document.createElement('ul');for(const reason of q.issues){const li=document.createElement('li');li.textContent=reason;ul.appendChild(li)}section.appendChild(ul);
+  const note=document.createElement('p');note.textContent='Esta etiqueta evalúa la cobertura de los datos de entrada, NO la exactitud del índice ni la probabilidad de encontrar setas. El modelo no está calibrado con hallazgos reales.';section.appendChild(note);
+  el.appendChild(section);
+ };
+ map.on('zoomend',redraw);
+ window.veraConfidenceForTest=confidence;
+ redraw();
+})();
+
+</script>
+<script>
+/* VeraSetas 4.0 alpha 5: renderizado visual sin consultas meteorológicas. */
+(function(){
+ 'use strict';
+ const intersects=(a,b)=>a[0][0]<=b.getNorth()&&a[1][0]>=b.getSouth()&&a[0][1]<=b.getEast()&&a[1][1]>=b.getWest();
+ function draw({map,L,gridCells,gridLayer,divisions,gridScore,markerColor,showGridDetail}){
+  if(!map||!gridLayer||!Number.isInteger(divisions)||divisions<2||divisions>8)return;
+  // Elimina solo las 64 casillas originales antes de crear las subdivisiones.
+  for(const layer of gridLayer.getLayers())if(layer instanceof L.Rectangle)gridLayer.removeLayer(layer);
+  const visible=map.getBounds().pad(.15);
+  const fragment=[];
+  for(const c of gridCells){
+   if(!c?.bounds||!intersects(c.bounds,visible))continue;
+   const raw=gridScore(c),score=Number.isFinite(raw)?raw:null,color=markerColor(score),b=c.bounds;
+   const dy=(b[1][0]-b[0][0])/divisions,dx=(b[1][1]-b[0][1])/divisions;
+   for(let y=0;y<divisions;y++)for(let x=0;x<divisions;x++){
+    const south=b[0][0]+y*dy,west=b[0][1]+x*dx;
+    const bounds=[[south,west],[south+dy,west+dx]];
+    if(!intersects(bounds,visible))continue;
+    const rect=L.rectangle(bounds,{color:'#152b22',weight:.5,fillColor:color,fillOpacity:score===null?.20:.67,interactive:true});
+    rect.on('click',()=>showGridDetail(south+dy/2,west+dx/2));
+    fragment.push(rect);
+   }
+  }
+  for(const layer of fragment)gridLayer.addLayer(layer);
+ }
+ window.VeraSetasVisualGrid=Object.freeze({draw});
+})();
+
+</script>
+<script>
+
+// v3.7: smaller visual grid, explicitly reusing the original regional weather cell.
+(function(){
+ if(typeof gridDraw!=='function'||typeof gridCells==='undefined'||typeof gridLayer==='undefined')return;
+ let divisions=2;
+ let automatic=true;
+ const control=document.createElement('div');control.id='vsGridSize';
+ control.style.cssText='position:absolute;z-index:800;top:114px;right:10px;background:#17382deF;color:white;padding:7px 9px;border-radius:9px;box-shadow:0 2px 9px #0005;font:12px system-ui;max-width:155px';
+ control.innerHTML='<label for="vsGridSizeSelect" style="display:block;margin-bottom:3px">Tamaño visual de casillas</label><select id="vsGridSizeSelect" style="width:100%;padding:5px;background:white;color:#17382d;border-radius:5px"><option value="1">Original (~8–12 km)</option><option value="2" selected>Mitad (~4–6 km)</option><option value="4">Cuarto (~2–3 km)</option><option value="8">Octavo (~1–1,5 km)</option></select><label style="display:flex;align-items:center;gap:5px;margin-top:5px"><input id="vsAutoGrid" type="checkbox" checked> Automático al acercar</label><small style="display:block;margin-top:4px;line-height:1.3">Mismos datos regionales; no mayor precisión.</small>';
+ const wrap=document.getElementById('mapWrap');if(!wrap)return;wrap.appendChild(control);
+ control.querySelector('select').onchange=e=>{automatic=false;control.querySelector('#vsAutoGrid').checked=false;divisions=Number(e.target.value);scheduleGridDraw()};
+ control.querySelector('#vsAutoGrid').onchange=e=>{automatic=e.target.checked;if(automatic)updateGridZoom()};
+ function updateGridZoom(){if(!automatic||typeof map?.getZoom!=='function')return;const z=map.getZoom(),next=z>=14?8:z>=12?4:z>=10?2:1;if(next!==divisions){divisions=next;control.querySelector('select').value=String(next);scheduleGridDraw()}}
+ // Agrupa los eventos de zoom y desplazamiento en un solo redibujado por fotograma.
+ let pendingFrame=0;
+ function scheduleGridDraw(){
+  if(pendingFrame)return;
+  pendingFrame=requestAnimationFrame(()=>{pendingFrame=0;if(tab==='pred')gridDraw()});
+ }
+ map.on('zoomend',updateGridZoom);
+ map.on('moveend',()=>{if(tab==='pred'&&divisions>1)scheduleGridDraw()});
+ const oldDraw=gridDraw;
+ gridDraw=function(){
+  oldDraw();control.style.display=tab==='pred'?'block':'none';
+  if(tab!=='pred'||divisions===1)return;
+  // Un solo componente para dibujar la subdivisión visible.
+  window.VeraSetasVisualGrid.draw({map,L,gridCells,gridLayer,divisions,gridScore,markerColor,showGridDetail});
+  const missing=gridCells.filter(c=>gridScore(c)===null).length;
+  const legend=document.getElementById('legend');
+  if(legend&&missing&&!legend.textContent.includes('zonas sin índice'))legend.innerHTML+=' · ⚠ '+missing+' zonas sin índice (faltan datos)';
+  if(legend&&!legend.textContent.includes('Casillas visuales ~'))legend.innerHTML+=' · Casillas visuales ~'+(divisions===2?'4–6':divisions===4?'2–3':'1–1,5')+' km; <b>datos regionales repetidos, no mayor precisión</b>';
+
+ };
+ const oldDetail=showGridDetail;
+ showGridDetail=function(lat,lon){oldDetail(lat,lon);if(tab!=='pred'||divisions===1)return;
+  const el=document.getElementById('detail');if(!el)return;
+  const note=document.createElement('p');note.className='grid-note';note.textContent='Casilla visual subdividida: el porcentaje, la lluvia y la temperatura proceden de la cuadrícula regional original (~8–12 km). Las subdivisiones no son predicciones independientes.';el.appendChild(note);
+ };
+ updateGridZoom();gridDraw();
+})();
+
+</script>
+
+<script>
+
+/* v3.8: local, sub-cell terrain and forest evidence. No invented source data. */
+(function(){
+ if(typeof gridDraw!=='function'||typeof gridCells==='undefined')return;
+ const tileData=new Map();let loaded=false;let detailMode=false;
+ const ctrl=document.createElement('div');ctrl.id='vsHighRes';ctrl.style.cssText='position:absolute;z-index:810;top:260px;right:10px;background:#17382def;color:#fff;padding:8px;border-radius:9px;font:12px system-ui;max-width:180px;box-shadow:0 2px 9px #0005';
+ ctrl.innerHTML='<b>Relieve y bosque detallados</b><div id="vsHrStatus" style="margin:5px 0">Sin datos locales de alta resolución</div><label style="display:block;cursor:pointer;background:#fff;color:#17382d;padding:5px;border-radius:5px;text-align:center">Cargar datos GeoJSON<input id="vsHrInput" type="file" accept=".geojson,.json,application/geo+json" style="display:none"></label><small style="display:block;margin-top:5px">Solo se corrigen las casillas con datos reales. Sin datos: índice regional.</small>';
+ const wrap=document.getElementById('mapWrap');if(!wrap)return;wrap.appendChild(ctrl);
+ const status=ctrl.querySelector('#vsHrStatus');
+ function key(lat,lon){return lat.toFixed(5)+','+lon.toFixed(5)}
+ function center(c,y,x,n){const b=c.bounds;return [b[0][0]+(y+.5)*(b[1][0]-b[0][0])/n,b[0][1]+(x+.5)*(b[1][1]-b[0][1])/n]}
+ function forestType(k){let t=String(k||'').toLowerCase();if(/casta|castanea/.test(t))return 'castano';if(/pino|pinus/.test(t))return 'pino';if(/quercus ilex|encina/.test(t))return 'encina';if(/quercus suber|alcornoque/.test(t))return 'encina';if(/quercus|roble|rebollo/.test(t))return 'roble';if(/populus|chopo|alamo/.test(t))return 'chopo';return null}
+ function speciesHabitat(){const name=String(species[selected]?.short||species[selected]?.name||'').toLowerCase();if(/aereus/.test(name))return ['encina','roble'];if(/pinophilus|n.scalo/.test(name))return ['pino'];if(/reticulatus|edulis|trompeta|cornucopioides/.test(name))return ['roble','castano'];if(/chopo|aegerita/.test(name))return ['chopo'];return []}
+ function adjusted(c,lat,lon,info){if(!c?.t||!info)return null;const base=gridScore(c);if(!Number.isFinite(base))return null;let n=base;
+ if(Number.isFinite(info.elevation)&&Number.isFinite(c.t[3])){const sp=species[selected];const was=c.t[3]<sp.min||c.t[3]>sp.max,now=info.elevation<sp.min||info.elevation>sp.max;n+=(was&&!now?16:!was&&now?-16:0)}
+ const wanted=speciesHabitat(),kind=forestType(info.forest);
+ if(kind&&wanted.length)n+=wanted.includes(kind)?6:-5;
+ return Math.max(0,Math.min(100,Math.round(n)))}
+ function ingest(obj){if(obj?.type!=='FeatureCollection'||!Array.isArray(obj.features))throw Error('Se requiere GeoJSON FeatureCollection');if(obj.features.length>20000)throw Error('Archivo demasiado grande: máximo 20.000 entidades');let count=0;
+ for(const f of obj.features){if(f.geometry?.type!=='Point')continue;const q=f.geometry.coordinates,p=f.properties||{};if(!Array.isArray(q)||!Number.isFinite(q[0])||!Number.isFinite(q[1])||Math.abs(q[0])>180||Math.abs(q[1])>90)continue;const elevation=p.elevation==null?NaN:Number(p.elevation),forest=typeof p.forest==='string'?p.forest:null;if(!Number.isFinite(elevation)&&!forest)continue;tileData.set(key(q[1],q[0]),{elevation:Number.isFinite(elevation)?elevation:null,forest,source:p.source||'Archivo local'});count++}
+ if(!count)throw Error('No hay puntos válidos con elevation o forest');loaded=true;status.textContent=count+' puntos detallados importados';gridDraw();return count}
+ ctrl.querySelector('#vsHrInput').onchange=async e=>{const file=e.target.files?.[0];if(!file)return;try{const count=ingest(JSON.parse(await file.text()));alert(count+' puntos importados. La malla solo cambia donde hay muestras coincidentes.')}catch(err){alert('Archivo no compatible: '+err.message)}e.target.value=''};
+ // Load only if a verified, processed data file is actually deployed.
+ fetch('./data/terreno_vegetacion.geojson',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('sin archivo');return r.json()}).then(ingest).catch(()=>{});
+ const previous=gridDraw;
+ gridDraw=function(){previous();ctrl.style.display=tab==='pred'?'block':'none';if(tab!=='pred'||!loaded)return;
+ const sel=document.getElementById('vsGridSizeSelect');const divisions=Number(sel?.value||2);if(divisions===1)return;
+ // El renderizador dibuja solo subcasillas visibles: localizar cada muestra por su centro.
+ // Nunca se presupone que hay 64 × divisions² rectángulos ni un orden fijo.
+ const samples=new Map();
+ for(const c of gridCells)for(let y=0;y<divisions;y++)for(let x=0;x<divisions;x++){
+  const [lat,lon]=center(c,y,x,divisions),info=tileData.get(key(lat,lon));
+  if(info)samples.set(key(lat,lon),{c,lat,lon,info});
+ }
+ let applied=0;
+ for(const r of gridLayer.getLayers()){
+  if(!(r instanceof L.Rectangle))continue;
+  const ll=r.getBounds().getCenter(),sample=samples.get(key(ll.lat,ll.lng));
+  if(!sample)continue;
+  const {c,lat,lon,info}=sample,score=adjusted(c,lat,lon,info);
+  if(score===null)continue;
+  r.setStyle({fillColor:markerColor(score),weight:1.1,color:'#f5f3e8'});
+  r.off('click');r.on('click',()=>showGridDetail(lat,lon));applied++;
+ }
+ const legend=document.getElementById('legend');if(legend)legend.innerHTML+=' · '+applied+' casillas con corrección local de relieve/bosque';
+ };
+ const prevDetail=showGridDetail;
+ showGridDetail=function(lat,lon){prevDetail(lat,lon);if(tab!=='pred')return;const info=tileData.get(key(lat,lon));if(!info)return;const c=cellFor(lat,lon),n=adjusted(c,lat,lon,info),el=document.getElementById('detail');if(!el)return;const p=document.createElement('p');p.className='grid-note';p.textContent='Datos locales ('+info.source+'): altitud '+(info.elevation==null?'no disponible':Math.round(info.elevation)+' m')+'; bosque '+(info.forest||'no identificado')+'. Índice ajustado de esta subcasilla: '+(n==null?'sin datos':n+'/100')+'. La lluvia y temperatura siguen siendo regionales. La corrección local es experimental.';el.appendChild(p)};
+ gridDraw();
+})();
+
+</script>
 <style>
 #vsSpeciesLegend{font-size:12px;margin:9px 0;padding:10px;border:1px solid #50755c;border-radius:10px}
 .vs-sp-color{display:inline-block;width:13px;height:13px;border:1px solid #ffffff88;border-radius:3px;vertical-align:middle;margin-right:5px}
 .vs-sp-line{padding:3px 0;display:flex;align-items:center;gap:4px}
 </style>
-<script src="./src/legacy/part-23.js"></script>
-<script type="module" src="./src/main.js"></script></body></html>
+<script>
+
+/* VeraSetas 3.9.3: different colors per identified plant species, not just per forest group. */
+(function(){
+ if(typeof FLORA_GROUPS==='undefined'||typeof forestLayer==='undefined')return;
+ const palette={
+ 'Pino silvestre':'#2775c6','Pino carrasco':'#69b5e2','Pino resinero':'#1b9d9e','Pino piñonero':'#7a83d5','Otros pinos':'#69889b',
+ 'Rebollo':'#248c48','Roble común':'#54c56c','Quejigo':'#a2cc59','Otros robles':'#749e6b',
+ 'Encina':'#a8b83c','Castaño':'#ed963b','Alcornoque':'#c4a064','Haya':'#5dbaa1','Abedul':'#a4d6c3',
+ 'Abeto blanco':'#416d91','Pinsapo':'#754d96','Eucalipto':'#9e75c5',
+ 'Chopo':'#15b4d2','Álamo':'#70d6db','Sauce':'#55aab5','Aliso':'#2a8689','Fresno':'#6ca7a0',
+ 'Sabina albar':'#899c7a','Sabina mora':'#ab9075','Pastizales':'#c8d85c','Prados':'#b9cd67','Herbazales':'#d3cc8e','Jaras':'#b68b77','Matorral de jara':'#9b7567'
+ };
+ const safeColor=(sp,k)=>palette[sp]||FLORA_GROUPS.find(g=>g[0]===k)?.[2]||'#89948e';
+ function styleOSM(f){const k=floraKind(f),sp=floraSpecies(f,k);const c=safeColor(sp,k);return {color:c,fillColor:c,weight:1.4,fillOpacity:.57}}
+ function styleMFE(f){const p=f.properties||{},c=safeColor(p._veraSpecies,p._veraKind);return {color:c,fillColor:c,weight:1.4,fillOpacity:.63}}
+ function update(){if(tab!=='flora')return;
+  forestLayer.setStyle(styleOSM);forestLayer.eachLayer(l=>{const f=l.feature;if(!f)return;const k=floraKind(f),sp=floraSpecies(f,k);l.bindPopup('<b>'+esc(sp||'Especie no identificada')+'</b><br><small>Fuente: OpenStreetMap · cobertura parcial</small>')});
+  if(typeof mfeLayer!=='undefined'){mfeLayer.setStyle(styleMFE)}
+  const panel=document.getElementById('floraGroups');if(panel){panel.querySelectorAll('[data-specgroup]').forEach(input=>{const k=input.dataset.specgroup,group=FLORA_GROUPS.find(g=>g[0]===k),sp=group?.[3]?.[Number(input.dataset.specindex)];if(!sp)return;const label=input.closest('label');if(!label)return;let sw=label.querySelector('.vs-sp-color');if(!sw){sw=document.createElement('span');sw.className='vs-sp-color';input.insertAdjacentElement('afterend',sw)}sw.style.background=safeColor(sp,k)})}
+  const legend=document.getElementById('legend');if(legend){let el=legend.querySelector('#vsSpeciesLegend');if(!el){el=document.createElement('div');el.id='vsSpeciesLegend';legend.appendChild(el)}const active=[];for(const [k,, ,arr] of FLORA_GROUPS){if(!floraActive.has(k))continue;for(const sp of arr)if(floraSelection.get(k)?.has(sp))active.push([sp,safeColor(sp,k)])}el.innerHTML='<b>Colores por especie</b>'+ (active.length?active.map(([sp,c])=>'<div class="vs-sp-line"><span class="vs-sp-color" style="background:'+c+'"></span>'+esc(sp)+'</div>').join(''):'<small>Selecciona una especie para mostrarla.</small>')+'<small>Solo zonas con identificación disponible; no indica presencia en todos los bosques.</small>'}
+ }
+ const priorDraw=drawFlora;drawFlora=function(){priorDraw();update()};
+ const priorVerified=redrawVerifiedForest;redrawVerifiedForest=function(){priorVerified();update()};
+ // Alpha 4: eventos delegados; no se sobrescriben renderPanel ni renderMap.
+ // drawFlora ya ejecuta update() cuando se renderiza la pestaña Flora.
+ document.addEventListener('change',event=>{
+  if(tab==='flora'&&event.target?.closest?.('#floraGroups'))setTimeout(update,0);
+ });
+ update();
+})();
+
+</script>
+<script>
+// src/core/eventBus.js
+/** Bus de eventos tipado por convención; listeners aislados de fallos. */
+function createEventBus(){
+ const listeners=new Map();
+ return Object.freeze({
+  on(type,callback){if(typeof callback!=="function")throw new TypeError("callback");const set=listeners.get(type)||new Set();set.add(callback);listeners.set(type,set);return ()=>{set.delete(callback);if(!set.size)listeners.delete(type)}},
+  emit(type,payload){for(const callback of [...(listeners.get(type)||[])]){try{callback(payload)}catch(error){console.error("VeraSetas EventBus",type,error)}}},
+  clear(){listeners.clear()}
+ });
+}
+const events=createEventBus();
+
+// src/core/state.js
+
+const state={version:'4.0.0-beta.1',online:navigator.onLine,mapZoom:null,visible:!document.hidden,weatherUpdatedAt:null,weatherError:null};
+function getState(){return {...state}}
+function setState(patch){const changed={};for(const [key,value] of Object.entries(patch)){if(state[key]!==value){state[key]=value;changed[key]=value}}if(Object.keys(changed).length)events.emit('state:changed',{changed,state:getState()})}
+
+// src/core/diagnostics.js
+/** Diagnóstico de solo lectura: nunca modifica el cálculo ni provoca peticiones. */
+function installDiagnostics({events,getState}){
+ const recent=[];
+ const record=(type,detail)=>{recent.push({type,at:new Date().toISOString(),detail});if(recent.length>30)recent.shift()};
+ for(const type of ['weather:updated','weather:error','map:zoom','network:online','network:offline'])events.on(type,detail=>record(type,detail));
+ return Object.freeze({snapshot(){const state=getState();return {version:'4.0.0-beta.1',state:{...state},events:recent.map(e=>({...e})),leafletLoaded:!!window.vsLeafletMap,gridLoaded:typeof window.vsGridLoaded==='number'?window.vsGridLoaded:null}}});
+}
+
+// src/qa/runtime.js
+/** Observador de fallos de la Beta 3. No modifica el motor de predicción. */
+function installRuntimeMonitor(){
+ const entries=[];const max=30;
+ function add(type,message){entries.push({at:new Date().toISOString(),type,message:String(message).slice(0,500)});if(entries.length>max)entries.shift()}
+ window.addEventListener('error',e=>add('javascript',e.message||'Error no identificado'));
+ window.addEventListener('unhandledrejection',e=>add('promesa',e.reason?.message||e.reason||'Rechazo no identificado'));
+ return Object.freeze({get errors(){return entries.slice()},clear(){entries.length=0}});
+}
+
+// src/qa/smoke.js
+/** VeraSetas 4.0 beta 1 — pruebas no destructivas; no envían solicitudes. */
+function runSmokeChecks(){
+ const checks=[];
+ const add=(name,ok,detail='')=>checks.push({name,ok:!!ok,detail});
+ const map=window.vsLeafletMap;
+ add('Mapa Leaflet',!!map&&typeof map.getBounds==='function');
+ add('Seis pestañas', ['pred','explore','spots','climate','flora','catalog'].every(t=>!!document.querySelector(`[data-tab="${t}"]`)));
+ add('Panel de controles',!!document.getElementById('panelBody'));
+ add('Leyenda de predicción',!!document.getElementById('legend'));
+ add('Selector de zona',!!document.getElementById('areaSelect'));
+ add('Cuadrícula visual',typeof window.VeraSetasVisualGrid?.draw==='function');
+ add('Almacén meteorológico',typeof window.VeraSetasWeatherStore?.read==='function'&&typeof window.VeraSetasWeatherStore?.cooldownUntil==='function');
+ add('Estado y eventos',!!window.VeraSetas4?.events&&typeof window.VeraSetas4?.getState==='function');
+ add('Datos de flora',!!document.querySelector('[data-tab="flora"]'));
+ add('Catálogo',!!document.querySelector('[data-tab="catalog"]'));
+ const pending=window.VeraSetasWeatherStore?.cooldownUntil?.()||0;
+ const cached=window.VeraSetasWeatherStore?.read?.(16);
+ return {at:new Date().toISOString(),checks,passed:checks.filter(x=>x.ok).length,total:checks.length,
+  weather:{cachedAt:cached?.savedAt||null,cooldownUntil:pending||null,online:navigator.onLine},
+  note:'Pruebas de presencia e integración básica; no comprueban predicción real ni conexión con Open-Meteo.'};
+}
+
+// src/qa/functional.js
+/** Beta 2: comprobación voluntaria de navegación; no solicita datos ni altera setales. */
+async function runFunctionalChecks(){
+ const tabs=['pred','explore','spots','climate','flora','catalog'];
+ const checks=[],previous=document.querySelector('#tabs button.active')?.dataset.tab||'pred';
+ const panel=document.getElementById('panelBody');
+ const overlay=document.getElementById('overlay');
+ const qa=document.getElementById('vsQaPanel');
+ const wasOpen=qa&&!qa.hidden;
+ const capture=[];
+ const onError=e=>capture.push(String(e.message||e.error||'Error desconocido'));
+ const onRejection=e=>capture.push('Promesa: '+String(e.reason?.message||e.reason||'Error desconocido'));
+ window.addEventListener('error',onError);
+ window.addEventListener('unhandledrejection',onRejection);
+ try{
+  for(const tab of tabs){
+   const button=document.querySelector(`#tabs button[data-tab="${tab}"]`);
+   if(!button){checks.push({name:tab,ok:false,detail:'Botón inexistente'});continue}
+   try{
+    button.click();
+    const active=button.classList.contains('active');
+    const title=document.getElementById('panelTitle')?.textContent||'';
+    const content=tab==='catalog'?(document.getElementById('catalogScreen')?.textContent?.trim()||''):(panel?.textContent?.trim()||'');
+    const expected={pred:'Predicción',explore:'EXPLORACIÓN',spots:'Setales',climate:'Clima',flora:'Flora',catalog:'Catálogo'}[tab];
+    const catalogVisible=tab!=='catalog'||(document.getElementById('catalogScreen')&&!document.getElementById('catalogScreen').classList.contains('hidden'));
+    const ok=active&&content.length>0&&catalogVisible&&(tab==='catalog'||title.toLowerCase().includes(expected.toLowerCase())||tab==='spots');
+    checks.push({name:tab,ok,detail:ok?'Panel renderizado':'Título, contenido o pestaña activa incorrectos'});
+   }catch(err){checks.push({name:tab,ok:false,detail:String(err.message||err)})}
+  }
+ }finally{
+  try{document.querySelector(`#tabs button[data-tab="${previous}"]`)?.click()}catch(e){capture.push('Restauración: '+e.message)}
+  if(overlay?.classList.contains('open'))document.getElementById('closePanel')?.click();
+  if(wasOpen&&qa)qa.hidden=false;
+  window.removeEventListener('error',onError);
+  window.removeEventListener('unhandledrejection',onRejection);
+ }
+ return {at:new Date().toISOString(),checks,passed:checks.filter(x=>x.ok).length,total:checks.length,errors:capture,
+  note:'Prueba de navegación y renderizado DOM. No verifica mapas meteorológicos, conectividad, ni compatibilidad completa con Safari.'};
+}
+
+// src/qa/panel.js
+
+
+/** Panel opcional para detectar fallos desde Safari sin alterar los datos. */
+function installQaPanel(){
+ const btn=document.createElement('button');btn.id='vsQaToggle';btn.type='button';btn.textContent='Diagnóstico';
+ btn.setAttribute('aria-label','Abrir diagnóstico de VeraSetas');
+ btn.style.cssText='position:fixed;bottom:80px;left:10px;z-index:1250;padding:8px 10px;font-size:12px;background:#173c2c;color:white;border:1px solid #9dbb9f;border-radius:9px';
+ const panel=document.createElement('section');panel.id='vsQaPanel';panel.hidden=true;
+ panel.style.cssText='position:fixed;left:10px;bottom:125px;z-index:1251;max-width:min(390px,calc(100vw - 20px));max-height:65vh;overflow:auto;background:#102b22;color:#f2f8f2;border:1px solid #9dbb9f;border-radius:12px;padding:14px;box-shadow:0 5px 20px #0009;font:13px system-ui';
+ function render(){const r=runSmokeChecks();panel.replaceChildren();const title=document.createElement('h3');title.textContent=`Diagnóstico · ${r.passed}/${r.total} comprobaciones`;panel.append(title);
+ const status=document.createElement('p');status.textContent=r.weather.cooldownUntil>Date.now()?'Open-Meteo: espera por límite 429 hasta '+new Date(r.weather.cooldownUntil).toLocaleString('es-ES'):r.weather.cachedAt?'Datos guardados: '+new Date(r.weather.cachedAt).toLocaleString('es-ES'):'Sin datos meteorológicos guardados';panel.append(status);
+ const list=document.createElement('ul');list.style.paddingLeft='18px';for(const c of r.checks){const li=document.createElement('li');li.textContent=(c.ok?'✓ ':'✗ ')+c.name;li.style.color=c.ok?'#c8e59d':'#ffb0a0';list.append(li)}panel.append(list);
+ const runtime=window.VeraSetasRuntime?.errors||[];const failures=document.createElement('p');failures.textContent='Errores recientes: '+runtime.length+' (JavaScript y promesas)';panel.append(failures);
+ const note=document.createElement('p');note.textContent=r.note;note.style.fontSize='11px';panel.append(note);
+ const refresh=document.createElement('button');refresh.textContent='Repetir comprobación';refresh.onclick=render;panel.append(refresh);
+ const functional=document.createElement('button');functional.textContent='Probar las 6 pestañas';functional.style.marginLeft='7px';
+ functional.onclick=async()=>{functional.disabled=true;functional.textContent='Comprobando…';
+  try{const result=await runFunctionalChecks();window.VeraSetasLastFunctionalTest=result;
+   const message=document.createElement('p');message.textContent=`Navegación: ${result.passed}/${result.total} pestañas · ${result.errors.length} errores capturados`;
+   message.style.color=result.passed===result.total&&!result.errors.length?'#c8e59d':'#ffb0a0';
+   panel.append(message);
+   for(const check of result.checks){const line=document.createElement('p');line.textContent=(check.ok?'✓ ':'✗ ')+check.name+(check.ok?'':' · '+check.detail);panel.append(line)}
+  }catch(err){const msg=document.createElement('p');msg.textContent='Error de prueba: '+err.message;panel.append(msg)}
+  finally{functional.disabled=false;functional.textContent='Probar las 6 pestañas'}
+ };panel.append(functional);
+ const copy=document.createElement('button');copy.textContent='Copiar informe';copy.style.marginLeft='7px';copy.onclick=()=>{const report=JSON.stringify({...r,runtimeErrors:window.VeraSetasRuntime?.errors||[],functional:window.VeraSetasLastFunctionalTest||null},null,2);if(navigator.clipboard?.writeText)navigator.clipboard.writeText(report).catch(()=>window.prompt('Copia este informe:',report));else window.prompt('Copia este informe:',report)};panel.append(copy);
+ }
+ btn.onclick=()=>{panel.hidden=!panel.hidden;if(!panel.hidden)render()};document.body.append(btn,panel);
+ return {run:runSmokeChecks};
+}
+
+// src/main.js
+
+
+
+
+
+/** Adaptador no invasivo: mantiene el comportamiento 3.9.9 durante la migración. */
+function boot(){
+ document.addEventListener('vs:weather:updated',e=>{setState({weatherUpdatedAt:e.detail.savedAt,weatherError:null});events.emit('weather:updated',e.detail)});
+ document.addEventListener('vs:weather:error',e=>{setState({weatherError:e.detail.message});events.emit('weather:error',e.detail)});
+ const map=window.vsLeafletMap;
+ if(map){setState({mapZoom:map.getZoom()});map.on('zoomend',()=>{const zoom=map.getZoom();setState({mapZoom:zoom});events.emit('map:zoom',{zoom})});map.on('moveend',()=>events.emit('map:move',{bounds:map.getBounds().toBBoxString()}))}
+ window.addEventListener('online',()=>{setState({online:true});events.emit('network:online')});
+ window.addEventListener('offline',()=>{setState({online:false});events.emit('network:offline')});
+ document.addEventListener('visibilitychange',()=>setState({visible:!document.hidden}));
+ // Exposición controlada para diagnóstico de la migración, sin modificar datos ni cálculos.
+ window.VeraSetas4=Object.freeze({version:'4.0.0-beta.22',events,getState,diagnostics:installDiagnostics({events,getState})});
+ window.VeraSetasRuntime=installRuntimeMonitor();
+ window.VeraSetasQA=Object.freeze(installQaPanel());
+ events.emit('app:ready',getState());
+}
+boot();
+
+</script></body></html>
