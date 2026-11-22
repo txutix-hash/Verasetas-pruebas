@@ -507,29 +507,31 @@ let stationsEnabled=false,stationNetwork='AEMET';
 try{stationsEnabled=localStorage.getItem('verasetas_stations_on')==='true';stationNetwork=localStorage.getItem('verasetas_station_network')||'AEMET'}catch{}
 const climateLegend={
  rain:'Precipitación · mm (1 mm = 1 L/m²) · suma del intervalo',
- wind:'Viento máximo diario · km/h · media de máximos del intervalo',
+ wind:'Viento máximo del intervalo · km/h · a 10 m',
+ windMean:'Viento medio del intervalo · km/h · a 10 m',
  hum:'Humedad relativa media diaria · % · media del intervalo'
 };
 function climateValue(c){
  const rows=exploreSeries.get(c.id);if(!rows)return null;
  const chosen=rows.filter(x=>x.date>=dateKey(climateFrom)&&x.date<=dateKey(climateTo));
  if(chosen.length!==climateTo-climateFrom+1)return null;
- const vals=chosen.map(x=>climateLayer==='rain'?x.rain:climateLayer==='wind'?x.windMax:x.hum);
+ const vals=chosen.map(x=>climateLayer==='rain'?x.rain:climateLayer==='wind'?x.windMax:climateLayer==='windMean'?x.wind:x.hum);
  if(vals.some(x=>!Number.isFinite(x)))return null;
+ if(climateLayer==='wind')return Math.max(...vals);
  return climateLayer==='rain'?vals.reduce((a,b)=>a+b,0):vals.reduce((a,b)=>a+b,0)/vals.length;
 }
 function climateColor(v){
  if(v==null)return '#78857e';
  if(climateLayer==='rain')return v>=80?'#1e3a8a':v>=40?'#2563eb':v>=15?'#60a5fa':v>=3?'#bfdbfe':'#eff6ff';
- if(climateLayer==='wind')return v>=45?'#991b1b':v>=30?'#ea580c':v>=15?'#facc15':'#bbf7d0';
+ if(climateLayer.startsWith('wind'))return v>=45?'#991b1b':v>=30?'#ea580c':v>=15?'#facc15':'#bbf7d0';
  return v>=85?'#065f46':v>=70?'#059669':v>=50?'#5eead4':'#fef3c7';
 }
 function renderClimateGrid(){
  gridLayer.clearLayers();layersOverlay.clearLayers();
  for(const c of gridCells){const val=climateValue(c);
  const shape=L.rectangle(c.bounds,{color:'#172d24',weight:.65,fillColor:climateColor(val),fillOpacity:val==null?.22:.67}).addTo(gridLayer);
- shape.on('click',e=>{if(typeof showGridDetail==='function')showGridDetail(c,e.latlng);else if(typeof showCellDetail==='function')showCellDetail(c,e.latlng)});
- shape.bindTooltip(`${c.t[0]}: ${val==null?'sin datos':val.toFixed(1)+(climateLayer==='hum'?' %':climateLayer==='wind'?' km/h':' mm')}`);
+ shape.on('click',e=>{if(typeof showGridDetail==='function')showGridDetail(e.latlng.lat,e.latlng.lng);else if(typeof showCellDetail==='function')showCellDetail(c,e.latlng)});
+ shape.bindTooltip(`${c.t[0]}: ${val==null?'sin datos':val.toFixed(1)+(climateLayer==='hum'?' %':climateLayer.startsWith('wind')?' km/h':' mm')}`);
  }
  gridLayer.eachLayer(layer=>{if(typeof layer.bringToFront==="function")layer.bringToFront()});
  $('legend').textContent=climateLegend[climateLayer]+' · gris: datos incompletos · modelo Open-Meteo';
@@ -542,7 +544,7 @@ renderPanel=function(){
  $('panelBody').innerHTML=`
  <p class="muted">Datos meteorológicos modelizados, independientes de cualquier especie. La fecha y el intervalo se aplican a cada cuadrícula de La Vera.</p>
  <h3>CAPA DEL MAPA</h3>
- <div class="field"><label>Variable</label><select id="climateLayerSelect"><option value="rain">Precipitación</option><option value="wind">Viento</option><option value="hum">Humedad</option></select></div>
+ <div class="field"><label>Variable</label><select id="climateLayerSelect"><option value="rain">Precipitación</option><option value="wind">Viento máximo</option><option value="windMean">Viento medio</option><option value="hum">Humedad</option></select></div>
  <p class="muted" id="climateLayerDesc"></p>
  <div class="field"><label>Desde</label><select id="climateFrom">${dates}</select></div>
  <div class="field"><label>Hasta</label><select id="climateTo">${dates}</select></div>
@@ -651,35 +653,7 @@ catalogGoMap=function(type,value){if(type==='flora'&&value){floraActive=new Set(
 .official-source label{display:block;margin:8px 0}
 .official-source small{color:#d1ddcd}
 </style>
-<script>
 
-/* Visual SoilGrids overlay. Numeric pH still requires local samples. */
-let officialPhOn=false;
-const officialPh=L.tileLayer.wms('https://dev-maps.isric.org/mapserv/phh2o',{
- layers:'phh2o_0-5cm_mean',format:'image/png',transparent:true,version:'1.1.1',
- opacity:.58,attribution:'SoilGrids © ISRIC · pH modelizado 0–5 cm',maxZoom:18
-});
-officialPh.on('tileerror',()=>{
- const status=$('phWmsStatus');
- if(status)status.textContent='No se ha podido cargar alguna tesela de SoilGrids.';
-});
-function syncOfficialLayers(){
- if(officialPhOn&&tab==='flora'){if(!map.hasLayer(officialPh))officialPh.addTo(map)}
- else map.removeLayer(officialPh);
-}
-const officialOldPanel=renderPanel;
-renderPanel=function(){
- officialOldPanel();
- if(tab!=='flora')return;
- const block=document.createElement('div');
- block.className='official-source';
- block.innerHTML=`<label><input type="checkbox" id="phWmsToggle" ${officialPhOn?'checked':''}> pH superficial · SoilGrids (0–5 cm)</label>
- <small>Estimación visual. Para aplicar el filtro de pH se necesitan valores numéricos.</small>
- <p id="phWmsStatus" class="muted">Fuente: ISRIC SoilGrids.</p>`;
- $('panelBody').prepend(block);
- $('phWmsToggle').onchange=e=>{officialPhOn=e.target.checked;syncOfficialLayers()};
-};
-</script>
 
 <style>
 #verifiedForestBox{margin:12px 0;padding:12px;border:1px solid #87a18c;border-radius:10px;background:#153527}
@@ -799,7 +773,7 @@ renderPanel=function(){importedOldPanel();if(!['flora','pred'].includes(tab))ret
  $('phCsvInput').onchange=async e=>{try{const f=e.target.files[0];if(!f)return;const r=parsePhCsv(await f.text());$('phImportStatus').textContent=`${r.samples} muestras, ${r.cells} cuadrículas con datos.`}catch(err){$('phImportStatus').textContent='Error: '+err.message}};
 };
 const importedOldMap=renderMap;
-renderMap=function(){importedOldMap();const floraPhCard=$('floraPhCard');if(floraPhCard)floraPhCard.classList.toggle('hidden',tab!=='flora');if(tab==='flora')drawFlora();syncOfficialLayers();redrawVerifiedForest();drawVerifiedPh()};
+renderMap=function(){importedOldMap();const floraPhCard=$('floraPhCard');if(floraPhCard)floraPhCard.classList.toggle('hidden',tab!=='flora');if(tab==='flora')drawFlora();redrawVerifiedForest();drawVerifiedPh()};
 const importedOldDrawFlora=drawFlora;
 drawFlora=function(){importedOldDrawFlora();redrawVerifiedForest();drawVerifiedPh()};
 ['phMin','phMax','phEnabled'].forEach(id=>$(id).addEventListener(id==='phEnabled'?'change':'input',()=>drawVerifiedPh()));
@@ -834,21 +808,10 @@ drawFlora=function(){importedOldDrawFlora();redrawVerifiedForest();drawVerifiedP
  // Climate cards show the exact aggregated model value and data provenance.
  const previousDetail=showGridDetail;
  showGridDetail=function(lat,lon){previousDetail(lat,lon);if(tab!=='climate')return;
- const c=cellFor(lat,lon),v=climateValue(c),u=climateLayer==='rain'?'mm':climateLayer==='wind'?'km/h':'%';
+ const c=cellFor(lat,lon),v=climateValue(c),u=climateLayer==='rain'?'mm':climateLayer.startsWith('wind')?'km/h':'%';
  const el=document.createElement('div');el.className='card';
- el.innerHTML='<b>Clima · '+(climateLayer==='rain'?'Precipitación':climateLayer==='wind'?'Viento':'Humedad')+'</b><p>'+(v==null?'Datos insuficientes para el intervalo':v.toFixed(1)+' '+u)+'</p><small>Open-Meteo · datos modelizados en el centro de la cuadrícula · '+dateKey(climateFrom)+' a '+dateKey(climateTo)+'</small>';
+ el.innerHTML='<b>Clima · '+(climateLayer==='rain'?'Precipitación':climateLayer==='wind'?'Viento máximo':climateLayer==='windMean'?'Viento medio':'Humedad')+'</b><p>'+(v==null?'Datos insuficientes para el intervalo':v.toFixed(1)+' '+u)+'</p><small>Open-Meteo · datos modelizados en zonas de referencia regionales · '+dateKey(climateFrom)+' a '+dateKey(climateTo)+'</small>';
  document.getElementById('detail').appendChild(el);
- };
- // Provide a working climate legend and click action for the entire grid.
- renderClimateGrid=function(){
- gridLayer.clearLayers();layersOverlay.clearLayers();
- for(const c of gridCells){const val=climateValue(c);
- const shape=L.rectangle(c.bounds,{color:'#172d24',weight:.65,fillColor:climateColor(val),fillOpacity:val==null?.22:.67}).addTo(gridLayer);
- shape.on('click',e=>showGridDetail(e.latlng.lat,e.latlng.lng));
- shape.bindTooltip(`${c.t[0]}: ${val==null?'sin datos':val.toFixed(1)+(climateLayer==='hum'?' %':climateLayer==='wind'?' km/h':' mm')}`);
- }
- gridLayer.eachLayer(layer=>{if(typeof layer.bringToFront==="function")layer.bringToFront()});
- document.getElementById('legend').textContent=climateLegend[climateLayer]+' · gris: datos incompletos · modelo Open-Meteo';
  };
  // Show measured / estimated pH in the existing clicked-cell detail, only if imported.
  const phDetail=showGridDetail;
@@ -1866,4 +1829,5 @@ document.addEventListener('click',function(event){
 </script>
 
 <script src="./mfe-vera.js" defer></script>
+<script src="./entorno.js" defer></script>
 </body></html>

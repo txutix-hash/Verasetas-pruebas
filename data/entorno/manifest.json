@@ -1,0 +1,130 @@
+{
+  "layers": {
+    "ph": {
+      "name": "pH superficial estimado",
+      "description": "ISRIC SoilGrids · pH en agua de 0–5 cm, media modelizada (malla de 1 km). Las zonas transparentes carecen de datos.",
+      "attribution": "ISRIC SoilGrids · CC BY 4.0 · Límites: IGN/CNIG",
+      "classes": [
+        [
+          "#b45309",
+          "< 5"
+        ],
+        [
+          "#e99a42",
+          "5 a < 6"
+        ],
+        [
+          "#e4cf77",
+          "6 a < 7"
+        ],
+        [
+          "#72c2ae",
+          "7 a < 8"
+        ],
+        [
+          "#4169a1",
+          "≥ 8"
+        ]
+      ],
+      "file": "ph.png",
+      "bounds": [
+        [
+          39.94319200502503,
+          -5.9802459999999895
+        ],
+        [
+          40.264753999999996,
+          -5.336153941286292
+        ]
+      ]
+    },
+    "slope": {
+      "name": "Pendiente",
+      "description": "IGN/CNIG MDT25 · inclinación en grados. Visualización remuestreada para móvil.",
+      "attribution": "IGN/CNIG MDT25 · CC BY 4.0 ign.es",
+      "classes": [
+        [
+          "#b9dcaa",
+          "< 5°"
+        ],
+        [
+          "#86b67b",
+          "5 a < 15°"
+        ],
+        [
+          "#d8b35e",
+          "15 a < 30°"
+        ],
+        [
+          "#c77946",
+          "30 a < 45°"
+        ],
+        [
+          "#9e444d",
+          "≥ 45°"
+        ]
+      ],
+      "file": "slope.png",
+      "bounds": [
+        [
+          39.943880723161946,
+          -5.980245999999999
+        ],
+        [
+          40.264753999999996,
+          -5.3352556260021835
+        ]
+      ]
+    },
+    "aspect": {
+      "name": "Orientación de las laderas",
+      "description": "IGN/CNIG MDT25 · dirección descendente respecto al norte de la cuadrícula UTM. Las superficies llanas quedan transparentes.",
+      "attribution": "IGN/CNIG MDT25 · CC BY 4.0 ign.es",
+      "classes": [
+        [
+          "#73b4ee",
+          "N"
+        ],
+        [
+          "#8298e5",
+          "NE"
+        ],
+        [
+          "#9672bb",
+          "E"
+        ],
+        [
+          "#d184ac",
+          "SE"
+        ],
+        [
+          "#e9aa57",
+          "S"
+        ],
+        [
+          "#dece6c",
+          "SO"
+        ],
+        [
+          "#92bb70",
+          "O"
+        ],
+        [
+          "#54a99c",
+          "NO"
+        ]
+      ],
+      "file": "aspect.png",
+      "bounds": [
+        [
+          39.943880723161946,
+          -5.980245999999999
+        ],
+        [
+          40.264753999999996,
+          -5.3352556260021835
+        ]
+      ]
+    }
+  }
+}
