@@ -143,7 +143,7 @@ function verasetasLeafletFailed(){
 </script>
 <script>
 
-if(typeof window.L==='undefined'){verasetasLeafletFailed()}else{
+if(typeof window.L==='undefined'){verasetasLeafletFailed();throw Error('Leaflet no disponible')}
 
 const $=id=>document.getElementById(id),esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const towns=[['Jaraíz de la Vera',40.060,-5.754,490],['Cuacos de Yuste',40.106,-5.723,580],['Garganta la Olla',40.110,-5.777,590],['Pasarón de la Vera',40.052,-5.821,610],['Torremenga',40.047,-5.774,520],['Collado de la Vera',40.058,-5.721,510],['Jarandilla de la Vera',40.126,-5.660,590],['Aldeanueva de la Vera',40.127,-5.702,660],['Losar de la Vera',40.122,-5.606,550],['Valverde de la Vera',40.123,-5.494,540],['Villanueva de la Vera',40.130,-5.462,500],['Madrigal de la Vera',40.147,-5.369,400],['Gargüera',40.061256,-5.927652,518],['Cáceres',39.4765,-6.3722,459]];
@@ -167,7 +167,7 @@ let relief=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Ele
 function closePanel(){ $('panel').classList.remove('open');$('overlay').classList.remove('open')}function openPanel(){ $('panel').classList.add('open');$('overlay').classList.add('open')}$('filters').onclick=openPanel;$('closePanel').onclick=closePanel;$('overlay').onclick=closePanel;document.addEventListener('keydown',e=>{if(e.key==='Escape'){closePanel();$('layers').classList.add('hidden');$('detail').classList.add('hidden')}});$('userMenu').onclick=()=>{alert('VeraSetas v3.4 · Prototipo sin cuentas de usuario. Tus setales se guardan en este navegador. No compartimos tu posición.')} ;$('zoomIn').onclick=()=>map.zoomIn();$('zoomOut').onclick=()=>map.zoomOut();$('layersBtn').onclick=()=>$('layers').classList.toggle('hidden');$('closeLayers').onclick=()=>$('layers').classList.add('hidden');document.querySelectorAll('input[name=base]').forEach(x=>x.onchange=()=>{map.removeLayer(base);base=bases[x.value];base.addTo(map);base.bringToBack()});$('relief').onchange=e=>{if(e.target.checked)relief.addTo(map);else map.removeLayer(relief)};map.on('dragstart',()=>{following=false});
 function setTab(t){tab=t;document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));$('locate').classList.toggle('hidden',!['pred','explore','climate','flora'].includes(t));$('layersBtn').classList.toggle('hidden',!['pred','explore','flora'].includes(t));$('layers').classList.add('hidden');$('detail').classList.add('hidden');renderPanel();renderMap();closePanel();setTimeout(()=>map.invalidateSize(),50)}document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>setTab(b.dataset.tab));
 function dayStr(i){let d=new Date();d.setDate(d.getDate()+i);return d.toLocaleDateString('es-ES',{weekday:'short',day:'numeric',month:'short'})}function number(v){return v!==null&&v!==undefined&&Number.isFinite(+v)?Number(v).toFixed(1):'—'}function optSpecies(){return species.map((s,i)=>`<option value="${i}" ${i===selected?'selected':''}>${esc(s.short)}</option>`).join('')}
-function renderPanel(){let html='';if(tab==='pred'){html=`<p class="muted">Selecciona especie, fecha y lluvia previa (7, 15 o 30 días). Datos de Open-Meteo: histórico reciente modelizado y previsión, no pluviómetros oficiales. El índice es experimental y los círculos representan núcleos urbanos, no setales.</p><div class="field"><label>Especie</label><select id="spSelect">${optSpecies()}</select></div><div class="field"><label>Fecha</label><select id="dateSelect">${Array.from({length:15},(_,i)=>`<option value="${i}" ${i===dateOffset?'selected':''}>${dayStr(i)}</option>`).join('')}</select></div><div class="field"><label>Lluvia acumulada antes de la fecha</label><select id="rainWindow"><option value="7">7 días</option><option value="15">15 días</option><option value="30">30 días</option></select></div><button class="primary" id="apply">Generar mapa de condiciones</button><button type="button" id="vsForestPred">🌳 Cruzar con bosques OSM visibles</button><p class="notice" id="vsForestPredStatus">Para mejorar el índice, acerca el mapa (zoom 11+) y carga bosques de la zona visible. Los bosques sin especie etiquetada quedan como desconocidos.</p><div class="card" id="forecastInfo"></div>`}else if(tab==='explore'){html=`<p class="muted">Filtra las localidades según los valores meteorológicos disponibles y la altitud aproximada del núcleo urbano. No es un mapa continuo del terreno.</p><div class="field"><label>Temperatura máxima: <b id="tempValue">25</b> °C</label><input id="tempLimit" type="range" min="0" max="40" value="25"></div><div class="field"><label>Precipitación mínima: <b id="rainValue">2</b> mm</label><input id="rainLimit" type="range" min="0" max="50" value="2"></div><div class="field"><label>Altitud mínima: <b id="altValue">400</b> m</label><input id="altLimit" type="range" min="300" max="1200" step="50" value="400"></div><button class="primary" id="apply">Aplicar filtros</button>`}else if(tab==='climate'){html=`<p class="muted">Comparación de la previsión meteorológica por municipios. No son capas de observaciones históricas ni estaciones AEMET/SAIH.</p><div class="field"><label>Variable</label><select id="climateVar"><option value="rain">Precipitación prevista (mm)</option><option value="hum">Humedad relativa (%)</option><option value="wind">Viento máximo (km/h)</option></select></div><div class="field"><label>Fecha</label><select id="climateDate">${Array.from({length:15},(_,i)=>`<option value="${i}" ${i===dateOffset?'selected':''}>${dayStr(i)}</option>`).join('')}</select></div><button class="primary" id="apply">Actualizar mapa</button><div class="card"><b>Procedencia y vigencia</b><p class="muted" id="vsWeatherProvenance" aria-live="polite">Comprobando datos meteorológicos…</p></div><div class="card"><b>Fuentes meteorológicas · Beta 33</b><p class="muted">Principal: Open-Meteo. Respaldo pendiente: Visual Crossing requiere servidor HTTPS privado (sin claves en esta página). AEMET: referencia para validación, no conectada aún.</p><button type="button" id="vsProxyConfig">Configurar servidor de respaldo</button><button type="button" id="vsRetryWeather">Reintentar actualización</button></div>`}else if(tab==='flora'){html=`<p class="muted">Masas forestales dibujadas por colaboradores de OpenStreetMap. La especie solo se indica cuando está etiquetada; cobertura incompleta y no oficial. En Predicción, los bosques identificados próximos a un municipio pueden modificar ligeramente su índice, sin localizar fructificaciones.</p><div class="field"><label>Tipo de vegetación</label><select id="forest"><option value="all">Todos</option><option value="roble">Robledales</option><option value="castano">Castañares</option><option value="pino">Pinares</option><option value="encina">Encinares</option><option value="otro">Bosque sin especie identificada / otros</option></select></div><button class="primary" id="loadForest">Cargar bosques de la zona</button><p class="notice" id="forestStatus">${esc(forestStatus)}</p><label><input id="ph" type="checkbox" disabled> Filtrar por pH (pendiente de datos)</label>`}else if(tab==='spots'){html=`<p class="muted">Tus puntos permanecen en este navegador. Exporta una copia GPX para conservarlos.</p><div class="field"><label>Nombre del setal</label><input id="spotName" placeholder="Mi setal"></div><div class="field"><label>Latitud</label><input id="spotLat" type="number" step="any" placeholder="40.060"></div><div class="field"><label>Longitud</label><input id="spotLon" type="number" step="any" placeholder="-5.754"></div><button type="button" id="vsFillGps">📍 Usar mi posición</button> <button class="primary" id="addSpot">Guardar setal</button> <button id="exportGpx">Exportar GPX</button><p class="muted">También puedes pulsar el mapa y guardar el punto desde su ficha.</p><div id="spotList"></div>`}else{html=`<p class="muted">Temporadas y hábitats aproximados. Temporadas orientativas y no verificadas para cada municipio. Nunca uses esta información para decidir si una seta es comestible.</p><div class="catalog">${species.map((s,i)=>`<div class="card"><b>${esc(s.name)}</b><p>${esc(s.hab)}<br><small>${esc(s.months)} · ${s.min}–${s.max} m orientativos</small></p><button data-species="${i}">Ver en mapa</button></div>`).join('')}</div>`} $('panelTitle').textContent=({pred:'Predicción',explore:'Explora',spots:'Mis setales',climate:'Clima',flora:'Flora',catalog:'Catálogo'})[tab];$('panelBody').innerHTML=html;if(tab==='climate')setTimeout(()=>vsWeatherStatus(),0);
+function renderPanel(){let html='';if(tab==='pred'){html=`<p class="muted">Selecciona especie, fecha y lluvia previa (7, 15 o 30 días). Datos de Open-Meteo: histórico reciente modelizado y previsión, no pluviómetros oficiales. El índice es experimental y los círculos representan núcleos urbanos, no setales.</p><div class="field"><label>Especie</label><select id="spSelect">${optSpecies()}</select></div><div class="field"><label>Fecha</label><select id="dateSelect">${Array.from({length:15},(_,i)=>`<option value="${i}" ${i===dateOffset?'selected':''}>${dayStr(i)}</option>`).join('')}</select></div><div class="field"><label>Lluvia acumulada antes de la fecha</label><select id="rainWindow"><option value="7">7 días</option><option value="15">15 días</option><option value="30">30 días</option></select></div><button class="primary" id="apply">Generar mapa de condiciones</button><button type="button" id="vsForestPred">🌳 Cruzar con bosques OSM visibles</button><p class="notice" id="vsForestPredStatus">Para mejorar el índice, acerca el mapa (zoom 11+) y carga bosques de la zona visible. Los bosques sin especie etiquetada quedan como desconocidos.</p><div class="card" id="forecastInfo"></div>`}else if(tab==='explore'){html=`<p class="muted">Filtra las localidades según los valores meteorológicos disponibles y la altitud aproximada del núcleo urbano. No es un mapa continuo del terreno.</p><div class="field"><label>Temperatura máxima: <b id="tempValue">25</b> °C</label><input id="tempLimit" type="range" min="0" max="40" value="25"></div><div class="field"><label>Precipitación mínima: <b id="rainValue">2</b> mm</label><input id="rainLimit" type="range" min="0" max="50" value="2"></div><div class="field"><label>Altitud mínima: <b id="altValue">400</b> m</label><input id="altLimit" type="range" min="300" max="1200" step="50" value="400"></div><button class="primary" id="apply">Aplicar filtros</button>`}else if(tab==='climate'){html=`<p class="muted">Comparación de la previsión meteorológica por municipios. No son capas de observaciones históricas ni estaciones AEMET/SAIH.</p><div class="field"><label>Variable</label><select id="climateVar"><option value="rain">Precipitación prevista (mm)</option><option value="hum">Humedad relativa (%)</option><option value="wind">Viento máximo (km/h)</option></select></div><div class="field"><label>Fecha</label><select id="climateDate">${Array.from({length:15},(_,i)=>`<option value="${i}" ${i===dateOffset?'selected':''}>${dayStr(i)}</option>`).join('')}</select></div><button class="primary" id="apply">Actualizar mapa</button><div class="card"><b>Procedencia y vigencia</b><p class="muted" id="vsWeatherProvenance" aria-live="polite">Comprobando datos meteorológicos…</p></div><div class="card"><b>Fuentes meteorológicas · Beta 33</b><p class="muted">Principal: Open-Meteo. Respaldo pendiente: Visual Crossing requiere servidor HTTPS privado (sin claves en esta página). AEMET: referencia para validación, no conectada aún.</p><button type="button" id="vsProxyConfig">Configurar servidor de respaldo</button><button type="button" id="vsRetryWeather">Reintentar actualización</button></div>`}else if(tab==='flora'){html=`<p class="muted">Masas forestales dibujadas por colaboradores de OpenStreetMap. La especie solo se indica cuando está etiquetada; cobertura incompleta y no oficial. El índice de predicción usa muestras de la cuadrícula cuando hay arbolado identificado.</p><div class="field"><label>Tipo de vegetación</label><select id="forest"><option value="all">Todos</option><option value="roble">Robledales</option><option value="castano">Castañares</option><option value="pino">Pinares</option><option value="encina">Encinares</option><option value="otro">Bosque sin especie identificada / otros</option></select></div><button class="primary" id="loadForest">Cargar bosques de la zona</button><p class="notice" id="forestStatus">${esc(forestStatus)}</p><label><input id="ph" type="checkbox" disabled> Filtrar por pH (pendiente de datos)</label>`}else if(tab==='spots'){html=`<p class="muted">Tus puntos permanecen en este navegador. Exporta una copia GPX para conservarlos.</p><div class="field"><label>Nombre del setal</label><input id="spotName" placeholder="Mi setal"></div><div class="field"><label>Latitud</label><input id="spotLat" type="number" step="any" placeholder="40.060"></div><div class="field"><label>Longitud</label><input id="spotLon" type="number" step="any" placeholder="-5.754"></div><button type="button" id="vsFillGps">📍 Usar mi posición</button> <button class="primary" id="addSpot">Guardar setal</button> <button id="exportGpx">Exportar GPX</button><p class="muted">También puedes pulsar el mapa y guardar el punto desde su ficha.</p><div id="spotList"></div>`}else{html=`<p class="muted">Temporadas y hábitats aproximados. Temporadas orientativas y no verificadas para cada municipio. Nunca uses esta información para decidir si una seta es comestible.</p><div class="catalog">${species.map((s,i)=>`<div class="card"><b>${esc(s.name)}</b><p>${esc(s.hab)}<br><small>${esc(s.months)} · ${s.min}–${s.max} m orientativos</small></p><button data-species="${i}">Ver en mapa</button></div>`).join('')}</div>`} $('panelTitle').textContent=({pred:'Predicción',explore:'Explora',spots:'Mis setales',climate:'Clima',flora:'Flora',catalog:'Catálogo'})[tab];$('panelBody').innerHTML=html;if(tab==='climate')setTimeout(()=>vsWeatherStatus(),0);
 if(tab==='pred'){$('rainWindow').value=String(rainWindow);$('rainWindow').onchange=e=>rainWindow=+e.target.value;$('spSelect').onchange=e=>{selected=+e.target.value};$('dateSelect').onchange=e=>dateOffset=+e.target.value;$('apply').onclick=()=>{renderMap();closePanel()};const s=species[selected];$('forecastInfo').innerHTML=`<b>${esc(s.short)}</b><p>${esc(s.hab)}<br>${esc(s.months)}<br>Altitud habitual aproximada: ${s.min}–${s.max} m</p>`}if(tab==='explore'){['temp','rain','alt'].forEach(n=>{$(n+'Limit').oninput=e=>$(n+'Value').textContent=e.target.value});$('apply').onclick=()=>{renderMap();closePanel()}}if(tab==='climate'){$('climateDate').onchange=e=>dateOffset=+e.target.value;$('apply').onclick=()=>{renderMap();closePanel()}}if(tab==='flora'){$('forest').value=forestFilter;$('forest').onchange=e=>{forestFilter=e.target.value;renderMap()};$('loadForest').onclick=loadForests;}if(tab==='spots'){ $('addSpot').onclick=()=>{let lat=+$('spotLat').value,lon=+$('spotLon').value,name=$('spotName').value.trim();if(!name||!$('spotLat').value||!$('spotLon').value||Math.abs(lat)>90||Math.abs(lon)>180)return alert('Indica nombre y coordenadas válidas');saveSpot(name,lat,lon)};$('exportGpx').onclick=exportGpx;renderSpots()}if(tab==='catalog')document.querySelectorAll('[data-species]').forEach(b=>b.onclick=()=>{selected=Math.max(0,species.findIndex(x=>x.name===CAT_SPECIES[+b.dataset.species]?.scientific));setTab('pred')})}
 function daily(t){return weather.get(t[0])?.[dateOffset]||null}
 function rainBefore(t,offset=dateOffset,days=rainWindow){const rows=rainHistory.get(t[0]);if(!rows)return null;const target=new Date();target.setHours(12,0,0,0);target.setDate(target.getDate()+offset);let sum=0,count=0;for(let i=1;i<=days;i++){const d=new Date(target);d.setDate(d.getDate()-i);const key=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');const v=rows.get(key);if(Number.isFinite(v)){sum+=v;count++}}return count===days?Math.round(sum*10)/10:null}
@@ -196,10 +196,10 @@ async function loadForests(){
  for(const url of servers){
   try{const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),25000);
    let response;try{response=await fetch(url,{method:'POST',body:new URLSearchParams({data:query}),signal:controller.signal})}finally{clearTimeout(timeout)}
-   if(!response.ok)throw Error('HTTP '+response.status);data=await response.json();if(!Array.isArray(data.elements))throw Error('Respuesta inválida');break
+   if(!response.ok)throw Error('HTTP '+response.status);const result=await response.json();if(!Array.isArray(result?.elements))throw Error('Respuesta inválida');data=result;break
   }catch(err){lastError=err;console.warn('OSM Overpass',url,err)}
  }
- if(!data){report('❌ No se pudieron consultar bosques OSM. Comprueba Internet o prueba más tarde.');return false}
+ if(!data){report('OpenStreetMap: no se pudieron consultar los bosques. Prueba más tarde. La capa oficial MFE25 se carga por separado en Flora.');return false}
  const features=data.elements.filter(x=>x.geometry?.length>=4&&x.geometry[0].lat===x.geometry[x.geometry.length-1].lat&&x.geometry[0].lon===x.geometry[x.geometry.length-1].lon).slice(0,2500).map(x=>({type:'Feature',properties:{kind:forestKind(x.tags||{}),detail:Object.entries(x.tags||{}).filter(([k])=>['species','genus','name','leaf_type','landuse','natural'].includes(k)).map(([k,v])=>k+': '+v).join(' · ')||'Sin identificación de especie'},geometry:{type:'Polygon',coordinates:[x.geometry.map(c=>[c.lon,c.lat])]}}));
  forestData={type:'FeatureCollection',features};
  renderForests();renderMap();
@@ -425,10 +425,7 @@ function vsRefreshIfDue(){
 document.addEventListener('visibilitychange',vsRefreshIfDue);
 window.addEventListener('online',vsRefreshIfDue);
 setInterval(vsRefreshIfDue,60*60*1000);
-// Puente explícito: los scripts posteriores no pueden ver funciones declaradas dentro del bloque if en Safari.
 window.vsLoadForests=()=>loadForests();
-
-}
 
 </script>
 <div id="catalogScreen" aria-label="Catálogo de setas y hábitats"></div>
@@ -475,7 +472,7 @@ content=`<button data-back="1">← Hábitats</button><h2 style="margin-top:14px"
 }else if(catalogView==='setas'){
 let entries=CAT_SPECIES.map((s,i)=>({...s,i})).filter(s=>catalogMonth===-1||s.levels[catalogMonth]>0);
 if(catalogMonth===-1)entries.sort((a,b)=>b.levels[activeMonth()]-a.levels[activeMonth()]);
-content=`<div class="spec-grid">${entries.map(s=>`<article class="spec-card" id="species-${s.i}"><div class="spec-head"><img loading="lazy" src="${s.image}" alt="Fotografía orientativa de ${esc(s.common)}" onerror="this.style.display='none'"><div style="flex:1"><h3>${esc(s.common)}</h3><em>${esc(s.scientific)}</em><p class="catalog-small">${esc(s.description)}</p></div><button aria-label="Favorito" title="Marcar favorito" data-fav="${s.i}">${favorites.has(s.i)?'★':'☆'}</button></div><p><span class="chip">Temporada: ${esc(species[s.i].months)}</span> <span class="chip">Altitud: ${species[s.i].min}–${species[s.i].max} m</span></p><b class="catalog-small">ESTACIONALIDAD ORIENTATIVA · NO PROBABILIDAD</b>${monthBar(s.levels)}<h3>HÁBITAT</h3>${s.hab.map(id=>`<button data-hab="${id}">${esc(HABITATS.find(h=>h.id===id).name)}</button>`).join(' ')}<div><button class="primary catalog-action" data-map="${s.i}">Ver condiciones favorables</button></div>${!s.levels[activeMonth()]?'<p class="notice">Fuera de su temporada habitual: el calendario puede reducir la actividad estimada. No equivale a ausencia de datos.</p>':''}</article>`).join('')}</div>${!entries.length?'<p>No hay especies de este catálogo para el mes seleccionado.</p>':''}`;
+content=`<div class="spec-grid">${entries.map(s=>`<article class="spec-card" id="species-${s.i}"><div class="spec-head"><img loading="lazy" src="${s.image}" alt="Fotografía orientativa de ${esc(s.common)}" onerror="this.style.display='none'"><div style="flex:1"><h3>${esc(s.common)}</h3><em>${esc(s.scientific)}</em><p class="catalog-small">${esc(s.description)}</p></div><button aria-label="Favorito" title="Marcar favorito" data-fav="${s.i}">${favorites.has(s.i)?'★':'☆'}</button></div><p><span class="chip">Temporada: ${esc(species[s.i].months)}</span> <span class="chip">Altitud: ${species[s.i].min}–${species[s.i].max} m</span></p><b class="catalog-small">ESTACIONALIDAD ORIENTATIVA · NO PROBABILIDAD</b>${monthBar(s.levels)}<h3>HÁBITAT</h3>${s.hab.map(id=>HABITATS.find(h=>h.id===id)).filter(Boolean).map(h=>`<button data-hab="${h.id}">${esc(h.name)}</button>`).join(' ')}<div><button class="primary catalog-action" data-map="${s.i}">Ver condiciones favorables</button></div>${!s.levels[activeMonth()]?'<p class="notice">Fuera de su temporada habitual: el calendario puede reducir la actividad estimada. No equivale a ausencia de datos.</p>':''}</article>`).join('')}</div>${!entries.length?'<p>No hay especies de este catálogo para el mes seleccionado.</p>':''}`;
 }else{
 const groups=[...new Set(HABITATS.map(h=>h.family))];
 content=groups.map(group=>`<h3>${esc(group)}</h3>${HABITATS.filter(h=>h.family===group).sort((a,b)=>catalogMonth===-1?0:habLevels(b.id)[catalogMonth]-habLevels(a.id)[catalogMonth]).map(h=>{const count=CAT_SPECIES.filter(s=>s.hab.includes(h.id)).length,hot=catalogMonth>=0&&habLevels(h.id)[catalogMonth]>0;return `<button class="hab-row ${hot?'active':''}" data-hab="${h.id}"><span class="hab-swatch" style="background:${h.color}"></span><span style="flex:1"><b>${esc(h.name)}</b><br><small>${esc(h.desc)} · ${count} setas</small></span>${monthBar(habLevels(h.id))}</button>`}).join('')}`).join('');
@@ -580,10 +577,12 @@ renderPanel=function(){
 
 </script>
 <style>
-.flora-group{border:1px solid #496b57;border-radius:10px;margin:7px 0;padding:9px}.flora-row{display:flex;align-items:center;gap:8px}.flora-row input{width:18px;height:18px}.flora-row summary{cursor:pointer;flex:1}.flora-sub{padding:6px 0 0 26px}.flora-sub label{display:block;padding:5px 0;font-size:12px}.flora-dot{width:14px;height:14px;border-radius:50%;display:inline-block}.ph-card{position:absolute;z-index:600;left:12px;top:12px;background:#142e24;color:white;border:1px solid #67826b;border-radius:12px;padding:10px;max-width:250px;box-shadow:0 2px 12px #0006}.ph-card input[type=range]{width:100%}.ph-card small{display:block;opacity:.8}.ph-card button{padding:3px 8px}.flora-disabled{opacity:.6}
+.flora-group{border:1px solid #496b57;border-radius:10px;margin:7px 0;padding:9px}.flora-row{display:flex;align-items:center;gap:8px}.flora-row input{width:18px;height:18px}.flora-row summary{cursor:pointer;flex:1}.flora-sub{padding:6px 0 0 26px}.flora-sub label{display:block;padding:5px 0;font-size:12px}.flora-dot{width:14px;height:14px;border-radius:50%;display:inline-block}.ph-card{margin-top:12px;background:#142e24;color:white;border:1px solid #67826b;border-radius:12px;padding:10px;max-width:250px;box-shadow:0 2px 12px #0006}.ph-card input[type=range]{width:100%}.ph-card small{display:block;opacity:.8}.ph-card button{padding:3px 8px}.flora-disabled{opacity:.6}
 </style>
 <div class="ph-card hidden" id="floraPhCard"><div style="display:flex;justify-content:space-between;gap:8px"><b>pH del suelo</b><button id="phFold" aria-label="Plegar pH">▾</button></div><label><input type="checkbox" id="phEnabled"> Activar filtro</label><div id="phControls"><small>Rango seleccionado: <b id="phRange">3,0–9,0</b></small><label>ÁCIDO · mínimo <input id="phMin" type="range" min="3" max="9" step="0.1" value="3"></label><label>CALIZO · máximo <input id="phMax" type="range" min="3" max="9" step="0.1" value="9"></label></div><small id="phMessage">Sin datos de pH superficial georreferenciados: filtro no aplicable todavía.</small></div>
 <script>
+
+$('panel').append($('floraPhCard'));
 
 /* Flora v1.1: multi-select on partial OSM mapping, no invented official forestry/pH coverage. */
 const FLORA_GROUPS=[
@@ -599,7 +598,8 @@ const FLORA_GROUPS=[
  ['jaral','Jarales','#b39b7c',['Jaras','Matorral de jara']],
  ['eucalipto','Eucaliptos','#78a5a0',['Eucalipto']],
  ['ribera','Ribera','#58c7c2',['Chopo','Álamo','Sauce','Aliso','Fresno']],
- ['sabina','Sabinares','#8c9e91',['Sabina albar','Sabina mora']]
+ ['sabina','Sabinares','#8c9e91',['Sabina albar','Sabina mora']],
+ ['otro','Otros arbolados','#89948e',['Otros arbolados']]
 ];
 const floraSelection=new Map(FLORA_GROUPS.map(([k,, ,sp])=>[k,new Set(sp)]));
 let floraActive=new Set(['pino','roble','encina','castano']);
@@ -628,7 +628,7 @@ function drawFlora(){forestLayer.clearLayers();if(tab!=='flora'){map.removeLayer
 }
 const oldFloraPanel=renderPanel;
 renderPanel=function(){oldFloraPanel();if(tab!=='flora')return;
- $('panelBody').innerHTML=`<p class="muted">Arbolado identificado en OpenStreetMap, no cartografía forestal oficial. Cobertura parcial. Puedes encender varios tipos y desplegar sus especies; solo se dibujan las identificables.</p><h3>ARBOLADO</h3><div id="floraGroups"></div><button class="primary" id="loadForest">Cargar bosques de la zona visible</button><p class="notice" id="forestStatus">${esc(forestStatus)}</p><p class="muted">El pH necesita una capa georreferenciada y no se representa sin datos reales.</p>`;
+ $('panelBody').innerHTML=`<p class="muted">Arbolado identificado en OpenStreetMap, no cartografía forestal oficial. Cobertura parcial. Puedes encender varios tipos y desplegar sus especies; solo se dibujan las identificables.</p><h3>ARBOLADO</h3><div id="floraGroups"></div><button class="primary" id="loadForest">Cargar bosques de OpenStreetMap</button><p class="notice" id="forestStatus">${esc(forestStatus)}</p><p class="muted">El pH necesita una capa georreferenciada y no se representa sin datos reales.</p>`;
  const wrap=$('floraGroups');wrap.innerHTML=FLORA_GROUPS.map(([k,name,color,sp])=>`<div class="flora-group"><div class="flora-row"><input type="checkbox" data-group="${k}" ${floraActive.has(k)?'checked':''}><span class="flora-dot" style="background:${color}"></span><details style="flex:1"><summary>${name} <small id="status-${k}"></small></summary><div class="flora-sub">${sp.map((s,i)=>`<label><input type="checkbox" data-specgroup="${k}" data-specindex="${i}" ${floraSelection.get(k).has(s)?'checked':''}> ${s}</label>`).join('')}</div></details></div></div>`).join('');
  function status(){for(let [k,,,sp] of FLORA_GROUPS){let n=floraSelection.get(k).size;$('status-'+k).textContent=!floraActive.has(k)?'○':n===sp.length?'●':n?'◐':'○'}}
  wrap.querySelectorAll('[data-group]').forEach(el=>el.onchange=()=>{el.checked?floraActive.add(el.dataset.group):floraActive.delete(el.dataset.group);status();drawFlora()});
@@ -653,82 +653,34 @@ catalogGoMap=function(type,value){if(type==='flora'&&value){floraActive=new Set(
 </style>
 <script>
 
-/* v1.1: independently switchable authoritative raster WMS layers.
-   MFE layer names must be confirmed against GetCapabilities before production use.
-   SoilGrids WMS depicts model estimates, not laboratory measurements. */
-let officialMfeOn=false,officialPhOn=false;
-const officialMfe=L.tileLayer.wms('https://wms.mapama.gob.es/sig/Biodiversidad/MFE',{
- layers:'LC.LandCoverSurfaces',format:'image/png',transparent:true,version:'1.1.1',
- opacity:.45,attribution:'Mapa Forestal de España · MITECO (WMS)',maxZoom:19
-});
+/* Visual SoilGrids overlay. Numeric pH still requires local samples. */
+let officialPhOn=false;
 const officialPh=L.tileLayer.wms('https://dev-maps.isric.org/mapserv/phh2o',{
  layers:'phh2o_0-5cm_mean',format:'image/png',transparent:true,version:'1.1.1',
  opacity:.58,attribution:'SoilGrids © ISRIC · pH modelizado 0–5 cm',maxZoom:18
 });
-officialMfe.on('tileerror',()=>{const s=document.getElementById('mfeWmsStatus');if(s)s.textContent='No se ha podido cargar alguna tesela MFE. Comprueba disponibilidad y nombre de capa WMS.'});
-officialPh.on('tileerror',()=>{const s=document.getElementById('phWmsStatus');if(s)s.textContent='No se ha podido cargar alguna tesela de SoilGrids.'});
+officialPh.on('tileerror',()=>{
+ const status=$('phWmsStatus');
+ if(status)status.textContent='No se ha podido cargar alguna tesela de SoilGrids.';
+});
 function syncOfficialLayers(){
- if(!['flora','pred'].includes(tab)){map.removeLayer(officialMfe);map.removeLayer(officialPh);return}
- if(officialMfeOn){if(!map.hasLayer(officialMfe))officialMfe.addTo(map)}else map.removeLayer(officialMfe);
- if(officialPhOn&&tab==='flora'){if(!map.hasLayer(officialPh))officialPh.addTo(map)}else map.removeLayer(officialPh);
+ if(officialPhOn&&tab==='flora'){if(!map.hasLayer(officialPh))officialPh.addTo(map)}
+ else map.removeLayer(officialPh);
 }
 const officialOldPanel=renderPanel;
 renderPanel=function(){
  officialOldPanel();
- if(!['flora','pred'].includes(window.tab))return;
+ if(tab!=='flora')return;
  const block=document.createElement('div');
  block.className='official-source';
- block.innerHTML=`<h3>🌳 MAPA FORESTAL OFICIAL (MITECO)</h3>
- <label><input type="checkbox" id="mfeWmsToggle" ${officialMfeOn?'checked':''}> Mapa Forestal de España · MITECO (WMS)</label>
- <small>Capa visual WMS oficial para contrastar el mapa de colores con el bosque cartografiado. No modifica automáticamente la puntuación: para eso hacen falta polígonos y especies verificadas.</small>
- <p id="mfeWmsStatus" class="muted">Fuente: MITECO, Mapa Forestal de España. Requiere Internet y disponibilidad del servicio.</p>
- <label><input type="checkbox" id="phWmsToggle" ${officialPhOn?'checked':''}> pH superficial · SoilGrids (0–5 cm)</label>
- <small>Estimación espacial modelizada, no medición local. La imagen WMS se puede superponer; el rango 3–9 todavía no recorta píxeles.</small>
- <p id="phWmsStatus" class="muted">Fuente: ISRIC SoilGrids. Disponibilidad externa no garantizada.</p>`;
- if(tab==='pred'){const soil=block.querySelector('#phWmsToggle');if(soil){const label=soil.closest('label');if(label)label.remove();const status=block.querySelector('#phWmsStatus');if(status)status.remove();block.querySelectorAll('small').forEach(el=>{if(el.textContent.includes('Estimación espacial modelizada'))el.remove()})}}
+ block.innerHTML=`<label><input type="checkbox" id="phWmsToggle" ${officialPhOn?'checked':''}> pH superficial · SoilGrids (0–5 cm)</label>
+ <small>Estimación visual. Para aplicar el filtro de pH se necesitan valores numéricos.</small>
+ <p id="phWmsStatus" class="muted">Fuente: ISRIC SoilGrids.</p>`;
  $('panelBody').prepend(block);
- // El bloque WMS ya existe: el verificador se monta aquí, no en un wrapper previo.
- if(tab==='flora'){
-  const info=document.createElement('div');
-  info.id='officialDiagnostics';
-  info.innerHTML='<button id="verifyOfficialBtn">Comprobar servicios WMS</button><p>La superposición visual no identifica automáticamente especies ni valores de pH por cuadrícula. El filtro de pH seguirá inactivo hasta disponer de datos numéricos fiables.</p>';
-  block.append(info);
-  document.getElementById('verifyOfficialBtn').onclick=verifyOfficialSources;
- }
-
- $('mfeWmsToggle').onchange=e=>{officialMfeOn=e.target.checked;syncOfficialLayers()};
- if($('phWmsToggle'))$('phWmsToggle').onchange=e=>{officialPhOn=e.target.checked;syncOfficialLayers()};
+ $('phWmsToggle').onchange=e=>{officialPhOn=e.target.checked;syncOfficialLayers()};
 };
-// Las capas WMS se sincronizan desde el único adaptador cartográfico posterior (part-08).
-
 </script>
 
-<style>
-#officialDiagnostics{font-size:12px;line-height:1.5;border:1px solid #78917b;border-radius:9px;padding:10px;margin-top:8px}
-#officialDiagnostics button{margin:5px 3px}
-</style>
-<script>
-
-/* Official-source validation: browser-side, with explicit CORS/network errors. */
-const mfeCapabilities='https://wms.mapama.gob.es/sig/Biodiversidad/MFE?service=WMS&request=GetCapabilities';
-const soilCapabilities='https://dev-maps.isric.org/mapserv/phh2o?service=WMS&request=GetCapabilities';
-async function verifyWms(url,desired){
- const res=await fetch(url,{signal:AbortSignal.timeout(12000)});
- if(!res.ok)throw Error('HTTP '+res.status);
- const doc=new DOMParser().parseFromString(await res.text(),'text/xml');
- if(doc.querySelector('parsererror'))throw Error('Respuesta no XML');
- const names=[...doc.getElementsByTagName('Name')].map(n=>n.textContent.trim());
- if(!names.includes(desired))throw Error('La capa '+desired+' no figura en GetCapabilities');
- return 'Servicio accesible; capa '+desired+' confirmada';
-}
-async function verifyOfficialSources(){
- const status=document.getElementById('officialDiagnostics');if(!status)return;
- status.textContent='Comprobando servicios oficiales desde tu navegador…';
- const results=await Promise.allSettled([verifyWms(mfeCapabilities,'LC.LandCoverSurfaces'),verifyWms(soilCapabilities,'phh2o_0-5cm_mean')]);
- status.innerHTML=results.map((r,i)=>`<p><b>${i?'ISRIC SoilGrids':'MITECO MFE'}:</b> ${r.status==='fulfilled'?r.value:'No verificable: '+String(r.reason?.message||r.reason)+'. Puede ser red, CORS o servicio no disponible.'}</p>`).join('');
-}
-
-</script>
 <style>
 #verifiedForestBox{margin:12px 0;padding:12px;border:1px solid #87a18c;border-radius:10px;background:#153527}
 #verifiedForestBox input[type=file]{max-width:100%;font-size:12px}
@@ -739,12 +691,9 @@ async function verifyOfficialSources(){
 
 /* Verified offline geospatial inputs. Does not silently treat OSM as MFE25. */
 var mfeFeatures=[],mfeLayer=L.geoJSON(null),mfeImportName='',phSamples=[],phByCell=new Map();
-const MFE_CODES={
- '21':['pino','Pino silvestre'],'24':['pino','Pino carrasco'],'26':['pino','Pino resinero'],'23':['pino','Pino piñonero'],
- '41':['roble','Rebollo'],'45':['roble','Roble común'],'44':['roble','Quejigo'],
- '46':['haya','Haya'],'72':['castano','Castaño'],'43':['encina','Encina'],'42':['alcornoque','Alcornoque']
-};
-/* Codes above are illustrative candidates ONLY: require explicit name confirmation in input, never infer species from them. */
+const officialForestLayer=L.geoJSON(null,{attribution:'© Ministerio para la Transición Ecológica y el Reto Demográfico · Límites: IGN/CNIG (CC BY 4.0)'});
+let officialForestFeatures=[],showOfficialForest=true;
+let officialForestStatus='Cargando cartografía MFE25 de La Vera…';
 const mfeNames={
  'pinus sylvestris':['pino','Pino silvestre'],'pinus halepensis':['pino','Pino carrasco'],
  'pinus pinaster':['pino','Pino resinero'],'pinus pinea':['pino','Pino piñonero'],
@@ -753,7 +702,10 @@ const mfeNames={
  'castanea sativa':['castano','Castaño'],'quercus suber':['alcornoque','Alcornoque'],
  'fagus sylvatica':['haya','Haya'],'betula pendula':['abedul','Abedul'],
  'populus nigra':['ribera','Chopo'],'alnus glutinosa':['ribera','Aliso'],
- 'fraxinus angustifolia':['ribera','Fresno'],'salix alba':['ribera','Sauce']
+ 'fraxinus angustifolia':['ribera','Fresno'],'salix alba':['ribera','Sauce'],
+ 'salix atrocinerea':['ribera','Sauce'],'salix spp.':['ribera','Sauce'],
+ 'populus alba':['ribera','Álamo'],'populus x canadensis':['ribera','Chopo'],
+ 'pinus radiata':['pino','Otros pinos'],'eucalyptus camaldulensis':['eucalipto','Eucalipto']
 };
 function speciesFromProps(props){
  if(typeof props._veraKind==='string'&&typeof props._veraSpecies==='string')return [props._veraKind,props._veraSpecies];
@@ -762,30 +714,43 @@ function speciesFromProps(props){
  for(const v of values)for(const [name,pair] of Object.entries(mfeNames))if(v===name||v.startsWith(name+' '))return pair;
  return null;
 }
-function insidePolygon(point,geom){if(!geom)return false;
- function ringHit(ring){let inside=false;for(let i=0,j=ring.length-1;i<ring.length;j=i++){
- const [xi,yi]=ring[i],[xj,yj]=ring[j],x=point[0],y=point[1];
- if((yi>y)!==(yj>y)&&x<(xj-xi)*(y-yi)/(yj-yi)+xi)inside=!inside;
- }return inside}
- function polyHit(rings){return rings?.length&&ringHit(rings[0])&&!rings.slice(1).some(ringHit)}
- return geom.type==='Polygon'?polyHit(geom.coordinates):geom.type==='MultiPolygon'?geom.coordinates.some(polyHit):false;
+function forestPolygons(obj,official=false){
+ if(obj?.type!=='FeatureCollection'||!Array.isArray(obj.features))throw Error('Se requiere un GeoJSON FeatureCollection');
+ return obj.features.flatMap(f=>{
+  if(!['Polygon','MultiPolygon'].includes(f?.geometry?.type))return [];
+  const props=f.properties||{};
+  const scientificName=typeof props.scientific_name==='string'?props.scientific_name.trim():'';
+  if(official&&(!scientificName||scientificName.toLowerCase()==='sin datos'))return [];
+  const pair=official
+   ?speciesFromProps({scientific_name:scientificName})||['otro','Otros arbolados']
+   :speciesFromProps(props);
+  return pair?[{...f,properties:{...props,_veraKind:pair[0],_veraSpecies:pair[1]}}]:[];
+ });
 }
 function importMfeGeojson(obj,filename){
- if(obj?.type!=='FeatureCollection'||!Array.isArray(obj.features))throw Error('Se requiere un GeoJSON FeatureCollection');
- const filtered=obj.features.filter(f=>['Polygon','MultiPolygon'].includes(f.geometry?.type)).map(f=>{
- const pair=speciesFromProps(f.properties||{});return pair?{...f,properties:{...f.properties,_veraKind:pair[0],_veraSpecies:pair[1]}}:null;
- }).filter(Boolean);
+ const filtered=forestPolygons(obj);
+ if(!filtered.length)throw Error('El archivo no contiene polígonos con especies reconocidas.');
  mfeFeatures=filtered;mfeImportName=filename;
  redrawVerifiedForest();return {total:obj.features.length,recognized:filtered.length};
 }
 function redrawVerifiedForest(){
- mfeLayer.clearLayers();if(tab!=='flora'){map.removeLayer(mfeLayer);return}
- if(!map.hasLayer(mfeLayer))mfeLayer.addTo(map);
- const selectedFeatures=mfeFeatures.filter(f=>floraActive.has(f.properties._veraKind)&&floraSelection.get(f.properties._veraKind)?.has(f.properties._veraSpecies));
- mfeLayer.addData({type:'FeatureCollection',features:selectedFeatures});
- mfeLayer.setStyle(f=>({color:FLORA_GROUPS.find(g=>g[0]===f.properties._veraKind)?.[2]||'#777',weight:1.3,fillOpacity:.48}));
- mfeLayer.eachLayer(layer=>layer.bindPopup('<b>'+esc(layer.feature.properties._veraSpecies)+'</b><br>Importación local: '+esc(mfeImportName)+'<br>Fuente declarada por el usuario; sin validación de procedencia.'));
- if(mfeFeatures.length){$('legend').innerHTML+='<br><small>Polígonos aportados por usuario: '+selectedFeatures.length+' visibles · '+mfeFeatures.length+' reconocidos</small>'}
+ const selected=f=>floraActive.has(f.properties._veraKind)&&floraSelection.get(f.properties._veraKind)?.has(f.properties._veraSpecies);
+ const style=f=>({color:FLORA_GROUPS.find(g=>g[0]===f.properties._veraKind)?.[2]||'#777',weight:1.3,fillOpacity:.48});
+ for(const [layer,features,source] of [
+  [officialForestLayer,showOfficialForest?officialForestFeatures:[],'Fuente: © Ministerio para la Transición Ecológica y el Reto Demográfico'],
+  [mfeLayer,mfeFeatures,'Importación local: '+esc(mfeImportName)+' · Procedencia sin verificar']
+ ]){
+  layer.clearLayers();
+  if(tab!=='flora'||!features.length){map.removeLayer(layer);continue}
+  layer.addData(features.filter(selected));
+  layer.setStyle(style);
+  layer.eachLayer(item=>{
+   const props=item.feature.properties;
+   const officialDetails=layer===officialForestLayer?'<br>'+esc(props.scientific_name)+' · '+esc(props.formation):'';
+   item.bindPopup('<b>'+esc(props._veraSpecies)+'</b>'+officialDetails+'<br>'+source);
+  });
+  if(!map.hasLayer(layer))layer.addTo(map);
+ }
 }
 function parsePhCsv(text){
  const lines=text.trim().split(/\r?\n/);if(lines.length<2)throw Error('CSV vacío');
@@ -793,7 +758,7 @@ function parsePhCsv(text){
  const ix=header.indexOf('lat'),iy=header.indexOf('lon'),iz=header.indexOf('ph');
  if([ix,iy,iz].some(x=>x<0))throw Error('Se requieren columnas lat,lon,ph');
  const samples=[];
- for(const line of lines){const a=line.split(delim);const lat=Number(a[ix]),lon=Number(a[iy]),ph=Number(a[iz]);
+ for(const line of lines){const a=line.split(delim);if([ix,iy,iz].some(i=>!a[i]?.trim()))continue;const lat=Number(a[ix]),lon=Number(a[iy]),ph=Number(a[iz]);
  if(Number.isFinite(lat)&&Number.isFinite(lon)&&ph>=0&&ph<=14&&lat>39&&lat<41&&lon>-7&&lon<-4)samples.push({lat,lon,ph})}
  if(!samples.length)throw Error('No hay puntos válidos de pH en La Vera');
  phSamples=samples;phByCell=new Map();for(const c of gridCells){const v=samples.filter(p=>p.lat>=c.bounds[0][0]&&p.lat<c.bounds[1][0]&&p.lon>=c.bounds[0][1]&&p.lon<c.bounds[1][1]);if(v.length)phByCell.set(c.id,v.reduce((a,b)=>a+b.ph,0)/v.length)}
@@ -811,15 +776,25 @@ function drawVerifiedPh(){phFilterLayer.clearLayers();if(tab!=='flora'||!$('phEn
 const importedOldPanel=renderPanel;
 renderPanel=function(){importedOldPanel();if(!['flora','pred'].includes(tab))return;
  const block=document.createElement('div');block.id='verifiedForestBox';
- block.innerHTML=`<h3>DATOS VECTORIALES Y pH NUMÉRICO</h3>
+ block.innerHTML=`${tab==='flora'?`<h3>Mapa Forestal de España · MFE25</h3>
+ <p>Capa oficial solo visual. No modifica la predicción y no incluye pH.</p>
+ <p id="officialForestStatus" role="status"></p>
+ <label><input type="checkbox" id="showOfficialForest"> Mostrar MFE25 en el mapa</label>`:''}
+ <h3>Importaciones locales</h3>
  <p>Importa un GeoJSON <b>en EPSG:4326</b> con polígonos y un campo de nombre científico. Los códigos MFE no se interpretan automáticamente: sin diccionario verificado se omiten para evitar clasificaciones falsas.</p>
  <label>Polígonos forestales GeoJSON <input id="mfeGeoInput" type="file" accept=".geojson,.json,application/geo+json"></label>
  <p id="mfeImportStatus">${mfeFeatures.length} polígonos identificados en memoria. Solo se reconocen nombres científicos explícitos.</p>
  <label>pH superficial, CSV con columnas lat,lon,ph <input id="phCsvInput" type="file" accept=".csv,text/csv"></label>
  <p id="phImportStatus">${phSamples.length} muestras · ${phByCell.size} cuadrículas. pH en escala 0–14, no pH×10.</p>
  <p>Para SoilGrids, exporta los valores numéricos de 0–5 cm y divide entre diez los valores codificados como pH×10. No se imputan cuadrículas sin datos.</p>`;
- if(tab==='pred'){const soil=block.querySelector('#phWmsToggle');if(soil){const label=soil.closest('label');if(label)label.remove();const status=block.querySelector('#phWmsStatus');if(status)status.remove();block.querySelectorAll('small').forEach(el=>{if(el.textContent.includes('Estimación espacial modelizada'))el.remove()})}}
  $('panelBody').prepend(block);
+ const drawing=$('showOfficialForest');
+ if(drawing){
+  $('officialForestStatus').textContent=officialForestStatus;
+  drawing.checked=showOfficialForest;
+  drawing.disabled=!officialForestFeatures.length;
+  drawing.onchange=()=>{showOfficialForest=drawing.checked;redrawVerifiedForest()};
+ }
  $('mfeGeoInput').onchange=async e=>{try{const f=e.target.files[0];if(!f)return;const r=importMfeGeojson(JSON.parse(await f.text()),f.name);$('mfeImportStatus').textContent=`${r.recognized} de ${r.total} polígonos reconocidos por nombre científico. Fuente no autenticada.`}catch(err){$('mfeImportStatus').textContent='Error: '+err.message}};
  $('phCsvInput').onchange=async e=>{try{const f=e.target.files[0];if(!f)return;const r=parsePhCsv(await f.text());$('phImportStatus').textContent=`${r.samples} muestras, ${r.cells} cuadrículas con datos.`}catch(err){$('phImportStatus').textContent='Error: '+err.message}};
 };
@@ -831,35 +806,6 @@ drawFlora=function(){importedOldDrawFlora();redrawVerifiedForest();drawVerifiedP
 
 </script>
 
-<script>
-
-/* v1.8: carga automática de datos ya procesados y servidos junto a la aplicación.
-   No sustituye la adquisición y procesamiento de los archivos oficiales. */
-async function loadProcessedSources(){
- const status=document.createElement('div');status.id='processedStatus';
- status.style.cssText='position:absolute;right:12px;bottom:64px;z-index:850;background:#163527;color:#d8e9d9;padding:7px 10px;border-radius:8px;font-size:11px;max-width:260px;pointer-events:none';
- document.body.appendChild(status);
- const messages=[];
- try{
-  const r=await fetch('./data/manifest.json',{cache:'no-store'});
-  if(!r.ok)throw Error('Sin datos procesados');
-  const m=await r.json();
-  if(m.forest!=='no disponible'){
-   const f=await fetch('./data/mfe_lavera.geojson');if(!f.ok)throw Error('No se pudo leer GeoJSON MFE');
-   const obj=await f.json();const result=importMfeGeojson(obj,'MFE25 procesado');
-   messages.push('MFE: '+result.recognized+' polígonos con taxón identificado');
-  }
-  if(m.ph!=='no disponible'){
-   const r=await fetch('./data/ph_lavera.csv');if(!r.ok)throw Error('No se pudo leer CSV pH');
-   const result=parsePhCsv(await r.text());
-   messages.push('SoilGrids: '+result.cells+' cuadrículas con pH estimado');
-  }
-  status.textContent=messages.length?messages.join(' · '):'Sin archivos de MFE/pH procesados';
- }catch(e){status.textContent='Bosques y pH: no hay archivos oficiales precargados. En Flora puedes importar datos geográficos reales.';console.info(e)}
-}
-if(location.protocol!=='file:')loadProcessedSources();
-
-</script>
 <style>
 #appHealth{position:fixed;left:12px;bottom:83px;z-index:960;background:#102d23;color:#f2f6f0;border:1px solid #648b70;border-radius:10px;padding:8px 12px;font:12px system-ui;max-width:280px;box-shadow:0 2px 12px #0006}
 #appHealth button{margin-left:7px;background:#284d39;color:white;border:1px solid #789b80;border-radius:6px;padding:4px}
@@ -1166,45 +1112,7 @@ if(location.protocol!=='file:')loadProcessedSources();
 })();
 
 </script>
-<style>
-#vsMfeStatus{margin:8px 0;padding:10px;background:#234737;border-radius:10px;font-size:12px;line-height:1.5}
-</style>
-<script>
 
-/* v3.1: official MFE polygon evidence only when verified taxon names are available.
-   No unverified MFE numeric codes are mapped to species. */
-(function(){
- if(typeof forestEvidence!=='function'||typeof insidePolygon!=='function'||typeof mfeFeatures==='undefined')return;
- const oldEvidence=forestEvidence;
- const habitat={0:['roble','castano'],1:['pino'],2:['roble','castano'],3:[],4:['encina','roble'],5:['roble','pino','castano'],9:[],10:['roble','castano']};
- const samples=c=>{const b=c.bounds,out=[];for(const dy of [.2,.5,.8])for(const dx of [.2,.5,.8])out.push([b[0][1]+(b[1][1]-b[0][1])*dx,b[0][0]+(b[1][0]-b[0][0])*dy]);return out};
- function officialEvidence(c){
-   if(!mfeFeatures.length)return null;
-   const wants=habitat[selected]||['roble','pino','castano'];
-   if(!wants.length)return {state:'neutral',source:'MFE25',reason:'Especie con hábitat variado: sin bonificación forestal'};
-   let matched=0,identified=0;
-   for(const point of samples(c)){
-     const kinds=new Set();
-     for(const f of mfeFeatures){if(insidePolygon(point,f.geometry))kinds.add(f.properties._veraKind)}
-     if(kinds.size){identified++;if([...kinds].some(k=>wants.includes(k)))matched++}
-   }
-   if(matched)return {state:'match',matched,identified,source:'MFE25',reason:'MFE25: '+matched+'/9 muestras con especie compatible'};
-   if(identified)return {state:'different',matched:0,identified,source:'MFE25',reason:'MFE25: '+identified+'/9 muestras identificadas, ninguna compatible'};
-   return {state:'unknown',source:'MFE25',reason:'MFE25 disponible, sin especies identificadas en las muestras'};
- }
- forestEvidence=function(c){const official=officialEvidence(c);if(official&&official.state!=='unknown')return official;const osm=oldEvidence(c);return {...osm,source:'OpenStreetMap',reason:official&&osm.state==='unknown'?'MFE25 y OSM: sin especies identificadas en las muestras':osm.reason}};
- const oldImport=importMfeGeojson;
- importMfeGeojson=function(obj,filename){const result=oldImport(obj,filename);if(typeof gridDraw==='function')gridDraw();return result};
- const oldDetail=showGridDetail;
- showGridDetail=function(lat,lon){oldDetail(lat,lon);if(tab!=='pred')return;
-   const c=cellFor(lat,lon),ev=forestEvidence(c),root=document.getElementById('detail');if(!root)return;
-   const block=document.createElement('p');block.id='vsMfeStatus';
-   block.textContent='🌳 Fuente forestal usada en el índice: '+ev.source+'. '+ev.reason+'. '+(mfeFeatures.length?'Polígonos MFE con taxón reconocido: '+mfeFeatures.length+'.':'Aún no se han cargado polígonos MFE25 interpretables; la capa WMS solo se muestra visualmente.');
-   root.appendChild(block);
- };
-})();
-
-</script>
 
 <style>
 .vs-explain{margin:12px 0;padding:12px;border:1px solid #6d927b;border-radius:12px;background:#18382c;color:#f3f7f0}
@@ -1383,25 +1291,16 @@ if(location.protocol!=='file:')loadProcessedSources();
   const weatherOK=!!d&&Number.isFinite(d.max)&&Number.isFinite(d.min)&&Number.isFinite(rain);
   const altitudeOK=Number.isFinite(alt);
   // The underlying grid is regional and unvalidated, so do not present 'high confidence'.
-  let source='Sin vegetación identificada',forestOK=false,official=false;
-  if(typeof mfeFeatures!=='undefined'&&mfeFeatures.length){
-   const ev=forestEvidence(c);
-   if(ev.source==='MFE25'&&['match','different'].includes(ev.state)){
-    official=true;forestOK=true;source='MFE25 vectorial importado';
-   }
-  }
-  if(!forestOK&&typeof forestData!=='undefined'&&forestData){
-   const ev=forestEvidence(c);
-   if(['match','different'].includes(ev.state)){forestOK=true;source='OpenStreetMap (cobertura parcial)'}
-  }
+  const ev=forestEvidence(c);
+  const forestOK=Boolean(forestData)&&['match','different'].includes(ev.state);
+  const source=forestOK?'OpenStreetMap (cobertura parcial)':'Sin vegetación identificada';
   const issues=[];
   if(!weatherOK)issues.push('Faltan temperatura o lluvia acumulada completas para la fecha seleccionada.');
   if(!altitudeOK)issues.push('No hay altitud válida para la celda.');
   if(!forestOK)issues.push('No se ha identificado vegetación arbórea para esta celda.');
-  else if(!official)issues.push('La identificación forestal procede de OSM, con cobertura incompleta.');
+  else issues.push('La identificación forestal procede de OSM, con cobertura incompleta.');
   if(weatherOK&&altitudeOK)issues.push('Meteorología modelizada y resolución regional (~8–12 km), no mediciones en el setal.');
-  const level=(!weatherOK||!altitudeOK)?'Baja':official?'Media':'Baja';
-  return {level,weatherOK,altitudeOK,forestOK,source,issues};
+  return {level:'Baja',weatherOK,altitudeOK,forestOK,source,issues};
  }
  function redraw(){
   layer.clearLayers();if(tab!=='pred'||map.getZoom()<11)return;
@@ -1415,7 +1314,7 @@ if(location.protocol!=='file:')loadProcessedSources();
  }
  const oldDraw=gridDraw;
  gridDraw=function(){oldDraw();redraw();if(tab==='pred'){
-  const el=document.getElementById('legend');if(el)el.innerHTML+=' · Datos: baja/media = cobertura de fuentes, no certeza de hallar setas';
+  const el=document.getElementById('legend');if(el)el.innerHTML+=' · Datos: cobertura de fuentes, no certeza de hallar setas';
  }};
  const oldDetail=showGridDetail;
  showGridDetail=function(lat,lon){oldDetail(lat,lon);if(tab!=='pred')return;
@@ -1942,7 +1841,7 @@ setTimeout(enhance,800);
    if(forest?.obj&&!mfeFeatures.length)oldMfe(forest.obj,forest.filename||'Importación guardada');
    const ph=await read('ph');
    if(ph?.csv&&!phSamples.length)oldPh(ph.csv);
-   if(forest||ph){renderMap();if(['flora','pred'].includes(window.tab))renderPanel();}
+   if(forest||ph){renderMap();if(['flora','pred'].includes(tab))renderPanel();}
   }catch(e){console.warn('Restauración espacial',e)}
  }
  restore();
@@ -1966,74 +1865,5 @@ document.addEventListener('click',function(event){
 });
 </script>
 
-<script id="vs32-official-forest">
-/* MFE official visual reference: named layer and alternate official WMS; no fake forest/pH data. */
-(()=>{
-'use strict';
-const services=[
- {url:'https://geoserver.iepnb.es/geoserver/foto_fija_mfe/wms',layer:null,label:'IEPNB Foto Fija MFE (WMS)'},
- {url:'https://wms.mapama.gob.es/sig/Biodiversidad/MFE',layer:'LC.LandCoverSurfaces',label:'MITECO MFE (WMS antiguo)'}
-];
-let overlay=null,active=false,loading=false,notice='';
-function status(){const el=document.getElementById('vs32-state');if(el)el.textContent=notice||'Capa oficial solo visual. No modifica la predicción y no incluye pH.';}
-function button(){const el=document.getElementById('vs32-btn');if(el){el.disabled=loading;el.textContent=active?'Ocultar mapa forestal oficial':'Mostrar mapa forestal oficial (MITECO)';}}
-function namedLayers(xml){
- const layers=Array.from(xml.getElementsByTagName('*')).filter(n=>n.localName==='Layer');
- return layers.map(n=>{
-  const children=Array.from(n.childNodes).filter(x=>x.nodeType===1);
-  const name=children.find(x=>x.localName==='Name');
-  const title=children.find(x=>x.localName==='Title');
-  return {name:name?.textContent?.trim(),title:title?.textContent?.trim()||''};
- }).filter(x=>x.name);
-}
-async function discover(url){
- const c=new AbortController(),timer=setTimeout(()=>c.abort(),11000);
- try{
-  const r=await fetch(url+'?SERVICE=WMS&REQUEST=GetCapabilities',{signal:c.signal});
-  if(!r.ok)throw Error('HTTP '+r.status);
-  const body=await r.text();
-  const xml=new DOMParser().parseFromString(body,'text/xml');
-  if(xml.getElementsByTagName('parsererror').length)throw Error('XML inválido');
-  const list=namedLayers(xml);
-  if(!list.length)throw Error('sin capas identificables (respuesta '+xml.documentElement?.localName+')');
-  return (list.find(x=>/ff_uso|forestal|landcoversurfaces|mfe/i.test(x.name+' '+x.title))||list[0]).name;
- }finally{clearTimeout(timer)}
-}
-async function activate(){
- if(!window.vsLeafletMap||!window.L){notice='Mapa no disponible todavía.';status();return;}
- if(active){window.vsLeafletMap.removeLayer(overlay);active=false;notice='Capa oficial desactivada.';status();button();return;}
- if(overlay){overlay.addTo(window.vsLeafletMap);active=true;notice='Capa oficial reactivada; verifica que se dibujen las imágenes.';status();button();return;}
- loading=true;button();notice='Conectando con el mapa forestal oficial…';status();
- const failures=[];
- for(const service of services){
-  try{
-   const name=service.layer||await discover(service.url);
-   const layer=L.tileLayer.wms(service.url,{layers:name,format:'image/png',transparent:true,version:'1.3.0',opacity:0.65,attribution:'Mapa Forestal de España © MITECO / IEPNB'});
-   // A successful WMS image request is required before claiming the layer is visible.
-   const ok=await new Promise((resolve,reject)=>{
-    let settled=false;const finish=(err)=>{if(settled)return;settled=true;clearTimeout(timer);layer.off('tileload',onLoad);layer.off('tileerror',onError);err?reject(err):resolve(true)};
-    const onLoad=(e)=>{if(e?.tile?.naturalWidth>0)finish();else finish(Error('imagen vacía'))};let errors=0;const onError=()=>{if(++errors>=2)finish(Error('imágenes no disponibles'))};
-    const timer=setTimeout(()=>finish(Error('tiempo de espera agotado')),13000);
-    layer.on('tileload',onLoad);layer.on('tileerror',onError);layer.addTo(window.vsLeafletMap);
-   }).catch(e=>{window.vsLeafletMap.removeLayer(layer);throw e});
-   if(ok){overlay=layer;active=true;notice='Se recibió una imagen WMS de ('+service.label+'). Comprueba visualmente la capa. No se usa para calcular el índice.';break;}
-  }catch(e){failures.push(service.label+': '+e.message)}
- }
- if(!active)notice='No se ha podido cargar el mapa oficial. '+failures.join(' / ')+'. Los bosques OSM siguen disponibles.';
- loading=false;button();status();
-}
-function install(){
- const tabButton=document.querySelector('nav button.active');
- if(!tabButton||!/flora/i.test(tabButton.textContent||''))return;
- const base=document.getElementById('loadForest');if(!base||document.getElementById('vs32-btn'))return;
- const b=document.createElement('button');b.type='button';b.id='vs32-btn';b.style.marginTop='10px';b.addEventListener('click',activate);
- const p=document.createElement('p');p.className='notice';p.id='vs32-state';
- base.insertAdjacentElement('afterend',p);p.insertAdjacentElement('beforebegin',b);button();status();
-}
-const panel=document.getElementById('panelBody');
-if(panel)new MutationObserver(()=>queueMicrotask(install)).observe(panel,{childList:true});
-document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>setTimeout(install,0)));
-install();
-})();
-</script>
+<script src="./mfe-vera.js" defer></script>
 </body></html>
