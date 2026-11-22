@@ -51,10 +51,8 @@ html,body{height:100%;overscroll-behavior:none}button,select,input{touch-action:
  #catalogScreen{top:calc(58px + env(safe-area-inset-top))!important;bottom:calc(65px + env(safe-area-inset-bottom))!important;overflow-y:auto;-webkit-overflow-scrolling:touch}
 }
 @media(max-width:390px){nav button{font-size:9px;padding:6px 1px}header h1{font-size:17px}}
-.area-picker{position:absolute;z-index:700;top:12px;right:12px;background:#143a2beF;border:1px solid #64866e;border-radius:12px;padding:6px 9px;max-width:160px}.area-picker label{font-size:10px;display:block;color:#c8decf}.area-picker select{font-size:13px;padding:6px;background:#173529;color:white;max-width:140px}@media(max-width:760px){.area-picker{top:10px;right:9px;max-width:140px}.area-picker select{max-width:120px}.legend{top:94px!important}} </style><style id="vs-beta23-layout">@media (min-width:761px){#workspace{grid-template-columns:minmax(315px,360px) minmax(0,1fr)}aside{min-width:0;overflow-x:hidden}#panelBody{overflow-wrap:anywhere}}@media (max-width:760px){#vsQaToggle{top:auto!important;bottom:calc(78px + env(safe-area-inset-bottom))!important;right:12px!important}#vsQaPanel{top:calc(65px + env(safe-area-inset-top))!important;right:10px!important;max-height:65dvh!important}}#vsQaPanel button{margin:4px 3px!important}#vsQaPanel{box-sizing:border-box}</style><style id="vs-beta24-css">
+.area-picker{position:absolute;z-index:700;top:12px;right:12px;background:#143a2beF;border:1px solid #64866e;border-radius:12px;padding:6px 9px;max-width:160px}.area-picker label{font-size:10px;display:block;color:#c8decf}.area-picker select{font-size:13px;padding:6px;background:#173529;color:white;max-width:140px}@media(max-width:760px){.area-picker{top:10px;right:9px;max-width:140px}.area-picker select{max-width:120px}.legend{top:94px!important}} </style><style id="vs-beta23-layout">@media (min-width:761px){#workspace{grid-template-columns:minmax(315px,360px) minmax(0,1fr)}aside{min-width:0;overflow-x:hidden}#panelBody{overflow-wrap:anywhere}}</style><style id="vs-beta24-css">
 @media(max-width:760px){
- #vsQaToggle{top:10px!important;bottom:auto!important;right:62px!important}
- #vsQaPanel{max-width:calc(100vw - 20px)!important}
  .legend{max-width:185px!important;font-size:11px!important}
 }
 .vs-photo-card{padding:10px;border:1px solid #527b63;border-radius:10px;margin:10px 0;background:#193b2c}
@@ -68,12 +66,29 @@ html,body{height:100%;overscroll-behavior:none}button,select,input{touch-action:
 #mapOptions > div:not([hidden]),#mapOptions > section:not([hidden]){position:static;max-width:none!important;margin:0 0 8px}
 #mapOptions #legend{pointer-events:auto}
 #mapOptions #vsModeSelect{max-width:100%}
+.header-actions{display:flex;align-items:center;gap:8px;flex:none}
+#vsQaToggle{font-size:12px;padding:6px 9px}
+#vsQaPanel[hidden]{display:none}
+#vsQaPanel{position:fixed;z-index:1251;right:12px;top:74px;width:min(390px,calc(100% - 24px));max-height:min(650px,calc(100dvh - 86px));display:flex;flex-direction:column;background:#102b22;color:#f2f8f2;border:1px solid #9dbb9f;border-radius:12px;box-shadow:0 5px 20px #0009;font-size:14px}
+.qa-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 12px;border-bottom:1px solid #527b63}
+.qa-heading h2{font-size:16px;margin:0}
+.qa-body{min-height:0;overflow:auto;overscroll-behavior:contain;overflow-wrap:anywhere;padding:0 12px 12px}
+.qa-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+#vsQaClose,.qa-actions button{min-height:44px}
+@media(max-width:760px){
+ header{padding-left:max(8px,env(safe-area-inset-left));padding-right:max(8px,env(safe-area-inset-right));gap:6px}
+ header>div:first-child{min-width:0}
+ header h1 small{white-space:nowrap}
+ .header-actions{gap:5px}
+ .header-actions button{min-height:44px;padding-inline:7px}
+ #vsQaPanel{top:calc(64px + env(safe-area-inset-top));bottom:max(8px,env(safe-area-inset-bottom));left:max(8px,env(safe-area-inset-left));right:max(8px,env(safe-area-inset-right));width:auto;max-height:none}
+}
 @media(min-width:761px){
  #workspace.panel-collapsed{grid-template-columns:minmax(0,1fr)}
  #workspace.panel-collapsed #panel{display:none}
  #workspace.panel-collapsed #filters{display:block}
 }
-</style></head><body><header><div><h1>🍄 VeraSetas <small>v4.0 Beta 35</small></h1><small>La Vera · Gargüera · Cáceres</small></div><button id="userMenu" title="Información">☰</button></header><nav id="tabs"><button data-tab="pred" class="active">Predicción</button><button data-tab="explore">Explora</button><button data-tab="spots">Setales</button><button data-tab="climate">Clima</button><button data-tab="flora">Flora</button><button data-tab="catalog">Catálogo</button></nav><div class="overlay" id="overlay"></div><div id="workspace"><aside id="panel"><div class="row"><h2 id="panelTitle">Predicción</h2><button id="closePanel" type="button" aria-label="Cerrar panel" style="flex:0 0 auto">✕</button></div><div id="panelBody"></div></aside><div id="mapWrap"><div id="map"></div><button class="floating" id="filters" aria-label="Abrir panel" aria-controls="panel">☷</button><button type="button" id="mapOptionsToggle" aria-expanded="false" aria-controls="mapOptions"><span aria-hidden="true">⚙️</span> Opciones del mapa</button><section id="mapOptions" aria-labelledby="mapOptionsToggle" hidden><div class="area-picker"><label for="areaSelect">Zona del mapa</label><select id="areaSelect" aria-label="Ir a zona"><option value="vera">La Vera</option><option value="garguera">Gargüera</option><option value="caceres">Cáceres</option><option value="todo">Toda la zona</option></select></div><div class="legend" id="legend"></div></section><div id="detail" class="hidden"></div><div class="mapbuttons"><button id="locate" title="Mi posición">◎</button><button id="layersBtn" title="Capas base">▧</button><button id="zoomIn" title="Acercar">+</button><button id="zoomOut" title="Alejar">−</button></div><div class="layers hidden" id="layers"><button class="close" id="closeLayers">✕</button><strong>Mapa base</strong><label><input type="radio" name="base" value="light" checked> Claro</label><label><input type="radio" name="base" value="sat"> Satélite</label><label><input type="radio" name="base" value="topo"> Topográfico</label><label><input type="checkbox" id="relief"> Relieve sombreado</label><label><input type="checkbox" id="trailsToggle"> Caminos y senderos OSM</label><button id="detailRefresh" type="button">Actualizar detalle visible</button><small id="detailStatus" class="muted">Acerca el mapa (zoom 12+) y activa caminos. Los datos son parciales.</small></div></div></div><script>
+</style></head><body><header><div><h1>🍄 VeraSetas <small>v4.0 Beta 35</small></h1><small>La Vera · Gargüera · Cáceres</small></div><div class="header-actions"><button id="userMenu" title="Información">☰</button></div></header><nav id="tabs"><button data-tab="pred" class="active">Predicción</button><button data-tab="explore">Explora</button><button data-tab="spots">Setales</button><button data-tab="climate">Clima</button><button data-tab="flora">Flora</button><button data-tab="catalog">Catálogo</button></nav><div class="overlay" id="overlay"></div><div id="workspace"><aside id="panel"><div class="row"><h2 id="panelTitle">Predicción</h2><button id="closePanel" type="button" aria-label="Cerrar panel" style="flex:0 0 auto">✕</button></div><div id="panelBody"></div></aside><div id="mapWrap"><div id="map"></div><button class="floating" id="filters" aria-label="Abrir panel" aria-controls="panel">☷</button><button type="button" id="mapOptionsToggle" aria-expanded="false" aria-controls="mapOptions"><span aria-hidden="true">⚙️</span> Opciones del mapa</button><section id="mapOptions" aria-labelledby="mapOptionsToggle" hidden><div class="area-picker"><label for="areaSelect">Zona del mapa</label><select id="areaSelect" aria-label="Ir a zona"><option value="vera">La Vera</option><option value="garguera">Gargüera</option><option value="caceres">Cáceres</option><option value="todo">Toda la zona</option></select></div><div class="legend" id="legend"></div></section><div id="detail" class="hidden"></div><div class="mapbuttons"><button id="locate" title="Mi posición">◎</button><button id="layersBtn" title="Capas base">▧</button><button id="zoomIn" title="Acercar">+</button><button id="zoomOut" title="Alejar">−</button></div><div class="layers hidden" id="layers"><button class="close" id="closeLayers">✕</button><strong>Mapa base</strong><label><input type="radio" name="base" value="light" checked> Claro</label><label><input type="radio" name="base" value="sat"> Satélite</label><label><input type="radio" name="base" value="topo"> Topográfico</label><label><input type="checkbox" id="relief"> Relieve sombreado</label><label><input type="checkbox" id="trailsToggle"> Caminos y senderos OSM</label><button id="detailRefresh" type="button">Actualizar detalle visible</button><small id="detailStatus" class="muted">Acerca el mapa (zoom 12+) y activa caminos. Los datos son parciales.</small></div></div></div><script>
 
 (function(){
  const toggle=document.getElementById('mapOptionsToggle');
@@ -1793,29 +1808,45 @@ async function runFunctionalChecks(){
 /** Panel opcional para detectar fallos desde Safari sin alterar los datos. */
 function installQaPanel(){
  const btn=document.createElement('button');btn.id='vsQaToggle';btn.type='button';btn.textContent='Diagnóstico';
- btn.setAttribute('aria-label','Abrir diagnóstico de VeraSetas');
- btn.style.cssText='position:fixed;top:13px;right:64px;left:auto;bottom:auto;z-index:1250;padding:6px 8px;font-size:11px;background:#173c2c;color:white;border:1px solid #9dbb9f;border-radius:9px';
+ btn.setAttribute('aria-expanded','false');
+ btn.setAttribute('aria-controls','vsQaPanel');
  const panel=document.createElement('section');panel.id='vsQaPanel';panel.hidden=true;
- panel.style.cssText='position:fixed;right:10px;left:auto;top:125px;bottom:auto;z-index:1251;max-width:min(390px,calc(100vw - 20px));max-height:min(70dvh,650px);overflow:auto;background:#102b22;color:#f2f8f2;border:1px solid #9dbb9f;border-radius:12px;padding:14px;box-shadow:0 5px 20px #0009;font:13px system-ui';
- function render(){const r=runSmokeChecks();panel.replaceChildren();const title=document.createElement('h3');title.textContent=`Diagnóstico · ${r.passed}/${r.total} comprobaciones`;panel.append(title);
- const status=document.createElement('p');const wd=window.vsWeatherDiagnostics?.();const stamp=wd?.lastUpdated?new Date(wd.lastUpdated).toLocaleString('es-ES'):'desconocida';status.textContent='Clima: '+(wd?.loaded??0)+'/'+(wd?.total??64)+' · Fuente: '+(wd?.source||'no identificada')+' · '+(wd?.fromCache?'CACHÉ LOCAL':'descarga en esta sesión o sin datos')+' · Marca de almacenamiento: '+stamp+(wd?.rateLimited?' · límite 429':'')+(wd?.cooldownUntil>Date.now()?' · reintento después de '+new Date(wd.cooldownUntil).toLocaleString('es-ES'):'');panel.append(status);
- const list=document.createElement('ul');list.style.paddingLeft='18px';for(const c of r.checks){const li=document.createElement('li');li.textContent=(c.ok?'✓ ':'✗ ')+c.name;li.style.color=c.ok?'#c8e59d':'#ffb0a0';list.append(li)}panel.append(list);
- const runtime=window.VeraSetasRuntime?.errors||[];const failures=document.createElement('p');failures.textContent='Errores recientes: '+runtime.length+' (JavaScript y promesas)';panel.append(failures);
- const note=document.createElement('p');note.textContent=r.note;note.style.fontSize='11px';panel.append(note);
- const refresh=document.createElement('button');refresh.textContent='Repetir comprobación';refresh.onclick=render;panel.append(refresh);
- const functional=document.createElement('button');functional.textContent='Probar las 6 pestañas';functional.style.marginLeft='7px';
+ panel.setAttribute('aria-labelledby','vsQaTitle');
+ panel.innerHTML='<div class="qa-heading"><h2 id="vsQaTitle">Diagnóstico</h2><button id="vsQaClose" type="button" aria-label="Cerrar diagnóstico">✕</button></div><div class="qa-body"></div>';
+ const title=panel.querySelector('h2'),close=panel.querySelector('button'),body=panel.querySelector('.qa-body');
+ function render(){
+  const r=runSmokeChecks();
+  body.replaceChildren();
+  title.textContent=`Diagnóstico · ${r.passed}/${r.total} comprobaciones`;
+ const status=document.createElement('p');const wd=window.vsWeatherDiagnostics?.();const stamp=wd?.lastUpdated?new Date(wd.lastUpdated).toLocaleString('es-ES'):'desconocida';status.textContent='Clima: '+(wd?.loaded??0)+'/'+(wd?.total??gridCells.length)+' · Fuente: '+(wd?.source||'no identificada')+' · '+(wd?.fromCache?'CACHÉ LOCAL':'descarga en esta sesión o sin datos')+' · Marca de almacenamiento: '+stamp+(wd?.rateLimited?' · límite 429':'')+(wd?.cooldownUntil>Date.now()?' · reintento después de '+new Date(wd.cooldownUntil).toLocaleString('es-ES'):'');body.append(status);
+ const list=document.createElement('ul');list.style.paddingLeft='18px';for(const c of r.checks){const li=document.createElement('li');li.textContent=(c.ok?'✓ ':'✗ ')+c.name;li.style.color=c.ok?'#c8e59d':'#ffb0a0';list.append(li)}body.append(list);
+ const runtime=window.VeraSetasRuntime?.errors||[];const failures=document.createElement('p');failures.textContent='Errores recientes: '+runtime.length+' (JavaScript y promesas)';body.append(failures);
+ const note=document.createElement('p');note.textContent=r.note;note.style.fontSize='11px';body.append(note);
+ const actions=document.createElement('div');actions.className='qa-actions';body.append(actions);
+ const refresh=document.createElement('button');refresh.textContent='Repetir comprobación';refresh.onclick=render;actions.append(refresh);
+ const functional=document.createElement('button');functional.textContent='Probar las 6 pestañas';
  functional.onclick=async()=>{functional.disabled=true;functional.textContent='Comprobando…';
   try{const result=await runFunctionalChecks();window.VeraSetasLastFunctionalTest=result;
    const message=document.createElement('p');message.textContent=`Navegación: ${result.passed}/${result.total} pestañas · ${result.errors.length} errores capturados`;
    message.style.color=result.passed===result.total&&!result.errors.length?'#c8e59d':'#ffb0a0';
-   panel.append(message);
-   for(const check of result.checks){const line=document.createElement('p');line.textContent=(check.ok?'✓ ':'✗ ')+check.name+(check.ok?'':' · '+check.detail);panel.append(line)}
-  }catch(err){const msg=document.createElement('p');msg.textContent='Error de prueba: '+err.message;panel.append(msg)}
+   body.append(message);
+   for(const check of result.checks){const line=document.createElement('p');line.textContent=(check.ok?'✓ ':'✗ ')+check.name+(check.ok?'':' · '+check.detail);body.append(line)}
+  }catch(err){const msg=document.createElement('p');msg.textContent='Error de prueba: '+err.message;body.append(msg)}
   finally{functional.disabled=false;functional.textContent='Probar las 6 pestañas'}
- };panel.append(functional);
- const copy=document.createElement('button');copy.textContent='Copiar informe';copy.style.marginLeft='7px';copy.onclick=()=>{const report=JSON.stringify({...r,runtimeErrors:window.VeraSetasRuntime?.errors||[],functional:window.VeraSetasLastFunctionalTest||null},null,2);if(navigator.clipboard?.writeText)navigator.clipboard.writeText(report).catch(()=>window.prompt('Copia este informe:',report));else window.prompt('Copia este informe:',report)};panel.append(copy);
+ };actions.append(functional);
+ const copy=document.createElement('button');copy.textContent='Copiar informe';copy.onclick=()=>{const report=JSON.stringify({...r,runtimeErrors:window.VeraSetasRuntime?.errors||[],functional:window.VeraSetasLastFunctionalTest||null},null,2);if(navigator.clipboard?.writeText)navigator.clipboard.writeText(report).catch(()=>window.prompt('Copia este informe:',report));else window.prompt('Copia este informe:',report)};actions.append(copy);
  }
- btn.onclick=()=>{panel.hidden=!panel.hidden;if(!panel.hidden)render()};document.body.append(btn,panel);
+ function setOpen(open){
+  panel.hidden=!open;
+  btn.setAttribute('aria-expanded',String(open));
+  if(open){render();body.scrollTop=0;close.focus()}
+  else btn.focus();
+ }
+ btn.onclick=()=>setOpen(panel.hidden);
+ close.onclick=()=>setOpen(false);
+ panel.addEventListener('keydown',event=>{if(event.key==='Escape')setOpen(false)});
+ document.getElementById('userMenu').before(btn);
+ document.body.append(panel);
  return {run:runSmokeChecks};
 }
 
