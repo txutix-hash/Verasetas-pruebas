@@ -1,0 +1,866 @@
+{
+  "schema": 1,
+  "retrieved": "2026-11-22",
+  "bounds": [
+    -6.7025,
+    39.225,
+    -5.34,
+    40.2
+  ],
+  "sand": {
+    "dataset": "ISRIC SoilGrids 2.0, sand_0-5cm_mean",
+    "license": "CC BY 4.0",
+    "source": "https://docs.isric.org/globaldata/soilgrids/index.html",
+    "citation": "Poggio et al. (2021), https://doi.org/10.5194/soil-7-217-2021",
+    "download": "https://maps.isric.org/mapserv?map=/map/sand.map&SERVICE=WCS&VERSION=1.0.0&REQUEST=GetCoverage&COVERAGE=sand_0-5cm_mean&CRS=EPSG:4326&BBOX=-6.7025,39.225,-5.34,40.20&WIDTH=500&HEIGHT=425&FORMAT=GEOTIFF_INT16",
+    "method": "Media de píxeles válidos cuyo centro cae en la cuadrícula. Conversión de g/kg a %. Predicción modelizada del contenido de arena a 0–5 cm, resolución original 250 m. No es una medición local."
+  },
+  "host": {
+    "dataset": "GBIF Occurrence API · Tuberaria guttata (L.) Fourr.",
+    "source": "https://www.gbif.org/species/2874024",
+    "query": "https://api.gbif.org/v1/occurrence/search?taxonKey=2874024&country=ES&hasCoordinate=true&hasGeospatialIssue=false&occurrenceStatus=PRESENT&decimalLatitude=39.225,40.20&decimalLongitude=-6.7025,-5.34",
+    "method": "Se conservaron registros CC BY 4.0 o CC0, con incertidumbre explícita >0 y ≤1000 m y margen de incertidumbre dentro de una sola cuadrícula. Son registros de presencia de la planta y pueden incluir observaciones repetidas. Un 0 significa que no se encontraron registros que cumplieran estos filtros. Se excluyó el conjunto de observaciones de Pl@ntNet identificadas automáticamente.",
+    "datasets": {
+      "50c9509d-22c7-4a22-a47d-8c48425ef4a7": {
+        "url": "https://www.gbif.org/dataset/50c9509d-22c7-4a22-a47d-8c48425ef4a7",
+        "licenses": [
+          "CC BY 4.0",
+          "CC0 1.0"
+        ],
+        "name": "iNaturalist Research-grade Observations",
+        "citation": "iNaturalist contributors, iNaturalist (2026). iNaturalist Research-grade Observations. iNaturalist.org. Occurrence dataset https://doi.org/10.15468/ab3s5x accessed via GBIF.org on 2026-11-22.",
+        "doi": "10.15468/ab3s5x"
+      },
+      "6ac3f774-d9fb-4796-b3e9-92bf6c81c084": {
+        "url": "https://www.gbif.org/dataset/6ac3f774-d9fb-4796-b3e9-92bf6c81c084",
+        "licenses": [
+          "CC BY 4.0"
+        ],
+        "name": "NABU|naturgucker",
+        "citation": "naturgucker.de. NABU|naturgucker. Occurrence dataset https://doi.org/10.15468/uc1apo accessed via GBIF.org on 2026-11-22.",
+        "doi": "10.15468/uc1apo"
+      },
+      "7a3679ef-5582-4aaa-81f0-8c2545cafc81": {
+        "url": "https://www.gbif.org/dataset/7a3679ef-5582-4aaa-81f0-8c2545cafc81",
+        "licenses": [
+          "CC BY 4.0"
+        ],
+        "name": "Pl@ntNet observations",
+        "citation": "AFFOUARD A, JOLY A, LOMBARDO J, CHAMP J, GOEAU H, CHOUET M, GRESSE H, BONNET P (2025). Pl@ntNet observations. Version 1.9. Pl@ntNet. Occurrence dataset https://doi.org/10.15468/gtebaa accessed via GBIF.org on 2026-11-22.",
+        "doi": "10.15468/gtebaa"
+      }
+    }
+  },
+  "cells": {
+    "Cuadrícula S2-O2": {
+      "sandMeanPercent": 47.9,
+      "validPixels": 2100,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula S2-O1": {
+      "sandMeanPercent": 46.8,
+      "validPixels": 2100,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula S2-1": {
+      "sandMeanPercent": 45.2,
+      "validPixels": 2080,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula S2-2": {
+      "sandMeanPercent": 48,
+      "validPixels": 2082,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula S2-3": {
+      "sandMeanPercent": 47.6,
+      "validPixels": 2085,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula S2-4": {
+      "sandMeanPercent": 49.7,
+      "validPixels": 2100,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula S2-5": {
+      "sandMeanPercent": 50,
+      "validPixels": 2097,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula S2-6": {
+      "sandMeanPercent": 46.1,
+      "validPixels": 1962,
+      "sampledPixels": 2100,
+      "gbifRecords": [
+        {
+          "key": 5017933610,
+          "datasetKey": "6ac3f774-d9fb-4796-b3e9-92bf6c81c084",
+          "license": "CC BY 4.0"
+        }
+      ],
+      "latestYear": 2011
+    },
+    "Cuadrícula S2-7": {
+      "sandMeanPercent": 42.9,
+      "validPixels": 2051,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula S2-8": {
+      "sandMeanPercent": 42.9,
+      "validPixels": 2044,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula S1-O2": {
+      "sandMeanPercent": 47.6,
+      "validPixels": 2150,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula S1-O1": {
+      "sandMeanPercent": 46.9,
+      "validPixels": 2150,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula S1-1": {
+      "sandMeanPercent": 45.8,
+      "validPixels": 2123,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula S1-2": {
+      "sandMeanPercent": 44.4,
+      "validPixels": 2126,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula S1-3": {
+      "sandMeanPercent": 43.4,
+      "validPixels": 2148,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula S1-4": {
+      "sandMeanPercent": 44.9,
+      "validPixels": 2145,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula S1-5": {
+      "sandMeanPercent": 45.9,
+      "validPixels": 2150,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula S1-6": {
+      "sandMeanPercent": 45.2,
+      "validPixels": 2149,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula S1-7": {
+      "sandMeanPercent": 44.8,
+      "validPixels": 2150,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula S1-8": {
+      "sandMeanPercent": 42.7,
+      "validPixels": 2135,
+      "sampledPixels": 2150,
+      "gbifRecords": [
+        {
+          "key": 5109321124,
+          "datasetKey": "7a3679ef-5582-4aaa-81f0-8c2545cafc81",
+          "license": "CC BY 4.0"
+        }
+      ],
+      "latestYear": 2022
+    },
+    "Cuadrícula 1-O2": {
+      "sandMeanPercent": 48.2,
+      "validPixels": 2071,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 1-O1": {
+      "sandMeanPercent": 47.9,
+      "validPixels": 2047,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 1-1": {
+      "sandMeanPercent": 47.6,
+      "validPixels": 1872,
+      "sampledPixels": 2100,
+      "gbifRecords": [
+        {
+          "key": 2644929447,
+          "datasetKey": "7a3679ef-5582-4aaa-81f0-8c2545cafc81",
+          "license": "CC BY 4.0"
+        }
+      ],
+      "latestYear": 2019
+    },
+    "Cuadrícula 1-2": {
+      "sandMeanPercent": 42.2,
+      "validPixels": 2069,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 1-3": {
+      "sandMeanPercent": 43.4,
+      "validPixels": 2100,
+      "sampledPixels": 2100,
+      "gbifRecords": [
+        {
+          "key": 5025719185,
+          "datasetKey": "6ac3f774-d9fb-4796-b3e9-92bf6c81c084",
+          "license": "CC BY 4.0"
+        }
+      ],
+      "latestYear": 2011
+    },
+    "Cuadrícula 1-4": {
+      "sandMeanPercent": 41,
+      "validPixels": 2095,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 1-5": {
+      "sandMeanPercent": 42.5,
+      "validPixels": 2063,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 1-6": {
+      "sandMeanPercent": 41.8,
+      "validPixels": 2100,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 1-7": {
+      "sandMeanPercent": 42.9,
+      "validPixels": 2100,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 1-8": {
+      "sandMeanPercent": 46.7,
+      "validPixels": 2100,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 2-O2": {
+      "sandMeanPercent": 49.7,
+      "validPixels": 2146,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 2-O1": {
+      "sandMeanPercent": 48.5,
+      "validPixels": 2116,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 2-1": {
+      "sandMeanPercent": 46.4,
+      "validPixels": 2127,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 2-2": {
+      "sandMeanPercent": 45.3,
+      "validPixels": 2150,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 2-3": {
+      "sandMeanPercent": 45.8,
+      "validPixels": 2150,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 2-4": {
+      "sandMeanPercent": 42.6,
+      "validPixels": 2149,
+      "sampledPixels": 2150,
+      "gbifRecords": [
+        {
+          "key": 5016254479,
+          "datasetKey": "6ac3f774-d9fb-4796-b3e9-92bf6c81c084",
+          "license": "CC BY 4.0"
+        }
+      ],
+      "latestYear": 2021
+    },
+    "Cuadrícula 2-5": {
+      "sandMeanPercent": 41.8,
+      "validPixels": 2147,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 2-6": {
+      "sandMeanPercent": 42,
+      "validPixels": 2148,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 2-7": {
+      "sandMeanPercent": 43.8,
+      "validPixels": 2150,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 2-8": {
+      "sandMeanPercent": 46.8,
+      "validPixels": 2150,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 3-O2": {
+      "sandMeanPercent": 49.1,
+      "validPixels": 2096,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 3-O1": {
+      "sandMeanPercent": 48.6,
+      "validPixels": 1932,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 3-1": {
+      "sandMeanPercent": 47.3,
+      "validPixels": 2063,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 3-2": {
+      "sandMeanPercent": 45.4,
+      "validPixels": 2097,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 3-3": {
+      "sandMeanPercent": 44.6,
+      "validPixels": 2100,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 3-4": {
+      "sandMeanPercent": 43.3,
+      "validPixels": 2100,
+      "sampledPixels": 2100,
+      "gbifRecords": [
+        {
+          "key": 5027467287,
+          "datasetKey": "6ac3f774-d9fb-4796-b3e9-92bf6c81c084",
+          "license": "CC BY 4.0"
+        }
+      ],
+      "latestYear": 2011
+    },
+    "Cuadrícula 3-5": {
+      "sandMeanPercent": 43.4,
+      "validPixels": 2100,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 3-6": {
+      "sandMeanPercent": 44.2,
+      "validPixels": 2100,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 3-7": {
+      "sandMeanPercent": 44.9,
+      "validPixels": 2099,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 3-8": {
+      "sandMeanPercent": 44.5,
+      "validPixels": 2099,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 4-O2": {
+      "sandMeanPercent": 50.1,
+      "validPixels": 1889,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 4-O1": {
+      "sandMeanPercent": 48.4,
+      "validPixels": 1849,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 4-1": {
+      "sandMeanPercent": 46.3,
+      "validPixels": 2037,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 4-2": {
+      "sandMeanPercent": 48.2,
+      "validPixels": 2048,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 4-3": {
+      "sandMeanPercent": 46.8,
+      "validPixels": 2128,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 4-4": {
+      "sandMeanPercent": 47.7,
+      "validPixels": 2117,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 4-5": {
+      "sandMeanPercent": 46.3,
+      "validPixels": 2065,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 4-6": {
+      "sandMeanPercent": 48.6,
+      "validPixels": 2079,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 4-7": {
+      "sandMeanPercent": 49.8,
+      "validPixels": 1985,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 4-8": {
+      "sandMeanPercent": 47.8,
+      "validPixels": 1825,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 5-O2": {
+      "sandMeanPercent": 49.3,
+      "validPixels": 2100,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 5-O1": {
+      "sandMeanPercent": 48.8,
+      "validPixels": 2011,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 5-1": {
+      "sandMeanPercent": 48.9,
+      "validPixels": 2086,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 5-2": {
+      "sandMeanPercent": 48.7,
+      "validPixels": 2099,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 5-3": {
+      "sandMeanPercent": 47.8,
+      "validPixels": 2047,
+      "sampledPixels": 2100,
+      "gbifRecords": [
+        {
+          "key": 5109265790,
+          "datasetKey": "7a3679ef-5582-4aaa-81f0-8c2545cafc81",
+          "license": "CC BY 4.0"
+        },
+        {
+          "key": 5166965781,
+          "datasetKey": "50c9509d-22c7-4a22-a47d-8c48425ef4a7",
+          "license": "CC BY 4.0"
+        }
+      ],
+      "latestYear": 2025
+    },
+    "Cuadrícula 5-4": {
+      "sandMeanPercent": 48.4,
+      "validPixels": 1971,
+      "sampledPixels": 2100,
+      "gbifRecords": [
+        {
+          "key": 4607499400,
+          "datasetKey": "50c9509d-22c7-4a22-a47d-8c48425ef4a7",
+          "license": "CC0 1.0"
+        },
+        {
+          "key": 5109323431,
+          "datasetKey": "7a3679ef-5582-4aaa-81f0-8c2545cafc81",
+          "license": "CC BY 4.0"
+        },
+        {
+          "key": 5166756714,
+          "datasetKey": "50c9509d-22c7-4a22-a47d-8c48425ef4a7",
+          "license": "CC BY 4.0"
+        },
+        {
+          "key": 5167418536,
+          "datasetKey": "50c9509d-22c7-4a22-a47d-8c48425ef4a7",
+          "license": "CC BY 4.0"
+        },
+        {
+          "key": 5167994080,
+          "datasetKey": "50c9509d-22c7-4a22-a47d-8c48425ef4a7",
+          "license": "CC BY 4.0"
+        },
+        {
+          "key": 5168155766,
+          "datasetKey": "50c9509d-22c7-4a22-a47d-8c48425ef4a7",
+          "license": "CC BY 4.0"
+        }
+      ],
+      "latestYear": 2025
+    },
+    "Cuadrícula 5-5": {
+      "sandMeanPercent": 51.2,
+      "validPixels": 2088,
+      "sampledPixels": 2100,
+      "gbifRecords": [
+        {
+          "key": 2603279581,
+          "datasetKey": "50c9509d-22c7-4a22-a47d-8c48425ef4a7",
+          "license": "CC0 1.0"
+        },
+        {
+          "key": 5167701691,
+          "datasetKey": "50c9509d-22c7-4a22-a47d-8c48425ef4a7",
+          "license": "CC BY 4.0"
+        }
+      ],
+      "latestYear": 2025
+    },
+    "Cuadrícula 5-6": {
+      "sandMeanPercent": 52.6,
+      "validPixels": 1971,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 5-7": {
+      "sandMeanPercent": 52.2,
+      "validPixels": 2028,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 5-8": {
+      "sandMeanPercent": 51.7,
+      "validPixels": 1445,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 6-O2": {
+      "sandMeanPercent": 50.2,
+      "validPixels": 2150,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 6-O1": {
+      "sandMeanPercent": 50.9,
+      "validPixels": 2111,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 6-1": {
+      "sandMeanPercent": 49.9,
+      "validPixels": 2137,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 6-2": {
+      "sandMeanPercent": 49.3,
+      "validPixels": 2146,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 6-3": {
+      "sandMeanPercent": 48.9,
+      "validPixels": 2121,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 6-4": {
+      "sandMeanPercent": 48.3,
+      "validPixels": 2137,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 6-5": {
+      "sandMeanPercent": 50.2,
+      "validPixels": 2148,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 6-6": {
+      "sandMeanPercent": 52.1,
+      "validPixels": 2146,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 6-7": {
+      "sandMeanPercent": 54.9,
+      "validPixels": 2125,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 6-8": {
+      "sandMeanPercent": 53,
+      "validPixels": 2141,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 7-O2": {
+      "sandMeanPercent": 51.1,
+      "validPixels": 2076,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 7-O1": {
+      "sandMeanPercent": 51,
+      "validPixels": 2100,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 7-1": {
+      "sandMeanPercent": 50,
+      "validPixels": 2071,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 7-2": {
+      "sandMeanPercent": 49.3,
+      "validPixels": 2091,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 7-3": {
+      "sandMeanPercent": 48.7,
+      "validPixels": 1981,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 7-4": {
+      "sandMeanPercent": 46.3,
+      "validPixels": 2029,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 7-5": {
+      "sandMeanPercent": 46.2,
+      "validPixels": 2075,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 7-6": {
+      "sandMeanPercent": 48.7,
+      "validPixels": 2093,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 7-7": {
+      "sandMeanPercent": 51.4,
+      "validPixels": 2086,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 7-8": {
+      "sandMeanPercent": 52.5,
+      "validPixels": 2097,
+      "sampledPixels": 2100,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 8-O2": {
+      "sandMeanPercent": 53.5,
+      "validPixels": 2035,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 8-O1": {
+      "sandMeanPercent": 51.4,
+      "validPixels": 2024,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 8-1": {
+      "sandMeanPercent": 51.7,
+      "validPixels": 2139,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 8-2": {
+      "sandMeanPercent": 47.4,
+      "validPixels": 2088,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 8-3": {
+      "sandMeanPercent": 46.8,
+      "validPixels": 2134,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 8-4": {
+      "sandMeanPercent": 47.2,
+      "validPixels": 2150,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 8-5": {
+      "sandMeanPercent": 45.8,
+      "validPixels": 2140,
+      "sampledPixels": 2150,
+      "gbifRecords": [
+        {
+          "key": 5012938514,
+          "datasetKey": "6ac3f774-d9fb-4796-b3e9-92bf6c81c084",
+          "license": "CC BY 4.0"
+        },
+        {
+          "key": 5014377530,
+          "datasetKey": "6ac3f774-d9fb-4796-b3e9-92bf6c81c084",
+          "license": "CC BY 4.0"
+        },
+        {
+          "key": 5021006727,
+          "datasetKey": "6ac3f774-d9fb-4796-b3e9-92bf6c81c084",
+          "license": "CC BY 4.0"
+        },
+        {
+          "key": 5021079292,
+          "datasetKey": "6ac3f774-d9fb-4796-b3e9-92bf6c81c084",
+          "license": "CC BY 4.0"
+        }
+      ],
+      "latestYear": 2023
+    },
+    "Cuadrícula 8-6": {
+      "sandMeanPercent": 46.3,
+      "validPixels": 2146,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 8-7": {
+      "sandMeanPercent": 48.6,
+      "validPixels": 2147,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    },
+    "Cuadrícula 8-8": {
+      "sandMeanPercent": 47.3,
+      "validPixels": 2149,
+      "sampledPixels": 2150,
+      "gbifRecords": [],
+      "latestYear": null
+    }
+  }
+}
