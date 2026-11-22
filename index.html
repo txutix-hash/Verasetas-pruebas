@@ -61,7 +61,36 @@ html,body{height:100%;overscroll-behavior:none}button,select,input{touch-action:
 .vs-photo-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:8px 0}
 .vs-photo-grid img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:8px}
 .vs-photo-card button{font-size:12px;padding:7px}
-</style></head><body><header><div><h1>🍄 VeraSetas <small>v4.0 Beta 33</small></h1><small>La Vera · Gargüera · Cáceres</small></div><button id="userMenu" title="Información">☰</button></header><nav id="tabs"><button data-tab="pred" class="active">Predicción</button><button data-tab="explore">Explora</button><button data-tab="spots">Setales</button><button data-tab="climate">Clima</button><button data-tab="flora">Flora</button><button data-tab="catalog">Catálogo</button></nav><div class="overlay" id="overlay"></div><div id="workspace"><aside id="panel"><div class="row"><h2 id="panelTitle">Predicción</h2><button id="closePanel" style="flex:0 0 auto">✕</button></div><div id="panelBody"></div></aside><div id="mapWrap"><div id="map"></div><button class="floating" id="filters" aria-label="Abrir filtros">☷</button><div class="area-picker"><label for="areaSelect">Zona del mapa</label><select id="areaSelect" aria-label="Ir a zona"><option value="vera">La Vera</option><option value="garguera">Gargüera</option><option value="caceres">Cáceres</option><option value="todo">Toda la zona</option></select></div><div class="legend" id="legend"></div><div id="detail" class="hidden"></div><div class="mapbuttons"><button id="locate" title="Mi posición">◎</button><button id="layersBtn" title="Capas base">▧</button><button id="zoomIn" title="Acercar">+</button><button id="zoomOut" title="Alejar">−</button></div><div class="layers hidden" id="layers"><button class="close" id="closeLayers">✕</button><strong>Mapa base</strong><label><input type="radio" name="base" value="light" checked> Claro</label><label><input type="radio" name="base" value="sat"> Satélite</label><label><input type="radio" name="base" value="topo"> Topográfico</label><label><input type="checkbox" id="relief"> Relieve sombreado</label><label><input type="checkbox" id="trailsToggle"> Caminos y senderos OSM</label><button id="detailRefresh" type="button">Actualizar detalle visible</button><small id="detailStatus" class="muted">Acerca el mapa (zoom 12+) y activa caminos. Los datos son parciales.</small></div></div></div><script>
+</style><style>
+#mapOptionsToggle{position:absolute;z-index:701;top:10px;right:12px;min-height:44px;background:#173c2c}
+#mapOptions{position:absolute;z-index:700;top:60px;right:12px;width:min(310px,calc(100% - 24px));max-height:calc(100% - 72px);overflow:auto;overscroll-behavior:contain;padding:10px;border:1px solid #64866e;border-radius:12px;background:#102d23;box-shadow:0 5px 18px #0006}
+#mapOptions [hidden]{display:none!important}
+#mapOptions > div:not([hidden]),#mapOptions > section:not([hidden]){position:static;max-width:none!important;margin:0 0 8px}
+#mapOptions #legend{pointer-events:auto}
+#mapOptions #vsModeSelect{max-width:100%}
+</style></head><body><header><div><h1>🍄 VeraSetas <small>v4.0 Beta 35</small></h1><small>La Vera · Gargüera · Cáceres</small></div><button id="userMenu" title="Información">☰</button></header><nav id="tabs"><button data-tab="pred" class="active">Predicción</button><button data-tab="explore">Explora</button><button data-tab="spots">Setales</button><button data-tab="climate">Clima</button><button data-tab="flora">Flora</button><button data-tab="catalog">Catálogo</button></nav><div class="overlay" id="overlay"></div><div id="workspace"><aside id="panel"><div class="row"><h2 id="panelTitle">Predicción</h2><button id="closePanel" style="flex:0 0 auto">✕</button></div><div id="panelBody"></div></aside><div id="mapWrap"><div id="map"></div><button class="floating" id="filters" aria-label="Abrir filtros">☷</button><button type="button" id="mapOptionsToggle" aria-expanded="false" aria-controls="mapOptions"><span aria-hidden="true">⚙️</span> Opciones del mapa</button><section id="mapOptions" aria-labelledby="mapOptionsToggle" hidden><div class="area-picker"><label for="areaSelect">Zona del mapa</label><select id="areaSelect" aria-label="Ir a zona"><option value="vera">La Vera</option><option value="garguera">Gargüera</option><option value="caceres">Cáceres</option><option value="todo">Toda la zona</option></select></div><div class="legend" id="legend"></div></section><div id="detail" class="hidden"></div><div class="mapbuttons"><button id="locate" title="Mi posición">◎</button><button id="layersBtn" title="Capas base">▧</button><button id="zoomIn" title="Acercar">+</button><button id="zoomOut" title="Alejar">−</button></div><div class="layers hidden" id="layers"><button class="close" id="closeLayers">✕</button><strong>Mapa base</strong><label><input type="radio" name="base" value="light" checked> Claro</label><label><input type="radio" name="base" value="sat"> Satélite</label><label><input type="radio" name="base" value="topo"> Topográfico</label><label><input type="checkbox" id="relief"> Relieve sombreado</label><label><input type="checkbox" id="trailsToggle"> Caminos y senderos OSM</label><button id="detailRefresh" type="button">Actualizar detalle visible</button><small id="detailStatus" class="muted">Acerca el mapa (zoom 12+) y activa caminos. Los datos son parciales.</small></div></div></div><script>
+
+(function(){
+ const toggle=document.getElementById('mapOptionsToggle');
+ const options=document.getElementById('mapOptions');
+ function setOpen(open){
+  if(open){
+   const health=document.getElementById('appHealth');
+   if(health)health.hidden=false;
+  }
+  options.hidden=!open;
+  toggle.setAttribute('aria-expanded',String(open));
+ }
+ toggle.addEventListener('click',()=>setOpen(options.hidden));
+ document.addEventListener('keydown',event=>{
+  if(event.key!=='Escape'||options.hidden)return;
+  setOpen(false);
+  toggle.focus();
+ });
+ document.getElementById('tabs').addEventListener('click',event=>{
+  if(event.target.closest('[data-tab]'))setOpen(false);
+ });
+})();
 
 function verasetasLeafletFailed(){
  const msg=document.createElement('div');
@@ -161,7 +190,7 @@ let tileFailures=0,tileSuccesses=0;
 const tileNotice=document.createElement('div');
 tileNotice.id='tileNotice';tileNotice.style.cssText='display:none;position:absolute;top:75px;right:12px;z-index:650;background:#4b3021;color:#fff;border:1px solid #dcaa73;border-radius:10px;padding:10px;max-width:265px;font-size:12px';
 tileNotice.textContent='No se están descargando las imágenes del mapa. Comprueba Internet, bloqueadores o prueba otra capa con el botón ▧.';
-document.getElementById('mapWrap').appendChild(tileNotice);
+$('mapOptions').appendChild(tileNotice);
 Object.values(bases).forEach(layer=>{layer.on('tileerror',()=>{tileFailures++;if(tileFailures>=4&&tileSuccesses===0)tileNotice.style.display='block'});layer.on('tileload',()=>{tileSuccesses++;tileNotice.style.display='none'})});
 let relief=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Elevation/World_Hillshade/MapServer/tile/{z}/{y}/{x}',{opacity:.35,attribution:'Hillshade contributors',maxZoom:15});layersOverlay.addTo(map);markers.addTo(map);const forestLayer=L.geoJSON(null,{style:f=>({color:forestColor(f.properties.kind),fillColor:forestColor(f.properties.kind),weight:1,fillOpacity:.33}),onEachFeature:(f,l)=>l.bindPopup('<b>'+esc(f.properties.kind)+'</b><br><small>OpenStreetMap · '+esc(f.properties.detail)+'</small>')});let forestData=null,forestStatus='Pulsa «Cargar bosques» para consultar OpenStreetMap.',forestFilter='all';
 function closePanel(){ $('panel').classList.remove('open');$('overlay').classList.remove('open')}function openPanel(){ $('panel').classList.add('open');$('overlay').classList.add('open')}$('filters').onclick=openPanel;$('closePanel').onclick=closePanel;$('overlay').onclick=closePanel;document.addEventListener('keydown',e=>{if(e.key==='Escape'){closePanel();$('layers').classList.add('hidden');$('detail').classList.add('hidden')}});$('userMenu').onclick=()=>{alert('VeraSetas v3.4 · Prototipo sin cuentas de usuario. Tus setales se guardan en este navegador. No compartimos tu posición.')} ;$('zoomIn').onclick=()=>map.zoomIn();$('zoomOut').onclick=()=>map.zoomOut();$('layersBtn').onclick=()=>$('layers').classList.toggle('hidden');$('closeLayers').onclick=()=>$('layers').classList.add('hidden');document.querySelectorAll('input[name=base]').forEach(x=>x.onchange=()=>{map.removeLayer(base);base=bases[x.value];base.addTo(map);base.bringToBack()});$('relief').onchange=e=>{if(e.target.checked)relief.addTo(map);else map.removeLayer(relief)};map.on('dragstart',()=>{following=false});
@@ -811,13 +840,17 @@ drawFlora=function(){importedOldDrawFlora();redrawVerifiedForest();drawVerifiedP
 #appHealth button{margin-left:7px;background:#284d39;color:white;border:1px solid #789b80;border-radius:6px;padding:4px}
 #appHealth.offline{border-color:#d9b565}
 </style>
-<div id="appHealth" role="status" aria-live="polite"><span id="healthText">Preparando mapa…</span><button id="healthClose" aria-label="Ocultar estado">×</button></div>
+<div id="appHealth" hidden role="status" aria-live="polite"><span id="healthText">Preparando mapa…</span><button id="healthClose" aria-label="Ocultar estado">×</button></div>
 <script>
 
 /* v1.8 stability and usability: preserve existing data and avoid fabricated readings. */
 (function(){
  const panel=document.getElementById('appHealth'),out=document.getElementById('healthText');
- document.getElementById('healthClose').onclick=()=>panel.remove();
+ document.getElementById('mapOptions').appendChild(panel);
+ document.getElementById('healthClose').onclick=()=>{
+  panel.hidden=true;
+  document.getElementById('mapOptionsToggle').focus();
+ };
  function status(){if(!panel.isConnected)return;const online=navigator.onLine;
  panel.classList.toggle('offline',!online);
  out.textContent=(online?'Conectado':'Sin conexión')+' · clima '+gridLoaded+'/'+gridCells.length+' cuadrículas'+(gridErrorCount?' · '+gridErrorCount+' errores':'');
@@ -872,7 +905,7 @@ drawFlora=function(){importedOldDrawFlora();redrawVerifiedForest();drawVerifiedP
 #iphoneHelp .sheet p{line-height:1.55;font-size:14px}#iphoneHelp button{min-height:44px;width:100%}
 #iosStatus{position:fixed;z-index:600;left:50%;top:calc(64px + env(safe-area-inset-top));transform:translateX(-50%);background:#56351b;color:#fff;padding:8px 12px;border-radius:12px;max-width:85vw;text-align:center;font-size:12px;display:none;pointer-events:none}
 </style>
-<div id="iphoneHelp" role="dialog" aria-modal="true" aria-label="Ayuda de VeraSetas"><div class="sheet"><h2>🍄 VeraSetas para iPhone</h2><p><b>Usar el mapa:</b> pulsa ☷ para abrir los filtros; usa ◎ para pedir permiso de ubicación; ▧ cambia entre mapas base.</p><p><b>Instalar:</b> publica esta carpeta en un alojamiento HTTPS, ábrela en Safari, toca Compartir y elige «Añadir a pantalla de inicio».</p><p><b>Sin Internet:</b> el catálogo y la interfaz pueden conservarse tras una primera visita instalada, pero los mapas y la meteorología requieren conexión.</p><p><b>Datos:</b> la predicción micológica es experimental. Los datos oficiales MFE, pH y pluviómetros siguen incompletos.</p><button id="iphoneHelpClose">Cerrar</button></div></div>
+<div id="iphoneHelp" role="dialog" aria-modal="true" aria-label="Ayuda de VeraSetas"><div class="sheet"><h2>🍄 VeraSetas para iPhone</h2><p><b>Usar el mapa:</b> pulsa ☷ para abrir los filtros; pulsa ⚙️ Opciones del mapa para ver la leyenda y los ajustes; usa ◎ para pedir permiso de ubicación; ▧ cambia entre mapas base.</p><p><b>Instalar:</b> publica esta carpeta en un alojamiento HTTPS, ábrela en Safari, toca Compartir y elige «Añadir a pantalla de inicio».</p><p><b>Sin Internet:</b> el catálogo y la interfaz pueden conservarse tras una primera visita instalada, pero los mapas y la meteorología requieren conexión.</p><p><b>Datos:</b> la predicción micológica es experimental. Los datos oficiales MFE, pH y pluviómetros siguen incompletos.</p><button id="iphoneHelpClose">Cerrar</button></div></div>
 <div id="iosStatus" role="status" aria-live="polite"></div>
 <script>
 
@@ -1042,7 +1075,7 @@ drawFlora=function(){importedOldDrawFlora();redrawVerifiedForest();drawVerifiedP
    Nunca se representa el índice como probabilidad calibrada ni como lugar de recolección permitido. */
 (function(){
  if(typeof map==='undefined'||typeof gridCells==='undefined'||typeof gridScore!=='function')return;
- const wrap=document.getElementById('mapWrap');if(!wrap)return;
+ const wrap=document.getElementById('mapOptions');
  const pane=document.createElement('section');pane.id='vsHotspots';pane.setAttribute('aria-label','Zonas más favorables');
  pane.innerHTML='<button type="button" class="vsHotspotToggle" aria-expanded="false">🍄 Ver zonas favorables</button><div class="vsHotspotList" hidden></div>';
  wrap.appendChild(pane);
@@ -1220,7 +1253,7 @@ drawFlora=function(){importedOldDrawFlora();redrawVerifiedForest();drawVerifiedP
  const modeControl=document.createElement('div');
  modeControl.id='vsModeControl';
  modeControl.innerHTML='<label for="vsModeSelect">Mostrar favorabilidad</label><select id="vsModeSelect" aria-label="Modo de favorabilidad"><option value="mine">Mi especie</option><option value="all">Todas las setas</option></select>';
- document.getElementById('mapWrap').appendChild(modeControl);
+ document.getElementById('mapOptions').appendChild(modeControl);
  const modeSelect=modeControl.querySelector('select');
  modeSelect.onchange=()=>{viewMode=modeSelect.value==='all'?'all':'mine';gridDraw();};
  gridScore=function(c){if(viewMode==='mine'||tab!=='pred')return baseGridScore(c);const r=rankings(c);return r.length?r[0].n:null;};
@@ -1372,7 +1405,7 @@ drawFlora=function(){importedOldDrawFlora();redrawVerifiedForest();drawVerifiedP
  const control=document.createElement('div');control.id='vsGridSize';
  control.style.cssText='position:absolute;z-index:800;top:114px;right:10px;background:#17382deF;color:white;padding:7px 9px;border-radius:9px;box-shadow:0 2px 9px #0005;font:12px system-ui;max-width:155px';
  control.innerHTML='<label for="vsGridSizeSelect" style="display:block;margin-bottom:3px">Tamaño visual de casillas</label><select id="vsGridSizeSelect" style="width:100%;padding:5px;background:white;color:#17382d;border-radius:5px"><option value="1">Original (~8–12 km)</option><option value="2" selected>Mitad (~4–6 km)</option><option value="4">Cuarto (~2–3 km)</option><option value="8">Octavo (~1–1,5 km)</option></select><label style="display:flex;align-items:center;gap:5px;margin-top:5px"><input id="vsAutoGrid" type="checkbox" checked> Automático al acercar</label><small style="display:block;margin-top:4px;line-height:1.3">Mismos datos regionales; no mayor precisión.</small>';
- const wrap=document.getElementById('mapWrap');if(!wrap)return;wrap.appendChild(control);
+ document.getElementById('mapOptions').appendChild(control);
  control.querySelector('select').onchange=e=>{automatic=false;control.querySelector('#vsAutoGrid').checked=false;divisions=Number(e.target.value);scheduleGridDraw()};
  control.querySelector('#vsAutoGrid').onchange=e=>{automatic=e.target.checked;if(automatic)updateGridZoom()};
  function updateGridZoom(){if(!automatic||typeof map?.getZoom!=='function')return;const z=map.getZoom(),next=z>=14?8:z>=12?4:z>=10?2:1;if(next!==divisions){divisions=next;control.querySelector('select').value=String(next);scheduleGridDraw()}}
@@ -1414,7 +1447,7 @@ drawFlora=function(){importedOldDrawFlora();redrawVerifiedForest();drawVerifiedP
  const tileData=new Map();let loaded=false;let detailMode=false;
  const ctrl=document.createElement('div');ctrl.id='vsHighRes';ctrl.style.cssText='position:absolute;z-index:810;top:260px;right:10px;background:#17382def;color:#fff;padding:8px;border-radius:9px;font:12px system-ui;max-width:180px;box-shadow:0 2px 9px #0005';
  ctrl.innerHTML='<b>Relieve y bosque detallados</b><div id="vsHrStatus" style="margin:5px 0">Sin datos locales de alta resolución</div><label style="display:block;cursor:pointer;background:#fff;color:#17382d;padding:5px;border-radius:5px;text-align:center">Cargar datos GeoJSON<input id="vsHrInput" type="file" accept=".geojson,.json,application/geo+json" style="display:none"></label><small style="display:block;margin-top:5px">Solo se corrigen las casillas con datos reales. Sin datos: índice regional.</small>';
- const wrap=document.getElementById('mapWrap');if(!wrap)return;wrap.appendChild(ctrl);
+ document.getElementById('mapOptions').appendChild(ctrl);
  const status=ctrl.querySelector('#vsHrStatus');
  function key(lat,lon){return lat.toFixed(5)+','+lon.toFixed(5)}
  function center(c,y,x,n){const b=c.bounds;return [b[0][0]+(y+.5)*(b[1][0]-b[0][0])/n,b[0][1]+(x+.5)*(b[1][1]-b[0][1])/n]}
@@ -1649,7 +1682,7 @@ function boot(){
  window.addEventListener('offline',()=>{setState({online:false});events.emit('network:offline')});
  document.addEventListener('visibilitychange',()=>setState({visible:!document.hidden}));
  // Exposición controlada para diagnóstico de la migración, sin modificar datos ni cálculos.
- window.VeraSetas4=Object.freeze({version:'4.0.0-beta 30',events,getState,diagnostics:installDiagnostics({events,getState})});
+ window.VeraSetas4=Object.freeze({version:'4.0.0-beta 35',events,getState,diagnostics:installDiagnostics({events,getState})});
  window.VeraSetasRuntime=installRuntimeMonitor();
  window.VeraSetasQA=Object.freeze(installQaPanel());
  events.emit('app:ready',getState());
