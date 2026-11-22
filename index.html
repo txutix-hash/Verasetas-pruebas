@@ -294,8 +294,11 @@ async function loadForests(){
  const bounds=leafletMap.getBounds();
  const bbox=[bounds.getSouth(),bounds.getWest(),bounds.getNorth(),bounds.getEast()].map(v=>v.toFixed(5)).join(',');
  if(bounds.getNorth()-bounds.getSouth()>0.30||bounds.getEast()-bounds.getWest()>0.40){report('🔎 La zona visible es demasiado grande. Acerca más el mapa.');return false}
- report('⏳ Consultando bosques de OpenStreetMap…');
- const query=`[out:json][timeout:30];(way["landuse"="forest"](${bbox});way["natural"="wood"](${bbox}););out geom;`;
+ report('⏳ Consultando vegetación de OpenStreetMap…');
+ const jaralPattern='(^|[^[:alpha:]])(cistus|jaras?|jaral(es)?)([^[:alpha:]]|$)';
+ const jaralWays=['species','species:es','genus','genus:es','name'].map(key=>
+  `way["natural"="scrub"]["${key}"~"${jaralPattern}",i](${bbox});`).join('');
+ const query=`[out:json][timeout:30];(way["landuse"="forest"](${bbox});way["natural"="wood"](${bbox});${jaralWays});out geom;`;
  const servers=['https://overpass.kumi.systems/api/interpreter','https://overpass-api.de/api/interpreter','https://overpass.nchc.org.tw/api/interpreter'];
  let data=null,lastError=null;
  for(const url of servers){
@@ -305,10 +308,21 @@ async function loadForests(){
   }catch(err){lastError=err;console.warn('OSM Overpass',url,err)}
  }
  if(!data){report('OpenStreetMap: no se pudieron consultar los bosques. Prueba más tarde. La capa oficial MFE25 se carga por separado en Flora.');return false}
- const features=data.elements.filter(x=>x.geometry?.length>=4&&x.geometry[0].lat===x.geometry[x.geometry.length-1].lat&&x.geometry[0].lon===x.geometry[x.geometry.length-1].lon).slice(0,2500).map(x=>({type:'Feature',properties:{kind:forestKind(x.tags||{}),detail:Object.entries(x.tags||{}).filter(([k])=>['species','genus','name','leaf_type','landuse','natural'].includes(k)).map(([k,v])=>k+': '+v).join(' · ')||'Sin identificación de especie'},geometry:{type:'Polygon',coordinates:[x.geometry.map(c=>[c.lon,c.lat])]}}));
+ const closedWays=data.elements.filter(x=>x.geometry?.length>=4&&x.geometry[0].lat===x.geometry[x.geometry.length-1].lat&&x.geometry[0].lon===x.geometry[x.geometry.length-1].lon);
+ const isJaral=x=>x.tags?.natural==='scrub'&&['species','species:es','genus','genus:es','name'].some(key=>/\b(?:cistus|jaras?|jaral(?:es)?)\b/i.test(x.tags[key]||''));
+ const woods=closedWays.filter(x=>x.tags?.landuse==='forest'||x.tags?.natural==='wood').slice(0,2500);
+ const scrub=closedWays.filter(x=>x.tags?.landuse!=='forest'&&isJaral(x)).slice(0,2500);
+ const features=[...woods,...scrub].map(x=>({
+  type:'Feature',
+  properties:{
+   kind:x.tags?.landuse!=='forest'&&isJaral(x)?'jaral':forestKind(x.tags||{}),
+   detail:Object.entries(x.tags||{}).filter(([k])=>['species','species:es','genus','genus:es','name','leaf_type','landuse','natural'].includes(k)).map(([k,v])=>k+': '+v).join(' · ')||'Sin identificación de especie'
+  },
+  geometry:{type:'Polygon',coordinates:[x.geometry.map(c=>[c.lon,c.lat])]}
+ }));
  forestData={type:'FeatureCollection',features};
  renderForests();renderMap();
- report('✅ '+features.length+' polígonos forestales cargados (OSM, cobertura parcial). '+(features.length?'Índice actualizado.':'No se encontraron polígonos cerrados en esta vista.'));
+ report('✅ OpenStreetMap: '+woods.length+' polígonos de bosque y '+scrub.length+' de jaral en esta vista (cobertura parcial).');
  return true;
 }
 function showDetail(t,i){const d=daily(t),sc=score(t,d);$('detail').classList.remove('hidden');$('detail').innerHTML=`<button id="hideDetail">✕</button><b>${esc(t[0])}</b><div class="notice">Altitud del núcleo: ${t[3]==null?'—':'~'+t[3]+' m'}<br>${d?`🌡️ ${number(d.min)}–${number(d.max)} °C · 🌧️ ${number(d.rain)} mm<br>💧 ${number(d.hum)} % · 💨 ${number(d.wind)} km/h`:'Sin datos meteorológicos disponibles'}<br>${tab==='pred'&&sc!=null?'Índice experimental: '+sc+'/100 · lluvia previa '+rainWindow+' días: '+number(rainBefore(t))+' mm':''}</div><button id="saveHere">Guardar como setal</button>`;$('hideDetail').onclick=()=>$('detail').classList.add('hidden');$('saveHere').onclick=()=>{const name=prompt('Nombre del setal',t[0]);if(name)saveSpot(name.trim(),t[1],t[2])}}function detailSpot(i){const s=spots[i];$('detail').classList.remove('hidden');$('detail').innerHTML=`<button id="hideDetail">✕</button><b>${esc(s.name)}</b><p class="notice">${(+s.lat).toFixed(5)}, ${(+s.lon).toFixed(5)}<br>Setal privado guardado en el navegador.</p><button id="deleteSpot">Eliminar</button>`;$('hideDetail').onclick=()=>$('detail').classList.add('hidden');$('deleteSpot').onclick=()=>{if(confirm('¿Eliminar este setal?')){spots.splice(i,1);persist();renderMap();renderPanel();$('detail').classList.add('hidden')}}}map.on('click',e=>{if(tab==='catalog')return;chosen=e.latlng;$('detail').classList.remove('hidden');$('detail').innerHTML=`<button id="hideDetail">✕</button><b>Punto del mapa</b><p class="notice">${chosen.lat.toFixed(5)}, ${chosen.lng.toFixed(5)}<br>Sin pronóstico puntual calculado en esta versión.</p><button id="saveHere">Guardar setal</button>`;$('hideDetail').onclick=()=>$('detail').classList.add('hidden');$('saveHere').onclick=()=>{let n=prompt('Nombre del setal','Nuevo setal');if(n)saveSpot(n.trim(),chosen.lat,chosen.lng)}});
@@ -610,7 +624,7 @@ const HABITATS=[
 {id:'haya',name:'Hayedos',family:'Frondosas',color:'#79bd93',map:null,alt:'700–1.800 m',soil:'Variable, a menudo fresco y profundo',slope:'Preferencia por umbrías',where:'Principalmente montañas del norte de la Península; muy escasos en La Vera',why:'La sombra y el mantillo generan microclimas húmedos.',desc:'Bosques húmedos de haya.'},
 {id:'pino',name:'Pinares',family:'Coníferas',color:'#438e7c',map:'pino',alt:'300–1.900 m',soil:'Variable según pino',slope:'Variable',where:'Amplia distribución peninsular, incluidos enclaves de La Vera',why:'Numerosas setas forman micorrizas con pinos.',desc:'Pinos y suelos con acículas.'},
 {id:'encina',name:'Encinares',family:'Mediterráneos',color:'#9eae59',map:'encina',alt:'100–1.200 m',soil:'Muy variable',slope:'Frecuentemente solanas',where:'Gran parte de la Península mediterránea',why:'Las encinas forman micorrizas y generan suelos con hojarasca y materia orgánica.',desc:'Encinas en bosque mediterráneo.'},
-{id:'dehesa',name:'Dehesa',family:'Mediterráneos',color:'#c4aa69',map:null,alt:'150–1.000 m',soil:'Variable',slope:'Terrenos suaves y abiertos',where:'Especialmente Extremadura y oeste peninsular',why:'La combinación de árboles dispersos y pastizal permite hongos de pradera y micorrícicos.',desc:'Bosque abierto con pasto; categoría Jarales en la nomenclatura solicitada, no equivalente botánico.'},
+{id:'dehesa',name:'Dehesa',family:'Mediterráneos',color:'#c4aa69',map:null,alt:'150–1.000 m',soil:'Variable',slope:'Terrenos suaves y abiertos',where:'Especialmente Extremadura y oeste peninsular',why:'La combinación de árboles dispersos y pastizal permite hongos de pradera y micorrícicos.',desc:'Bosque abierto con pasto.'},
 {id:'pradera',name:'Prados y pastos',family:'Abiertos',color:'#b3ca68',map:null,alt:'0–1.800 m',soil:'Variable, a menudo rico en materia orgánica',slope:'Llanos y claros',where:'Distribuidos por toda la Península',why:'La materia orgánica del suelo alimenta hongos saprótrofos.',desc:'Praderas y claros sin necesidad de árboles.'},
 {id:'arenales',name:'Pastizales arenosos con hierba turmera',family:'Abiertos',color:'#bda874',map:null,alt:'Sin rango local de referencia',soil:'Sueltos, arenosos, a menudo ácidos',slope:'Variable',where:'Arenales fluviales y suelos arenosos sobre granito en el oeste peninsular.',why:'La criadilla de tierra forma micorrizas con las raíces de Tuberaria guttata.',desc:'Suelos arenosos con la planta hospedadora. El visor carece de cartografía de este hábitat.'},
 {id:'eucalipto',name:'Eucaliptales',family:'Otros',color:'#6b8e92',map:null,alt:'0–900 m',soil:'Variable',slope:'Variable',where:'Plantaciones de varias regiones peninsulares',why:'Ninguna de las especies seleccionadas está asociada aquí como hábitat de referencia; consulta bosques próximos.',desc:'Plantaciones de eucalipto.'},
@@ -791,22 +805,23 @@ const FLORA_GROUPS=[
  ['otro','Otros arbolados','#89948e',['Otros arbolados']]
 ];
 const floraSelection=new Map(FLORA_GROUPS.map(([k,, ,sp])=>[k,new Set(sp)]));
-let floraActive=new Set(['pino','roble','encina','castano']);
+let floraActive=new Set(['pino','roble','encina','castano','alcornoque','jaral']);
 const floraDetail=f=>String(f.properties.detail||'').toLowerCase();
 function floraKind(f){let k=f.properties.kind,txt=floraDetail(f);
  if(/eucalyptus|eucalipt/.test(txt))return 'eucalipto';
  if(/betula|abedul/.test(txt))return 'abedul';
  if(/fagus sylvatica|haya|hayed/.test(txt))return 'haya';
  if(/abies|pinsapo|abeto/.test(txt))return 'abeto';
- if(/quercus suber|alcornoque/.test(txt))return 'alcornoque';
+ if(k==='jaral')return k;
+ if(/quercus suber|alcorno(?:qu|c)/.test(txt))return 'alcornoque';
  if(/populus|salix|alnus|fraxinus|chopo|álamo|sauce|aliso|fresno/.test(txt))return 'ribera';
  if(/juniperus|sabina/.test(txt))return 'sabina';
  return k==='otro'?null:k;
 }
 function floraSpecies(f,k){let t=floraDetail(f);
- const patterns={pino:[[/sylvestris|silvestre/,'Pino silvestre'],[/halepensis|carrasco/,'Pino carrasco'],[/pinaster|resinero/,'Pino resinero'],[/pinea|piñonero/,'Pino piñonero']],roble:[[/pyrenaica|rebollo/,'Rebollo'],[/robur|roble común/,'Roble común'],[/faginea|quejigo/,'Quejigo']],ribera:[[/populus nigra|chopo/,'Chopo'],[/populus alba|álamo/,'Álamo'],[/salix|sauce/,'Sauce'],[/alnus|aliso/,'Aliso'],[/fraxinus|fresno/,'Fresno']]};
+ const patterns={jaral:[[/\bcistus\b|\bjaras?\b/,'Jaras']],pino:[[/sylvestris|silvestre/,'Pino silvestre'],[/halepensis|carrasco/,'Pino carrasco'],[/pinaster|resinero/,'Pino resinero'],[/pinea|piñonero/,'Pino piñonero']],roble:[[/pyrenaica|rebollo/,'Rebollo'],[/robur|roble común/,'Roble común'],[/faginea|quejigo/,'Quejigo']],ribera:[[/populus nigra|chopo/,'Chopo'],[/populus alba|álamo/,'Álamo'],[/salix|sauce/,'Sauce'],[/alnus|aliso/,'Aliso'],[/fraxinus|fresno/,'Fresno']]};
  const match=(patterns[k]||[]).find(([re])=>re.test(t));if(match)return match[1];
- const fallback={pino:'Otros pinos',roble:'Otros robles',encina:'Encina',castano:'Castaño',haya:'Haya',abedul:'Abedul',alcornoque:'Alcornoque',eucalipto:'Eucalipto',abeto:'Abeto blanco',sabina:'Sabina albar'};
+ const fallback={pino:'Otros pinos',roble:'Otros robles',encina:'Encina',castano:'Castaño',haya:'Haya',abedul:'Abedul',alcornoque:'Alcornoque',jaral:'Matorral de jara',eucalipto:'Eucalipto',abeto:'Abeto blanco',sabina:'Sabina albar'};
  return fallback[k]||null;
 }
 function floraIncluded(f){let k=floraKind(f);if(!k||!floraActive.has(k))return false;let sp=floraSpecies(f,k);return sp&&floraSelection.get(k)?.has(sp)}
@@ -817,7 +832,7 @@ function drawFlora(){forestLayer.clearLayers();if(tab!=='flora'){map.removeLayer
 }
 const oldFloraPanel=renderPanel;
 renderPanel=function(){oldFloraPanel();if(tab!=='flora')return;
- $('panelBody').innerHTML=`<p class="muted">Arbolado identificado en OpenStreetMap, no cartografía forestal oficial. Cobertura parcial. Puedes encender varios tipos y desplegar sus especies; solo se dibujan las identificables.</p><h3>ARBOLADO</h3><div id="floraGroups"></div><button class="primary" id="loadForest">Cargar bosques de OpenStreetMap</button><p class="notice" id="forestStatus">${esc(forestStatus)}</p><p class="muted">El pH necesita una capa georreferenciada y no se representa sin datos reales.</p>`;
+ $('panelBody').innerHTML=`<p class="muted">Puedes combinar grupos y desplegar sus especies. Para ver jarales identificados en OpenStreetMap, acerca el mapa y carga la vegetación de la vista.</p><h3>VEGETACIÓN</h3><div id="floraGroups"></div><button class="primary" id="loadForest">Cargar vegetación de OpenStreetMap</button><p class="notice" id="forestStatus">${esc(forestStatus)}</p><p class="muted">El pH necesita una capa georreferenciada y no se representa sin datos reales.</p>`;
  const wrap=$('floraGroups');wrap.innerHTML=FLORA_GROUPS.map(([k,name,color,sp])=>`<div class="flora-group"><div class="flora-row"><input type="checkbox" data-group="${k}" ${floraActive.has(k)?'checked':''}><span class="flora-dot" style="background:${color}"></span><details style="flex:1"><summary>${name} <small id="status-${k}"></small></summary><div class="flora-sub">${sp.map((s,i)=>`<label><input type="checkbox" data-specgroup="${k}" data-specindex="${i}" ${floraSelection.get(k).has(s)?'checked':''}> ${s}</label>`).join('')}</div></details></div></div>`).join('');
  function status(){for(let [k,,,sp] of FLORA_GROUPS){let n=floraSelection.get(k).size;$('status-'+k).textContent=!floraActive.has(k)?'○':n===sp.length?'●':n?'◐':'○'}}
  wrap.querySelectorAll('[data-group]').forEach(el=>el.onchange=()=>{el.checked?floraActive.add(el.dataset.group):floraActive.delete(el.dataset.group);status();drawFlora()});
