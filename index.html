@@ -63,7 +63,7 @@ html,body{height:100%;overscroll-behavior:none}button,select,input{touch-action:
 .vs-photo-card button{font-size:12px;padding:7px}
 </style><style>
 #mapOptionsToggle{position:absolute;z-index:701;top:10px;right:12px;min-height:44px;background:#173c2c}
-#mapOptions{position:absolute;z-index:700;top:60px;right:12px;width:min(310px,calc(100% - 24px));max-height:calc(100% - 72px);overflow:auto;overscroll-behavior:contain;padding:10px;border:1px solid #64866e;border-radius:12px;background:#102d23;box-shadow:0 5px 18px #0006}
+#mapOptions{position:absolute;z-index:700;top:60px;right:12px;width:min(310px,calc(100% - 24px));max-height:calc(100% - 84px);overflow:auto;overscroll-behavior:contain;padding:10px;border:1px solid #64866e;border-radius:12px;background:#102d23;box-shadow:0 5px 18px #0006}
 #mapOptions [hidden]{display:none!important}
 #mapOptions > div:not([hidden]),#mapOptions > section:not([hidden]){position:static;max-width:none!important;margin:0 0 8px}
 #mapOptions #legend{pointer-events:auto}
@@ -188,7 +188,7 @@ const areaViews={vera:{center:[40.09,-5.70],zoom:11},garguera:{center:[40.061256
 $('areaSelect').addEventListener('change',e=>{const v=e.target.value;if(v==='todo')map.fitBounds([[39.42,-6.43],[40.20,-5.34]],{padding:[15,15]});else{const a=areaViews[v];if(a)map.setView(a.center,a.zoom)}});
 let tileFailures=0,tileSuccesses=0;
 const tileNotice=document.createElement('div');
-tileNotice.id='tileNotice';tileNotice.style.cssText='display:none;position:absolute;top:75px;right:12px;z-index:650;background:#4b3021;color:#fff;border:1px solid #dcaa73;border-radius:10px;padding:10px;max-width:265px;font-size:12px';
+tileNotice.id='tileNotice';tileNotice.style.cssText='display:none;background:#4b3021;color:#fff;border:1px solid #dcaa73;border-radius:10px;padding:10px;max-width:265px;font-size:12px';
 tileNotice.textContent='No se están descargando las imágenes del mapa. Comprueba Internet, bloqueadores o prueba otra capa con el botón ▧.';
 $('mapOptions').appendChild(tileNotice);
 Object.values(bases).forEach(layer=>{layer.on('tileerror',()=>{tileFailures++;if(tileFailures>=4&&tileSuccesses===0)tileNotice.style.display='block'});layer.on('tileload',()=>{tileSuccesses++;tileNotice.style.display='none'})});
@@ -1403,7 +1403,7 @@ drawFlora=function(){importedOldDrawFlora();redrawVerifiedForest();drawVerifiedP
  let divisions=2;
  let automatic=true;
  const control=document.createElement('div');control.id='vsGridSize';
- control.style.cssText='position:absolute;z-index:800;top:114px;right:10px;background:#17382deF;color:white;padding:7px 9px;border-radius:9px;box-shadow:0 2px 9px #0005;font:12px system-ui;max-width:155px';
+ control.style.cssText='background:#17382deF;color:white;padding:7px 9px;border-radius:9px;box-shadow:0 2px 9px #0005;font:12px system-ui;max-width:155px';
  control.innerHTML='<label for="vsGridSizeSelect" style="display:block;margin-bottom:3px">Tamaño visual de casillas</label><select id="vsGridSizeSelect" style="width:100%;padding:5px;background:white;color:#17382d;border-radius:5px"><option value="1">Original (~8–12 km)</option><option value="2" selected>Mitad (~4–6 km)</option><option value="4">Cuarto (~2–3 km)</option><option value="8">Octavo (~1–1,5 km)</option></select><label style="display:flex;align-items:center;gap:5px;margin-top:5px"><input id="vsAutoGrid" type="checkbox" checked> Automático al acercar</label><small style="display:block;margin-top:4px;line-height:1.3">Mismos datos regionales; no mayor precisión.</small>';
  document.getElementById('mapOptions').appendChild(control);
  control.querySelector('select').onchange=e=>{automatic=false;control.querySelector('#vsAutoGrid').checked=false;divisions=Number(e.target.value);scheduleGridDraw()};
@@ -1445,7 +1445,7 @@ drawFlora=function(){importedOldDrawFlora();redrawVerifiedForest();drawVerifiedP
 (function(){
  if(typeof gridDraw!=='function'||typeof gridCells==='undefined')return;
  const tileData=new Map();let loaded=false;let detailMode=false;
- const ctrl=document.createElement('div');ctrl.id='vsHighRes';ctrl.style.cssText='position:absolute;z-index:810;top:260px;right:10px;background:#17382def;color:#fff;padding:8px;border-radius:9px;font:12px system-ui;max-width:180px;box-shadow:0 2px 9px #0005';
+ const ctrl=document.createElement('div');ctrl.id='vsHighRes';ctrl.style.cssText='background:#17382def;color:#fff;padding:8px;border-radius:9px;font:12px system-ui;max-width:180px;box-shadow:0 2px 9px #0005';
  ctrl.innerHTML='<b>Relieve y bosque detallados</b><div id="vsHrStatus" style="margin:5px 0">Sin datos locales de alta resolución</div><label style="display:block;cursor:pointer;background:#fff;color:#17382d;padding:5px;border-radius:5px;text-align:center">Cargar datos GeoJSON<input id="vsHrInput" type="file" accept=".geojson,.json,application/geo+json" style="display:none"></label><small style="display:block;margin-top:5px">Solo se corrigen las casillas con datos reales. Sin datos: índice regional.</small>';
  document.getElementById('mapOptions').appendChild(ctrl);
  const status=ctrl.querySelector('#vsHrStatus');
