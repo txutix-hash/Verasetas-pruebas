@@ -68,3 +68,10 @@ original de 1 km. El manifiesto contiene la extensión, fuente y leyenda de
 cada imagen. Los píxeles sin datos son transparentes.
 
 Estas capas son visuales y no intervienen en el cálculo de Predicción.
+
+En la ficha de un punto se muestra el intervalo de pH y el rumbo de la ladera
+del píxel correspondiente. Fuera del recorte o en píxeles sin cobertura, la
+ficha indica que no hay datos. El contador de viento usa la media diaria a
+10 m de Open-Meteo y cuenta los días que superan 30 km/h en el intervalo
+previo configurado para la lluvia. Si falta algún día, el contador queda
+sin valor.

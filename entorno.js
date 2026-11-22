@@ -6,6 +6,8 @@
  let selection='',metadata,metadataRequest,currentLayer,status='';
  const basePanel=renderPanel;
  const baseMap=renderMap;
+ const baseDetail=showGridDetail;
+ const sampleImages=new Map();
 
  function showStatus(){
   const output=$('environmentStatus');
@@ -34,6 +36,63 @@
   legend.append(entries);
  }
 
+ function loadMetadata(){
+  metadataRequest??=fetch(directory+'manifest.json').then(response=>{
+   if(!response.ok)throw Error('HTTP '+response.status);
+   return response.json();
+  }).catch(error=>{metadataRequest=null;throw error});
+  return metadataRequest;
+ }
+
+ function loadSampleImage(file){
+  if(!sampleImages.has(file)){
+   const image=new Image();
+   const pending=new Promise((resolve,reject)=>{
+    image.onload=()=>{
+     try{
+      const canvas=document.createElement('canvas');
+      canvas.width=image.naturalWidth;
+      canvas.height=image.naturalHeight;
+      const context=canvas.getContext('2d',{willReadFrequently:true});
+      context.drawImage(image,0,0);
+      resolve(canvas);
+     }catch(error){reject(error)}
+    };
+    image.onerror=()=>reject(Error('Imagen no disponible'));
+    image.src=directory+file;
+   }).catch(error=>{sampleImages.delete(file);throw error});
+   sampleImages.set(file,pending);
+  }
+  return sampleImages.get(file);
+ }
+
+ async function sampleClass(key,lat,lon){
+  const layer=(await loadMetadata()).layers[key];
+  const [southwest,northeast]=layer.bounds;
+  const projection=map.options.crs;
+  const sw=projection.project(L.latLng(southwest));
+  const ne=projection.project(L.latLng(northeast));
+  const point=projection.project(L.latLng(lat,lon));
+  const x=(point.x-sw.x)/(ne.x-sw.x),y=(ne.y-point.y)/(ne.y-sw.y);
+  if(x<0||x>=1||y<0||y>=1)return null;
+  const canvas=await loadSampleImage(layer.file);
+  const rgba=canvas.getContext('2d').getImageData(Math.floor(x*canvas.width),Math.floor(y*canvas.height),1,1).data;
+  if(!rgba[3])return null;
+  const color='#'+[...rgba.slice(0,3)].map(channel=>channel.toString(16).padStart(2,'0')).join('');
+  return layer.classes.find(entry=>entry[0]===color)?.[1]??null;
+ }
+
+ showGridDetail=function(lat,lon){
+  baseDetail(lat,lon);
+  for(const [key,id] of [['ph','detailEnvironmentPh'],['aspect','detailEnvironmentAspect']]){
+   const output=$(id);
+   if(!output)continue;
+   sampleClass(key,lat,lon).then(value=>{
+    output.textContent=value??'Sin datos en este punto';
+   }).catch(()=>{output.textContent='No disponible'});
+  }
+ };
+
  async function showLayer(){
   if(currentLayer)map.removeLayer(currentLayer);
   currentLayer=null;
@@ -46,11 +105,7 @@
   status='Cargando capa…';
   showStatus();
   try{
-   metadataRequest??=fetch(directory+'manifest.json').then(response=>{
-    if(!response.ok)throw Error('HTTP '+response.status);
-    return response.json();
-   }).catch(error=>{metadataRequest=null;throw error});
-   metadata=await metadataRequest;
+   metadata=await loadMetadata();
    if(tab!=='flora'||selection!==requested||currentLayer)return;
    showLegend();
    const layer=metadata.layers[requested];
