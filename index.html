@@ -283,10 +283,34 @@ let gridLoaded=0,gridBusy=false,gridErrorCount=0;
 for(let row=0;row<gridRows;row++)for(let col=0;col<gridCols;col++){
  const dy=(gridBounds.north-gridBounds.south)/gridRows,dx=(gridBounds.east-gridBounds.west)/gridCols;
  const south=gridBounds.south+row*dy,west=gridBounds.west+col*dx,lat=south+dy/2,lon=west+dx/2;
- gridCells.push({id:row*gridCols+col,t:['Cuadrícula '+(row+1)+'-'+(col+1),lat,lon,null],bounds:[[south,west],[south+dy,west+dx]],row,col,ready:false});
+ gridCells.push({id:row*gridCols+col,t:['Cuadrícula '+(row+1)+'-'+(col+1),lat,lon,null],bounds:[[south,west],[gridBounds.south+(row+1)*dy,gridBounds.west+(col+1)*dx]],row,col,ready:false});
 }
 function nearestTown(lat,lon){return towns.reduce((a,t)=>Math.hypot(t[1]-lat,(t[2]-lon)*.76)<Math.hypot(a[1]-lat,(a[2]-lon)*.76)?t:a,towns[0])}
-function cellFor(lat,lon){return gridCells.find(c=>lat>=c.bounds[0][0]&&lat<c.bounds[1][0]&&lon>=c.bounds[0][1]&&lon<c.bounds[1][1])||gridCells.reduce((a,c)=>Math.hypot(c.t[1]-lat,c.t[2]-lon)<Math.hypot(a.t[1]-lat,a.t[2]-lon)?c:a,gridCells[0])}
+function cellFor(lat,lon){
+ return gridCells.find(c=>lat>=c.bounds[0][0]&&lon>=c.bounds[0][1]&&
+  (lat<c.bounds[1][0]||(c.row===gridRows-1&&lat===gridBounds.north))&&
+  (lon<c.bounds[1][1]||(c.col===gridCols-1&&lon===gridBounds.east)));
+}
+function cellLocalities(c){
+ return towns.filter(([,lat,lon])=>cellFor(lat,lon)===c).map(([name])=>name);
+}
+function bindPointDetail(lat,lon){
+ $('hideDetail').onclick=()=>$('detail').classList.add('hidden');
+ $('saveHere').onclick=()=>{
+  const name=prompt('Nombre del setal',nearestTown(lat,lon)[0]);
+  if(name?.trim())saveSpot(name.trim(),lat,lon);
+ };
+}
+function showMapPoint(lat,lon,localSample){
+ if(cellFor(lat,lon)){
+  showGridDetail(lat,lon,localSample);
+  return;
+ }
+ const detail=$('detail');
+ detail.classList.remove('hidden');
+ detail.innerHTML=`<button id="hideDetail" aria-label="Cerrar ficha">✕</button><b>📍 Fuera de la cuadrícula regional</b><p class="grid-note">Punto seleccionado: ${lat.toFixed(5)}, ${lon.toFixed(5)}. Sin cobertura de la malla meteorológica de VeraSetas.</p><button id="saveHere">+ Añadir setal</button>`;
+ bindPointDetail(lat,lon);
+}
 function dateKey(offset=0){const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()+offset);return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')}
 function forestAt(lat,lon){if(!forestData)return ['Sin cartografía cargada'];const hits=[];for(const f of forestData.features){if(f.geometry?.type!=='Polygon')continue;const ring=f.geometry.coordinates?.[0];if(!ring)continue;let inside=false;for(let i=0,j=ring.length-1;i<ring.length;j=i++){const a=ring[i],b=ring[j];if(((a[1]>lat)!==(b[1]>lat))&&(lon<(b[0]-a[0])*(lat-a[1])/(b[1]-a[1])+a[0]))inside=!inside}if(inside)hits.push(f.properties.kind)}return [...new Set(hits)].length?[...new Set(hits)]:['No identificado']}
 /* v3.1: evidencia forestal por intersección espacial aproximada, no cercanía al pueblo.
@@ -323,9 +347,9 @@ function gridDraw(){gridLayer.clearLayers();if(!['pred','explore','climate'].inc
 const oldRenderMap=renderMap;renderMap=function(){oldRenderMap();if(['pred','explore','climate'].includes(tab)){layersOverlay.clearLayers();gridDraw()}else gridLayer.clearLayers()};
 function rainProductive(c){const hist=rainHistory.get(c.t[0]);if(!hist)return null;const target=new Date(dateKey(dateOffset)+'T12:00:00');let total=0,valid=0;for(let days=7;days<=28;days++){const d=new Date(target);d.setDate(d.getDate()-days);const k=[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');const mm=hist.get(k);if(Number.isFinite(mm)){total+=Math.max(0,mm-1.7);valid++}}return valid>=14?Math.round(total*10)/10:null}
 function rainChart(c){const hist=rainHistory.get(c.t[0]);if(!hist)return '<p class="grid-note">Sin serie de lluvia.</p>';const target=new Date(dateKey(dateOffset)+'T12:00:00'),arr=[];for(let j=rainWindow;j>=1;j--){const d=new Date(target);d.setDate(d.getDate()-j);const k=[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');arr.push({date:k,mm:hist.get(k)})}const max=Math.max(1,...arr.map(x=>x.mm||0));return '<div class="rainbars" aria-label="Precipitación diaria">'+arr.map(x=>`<div title="${x.date}: ${number(x.mm)} mm" style="height:${Math.max(2,Math.round((x.mm||0)/max*88))}px;background:${x.date>dateKey()?'#e6a548':'#53b979'}"></div>`).join('')+'</div><small>Verde: histórico/modelo · ámbar: previsión. Pasa el cursor sobre las barras.</small>'}
-function showGridDetail(lat,lon){const c=cellFor(lat,lon),d=daily(c.t),hist=rainHistory.get(c.t[0]),start=new Date(dateKey(dateOffset)+'T12:00:00'),series=[];for(let j=rainWindow;j>=1;j--){const dt=new Date(start);dt.setDate(dt.getDate()-j);const k=[dt.getFullYear(),String(dt.getMonth()+1).padStart(2,'0'),String(dt.getDate()).padStart(2,'0')].join('-');series.push({k,mm:hist?.get(k)})}const windDays=null;const town=nearestTown(lat,lon),flora=forestAt(lat,lon),prod=rainProductive(c),rain=rainBefore(c.t),n=gridScore(c);$('detail').classList.remove('hidden');$('detail').innerHTML=`<button id="hideDetail" aria-label="Cerrar ficha">✕</button><b>📍 ${esc(town[0])}, Cáceres</b><p class="grid-note">Localidad de referencia aproximada (no geocodificación oficial). Punto: ${lat.toFixed(5)}, ${lon.toFixed(5)}. Datos climáticos y altitud del centro de la cuadrícula, no del punto exacto.</p><div class="detailgrid"><div><small>Lluvia acumulada · ${rainWindow} días</small><b>${number(rain)} mm</b></div><div><small>Lluvia productiva · estimación simplificada 7–28 días</small><b style="color:${prod==null?'#ddd':prod>=species[selected].rain?'#75e29b':'#f4a69c'}">${number(prod)} mm</b></div><div><small>Temperatura diaria mín–máx</small><b>${d?number(d.min)+'–'+number(d.max)+' °C':'—'}</b></div><div><small>Humedad media estimada</small><b>${d?number(d.hum)+' %':'—'}</b></div><div><small>Altitud centro de cuadrícula</small><b>${c.t[3]==null?'—':Math.round(c.t[3])+' m'}</b></div><div><small>Días viento sostenido >30 km/h</small><b>No disponible</b></div><div><small>pH suelo (0–5 cm)</small><b>No disponible</b></div><div><small>Orientación de ladera</small><b>${slopeLabel(c)}</b></div></div><h3>Lluvia diaria</h3>${rainChart(c)}<h3>Flora cartografiada</h3><p>${flora.map(f=>`<span class="chip">${esc(f)}</span>`).join('')}</p>${tab==='pred'?`<div class="card"><b>Predicción · ${esc(species[selected].short)}</b><p>Índice experimental: ${n==null?'Sin datos':n+'/100'}. No es una probabilidad calibrada ni garantiza setas.</p></div>`:''}<button id="saveHere">+ Añadir setal</button>`;$('hideDetail').onclick=()=>$('detail').classList.add('hidden');$('saveHere').onclick=()=>{const name=prompt('Nombre del setal',town[0]);if(name?.trim())saveSpot(name.trim(),lat,lon)}}
+function showGridDetail(lat,lon){const c=cellFor(lat,lon),d=daily(c.t),hist=rainHistory.get(c.t[0]),start=new Date(dateKey(dateOffset)+'T12:00:00'),series=[];for(let j=rainWindow;j>=1;j--){const dt=new Date(start);dt.setDate(dt.getDate()-j);const k=[dt.getFullYear(),String(dt.getMonth()+1).padStart(2,'0'),String(dt.getDate()).padStart(2,'0')].join('-');series.push({k,mm:hist?.get(k)})}const windDays=null;const localities=cellLocalities(c),flora=forestAt(lat,lon),prod=rainProductive(c),rain=rainBefore(c.t),n=gridScore(c);$('detail').classList.remove('hidden');$('detail').innerHTML=`<button id="hideDetail" aria-label="Cerrar ficha">✕</button><b>📍 ${c.t[0]}</b><p class="grid-note">${localities.length?`Localidades de referencia en la cuadrícula: ${esc(localities.join(', '))}.`:'Sin localidades de referencia registradas en esta cuadrícula.'}</p><p class="grid-note">Punto seleccionado: ${lat.toFixed(5)}, ${lon.toFixed(5)}. Centro consultado en Open-Meteo: ${c.t[1].toFixed(5)}, ${c.t[2].toFixed(5)}.</p><div class="detailgrid"><div><small>Lluvia acumulada · ${rainWindow} días</small><b>${number(rain)} mm</b></div><div><small>Lluvia productiva · estimación simplificada 7–28 días</small><b style="color:${prod==null?'#ddd':prod>=species[selected].rain?'#75e29b':'#f4a69c'}">${number(prod)} mm</b></div><div><small>Temperatura diaria mín–máx</small><b>${d?number(d.min)+'–'+number(d.max)+' °C':'—'}</b></div><div><small>Humedad media estimada</small><b>${d?number(d.hum)+' %':'—'}</b></div><div><small>Altitud centro de cuadrícula</small><b>${c.t[3]==null?'—':Math.round(c.t[3])+' m'}</b></div><div><small>Días viento sostenido >30 km/h</small><b>No disponible</b></div><div><small>pH suelo (0–5 cm)</small><b>No disponible</b></div><div><small>Orientación de ladera</small><b>${slopeLabel(c)}</b></div></div><h3>Lluvia diaria</h3>${rainChart(c)}<h3>Flora cartografiada</h3><p>${flora.map(f=>`<span class="chip">${esc(f)}</span>`).join('')}</p>${tab==='pred'?`<div class="card"><b>Predicción · ${esc(species[selected].short)}</b><p>Índice experimental: ${n==null?'Sin datos':n+'/100'}. No es una probabilidad calibrada ni garantiza setas.</p></div>`:''}<button id="saveHere">+ Añadir setal</button>`;bindPointDetail(lat,lon)}
 function slopeLabel(c){const at=(r,col)=>gridCells.find(x=>x.row===r&&x.col===col)?.t[3];const e=at(c.row,c.col+1),w=at(c.row,c.col-1),n=at(c.row+1,c.col),s=at(c.row-1,c.col);if(![e,w,n,s].every(Number.isFinite))return 'Sin datos';const ew=e-w,ns=n-s;if(Math.hypot(ew,ns)<35)return 'Suave / indeterminada';const angle=(Math.atan2(-ew,-ns)*180/Math.PI+360)%360;return ['N','NE','E','SE','S','SO','O','NO'][Math.round(angle/45)%8]+' (aprox.)'}
-map.off('click');map.on('click',e=>{if(tab==='catalog')return;chosen=e.latlng;showGridDetail(chosen.lat,chosen.lng)});
+map.off('click');map.on('click',e=>{if(tab==='catalog')return;chosen=e.latlng;showMapPoint(chosen.lat,chosen.lng)});
 async function fetchGrid(c){const u=new URL('https://api.open-meteo.com/v1/forecast');Object.entries({latitude:c.t[1],longitude:c.t[2],daily:'temperature_2m_max,temperature_2m_min,precipitation_sum,wind_speed_10m_max',hourly:'relative_humidity_2m',timezone:'Europe/Madrid',past_days:35,forecast_days:15}).forEach(([k,v])=>u.searchParams.set(k,v));const r=await fetch(u,{signal:AbortSignal.timeout(18000)});if(!r.ok)throw Error('HTTP '+r.status);const raw=await r.json(),d=raw.daily,idx=d.time.indexOf(dateKey());if(idx<0)throw Error('Fecha ausente');c.t[3]=Number.isFinite(raw.elevation)?raw.elevation:null;rainHistory.set(c.t[0],new Map(d.time.map((x,i)=>[x,d.precipitation_sum[i]])));weather.set(c.t[0],d.time.slice(idx,idx+15).map((_,j)=>{const i=idx+j,hum=(raw.hourly?.relative_humidity_2m||[]).slice(i*24,(i+1)*24).filter(Number.isFinite);return {min:d.temperature_2m_min[i],max:d.temperature_2m_max[i],rain:d.precipitation_sum[i],wind:d.wind_speed_10m_max?.[i],hum:hum.length?hum.reduce((a,b)=>a+b,0)/hum.length:null}}));c.ready=true;gridLoaded++}
 async function loadGrid(){if(gridBusy)return;gridBusy=true;let next=0;async function worker(){while(next<gridCells.length){const c=gridCells[next++];try{await fetchGrid(c)}catch(e){gridErrorCount++;console.warn('Cuadrícula '+c.id,e)}if(gridLoaded%4===0||next>=gridCells.length)gridDraw()}}await Promise.all(Array.from({length:4},worker));gridBusy=false;gridDraw();if(gridErrorCount)$('legend').innerHTML+=` · ${gridErrorCount} cuadrículas sin datos`}
 
@@ -556,8 +580,8 @@ function climateColor(v){
 function renderClimateGrid(){
  gridLayer.clearLayers();layersOverlay.clearLayers();
  for(const c of gridCells){const val=climateValue(c);
- const shape=L.rectangle(c.bounds,{color:'#172d24',weight:.65,fillColor:climateColor(val),fillOpacity:val==null?.22:.67}).addTo(gridLayer);
- shape.on('click',e=>{if(typeof showGridDetail==='function')showGridDetail(c,e.latlng);else if(typeof showCellDetail==='function')showCellDetail(c,e.latlng)});
+ const shape=L.rectangle(c.bounds,{color:'#172d24',weight:.65,fillColor:climateColor(val),fillOpacity:val==null?.22:.67,bubblingMouseEvents:false}).addTo(gridLayer);
+ shape.on('click',e=>{showMapPoint(e.latlng.lat,e.latlng.lng)});
  shape.bindTooltip(`${c.t[0]}: ${val==null?'sin datos':val.toFixed(1)+(climateLayer==='hum'?' %':climateLayer==='wind'?' km/h':' mm')}`);
  }
  gridLayer.eachLayer(layer=>{if(typeof layer.bringToFront==="function")layer.bringToFront()});
@@ -876,8 +900,8 @@ drawFlora=function(){importedOldDrawFlora();redrawVerifiedForest();drawVerifiedP
  renderClimateGrid=function(){
  gridLayer.clearLayers();layersOverlay.clearLayers();
  for(const c of gridCells){const val=climateValue(c);
- const shape=L.rectangle(c.bounds,{color:'#172d24',weight:.65,fillColor:climateColor(val),fillOpacity:val==null?.22:.67}).addTo(gridLayer);
- shape.on('click',e=>showGridDetail(e.latlng.lat,e.latlng.lng));
+ const shape=L.rectangle(c.bounds,{color:'#172d24',weight:.65,fillColor:climateColor(val),fillOpacity:val==null?.22:.67,bubblingMouseEvents:false}).addTo(gridLayer);
+ shape.on('click',e=>showMapPoint(e.latlng.lat,e.latlng.lng));
  shape.bindTooltip(`${c.t[0]}: ${val==null?'sin datos':val.toFixed(1)+(climateLayer==='hum'?' %':climateLayer==='wind'?' km/h':' mm')}`);
  }
  gridLayer.eachLayer(layer=>{if(typeof layer.bringToFront==="function")layer.bringToFront()});
@@ -1093,7 +1117,8 @@ drawFlora=function(){importedOldDrawFlora();redrawVerifiedForest();drawVerifiedP
    for(const {c,n} of chosen){
      const b=document.createElement('button');b.type='button';
      const color=markerColor(n);const sw=document.createElement('span');sw.className='vs-swatch';sw.style.background=color;b.appendChild(sw);
-     b.appendChild(document.createTextNode(n+' / 100 · '+nearestTown(c.t[1],c.t[2])[0]+' (sector '+(c.row+1)+'-'+(c.col+1)+')'));
+     const localities=cellLocalities(c);
+     b.appendChild(document.createTextNode(n+' / 100 · '+c.t[0]+(localities.length?' · '+localities.join(', '):'')));
      b.onclick=()=>{openCell(c);list.hidden=true;toggle.setAttribute('aria-expanded','false')};list.appendChild(b)
    }
  }
@@ -1102,7 +1127,7 @@ drawFlora=function(){importedOldDrawFlora();redrawVerifiedForest();drawVerifiedP
  gridDraw=function(){originalDraw();if(tab==='pred'){
    gridLayer.eachLayer(l=>{if(typeof l.on!=='function'||typeof l.getBounds!=='function')return;
      l.options.interactive=true;
-     l.on('click',e=>{if(e.originalEvent&&L.DomEvent)L.DomEvent.stopPropagation(e.originalEvent);showGridDetail(e.latlng.lat,e.latlng.lng)});
+     l.on('click',e=>{if(e.originalEvent&&L.DomEvent)L.DomEvent.stopPropagation(e.originalEvent);showMapPoint(e.latlng.lat,e.latlng.lng)});
    });
    const legend=document.getElementById('legend');if(legend){legend.innerHTML+=' · <span style="color:#56be70">● alto</span> <span style="color:#f1c45b">● medio</span> <span style="color:#d87965">● bajo</span> <span style="color:#8c9b95">● sin datos</span>'}
  }refresh()};
@@ -1370,7 +1395,7 @@ drawFlora=function(){importedOldDrawFlora();redrawVerifiedForest();drawVerifiedP
 (function(){
  'use strict';
  const intersects=(a,b)=>a[0][0]<=b.getNorth()&&a[1][0]>=b.getSouth()&&a[0][1]<=b.getEast()&&a[1][1]>=b.getWest();
- function draw({map,L,gridCells,gridLayer,divisions,gridScore,markerColor,showGridDetail}){
+ function draw({map,L,gridCells,gridLayer,divisions,gridScore,markerColor,showMapPoint}){
   if(!map||!gridLayer||!Number.isInteger(divisions)||divisions<2||divisions>8)return;
   // Elimina solo las 64 casillas originales antes de crear las subdivisiones.
   for(const layer of gridLayer.getLayers())if(layer instanceof L.Rectangle)gridLayer.removeLayer(layer);
@@ -1384,8 +1409,8 @@ drawFlora=function(){importedOldDrawFlora();redrawVerifiedForest();drawVerifiedP
     const south=b[0][0]+y*dy,west=b[0][1]+x*dx;
     const bounds=[[south,west],[south+dy,west+dx]];
     if(!intersects(bounds,visible))continue;
-    const rect=L.rectangle(bounds,{color:'#152b22',weight:.5,fillColor:color,fillOpacity:score===null?.20:.67,interactive:true});
-    rect.on('click',()=>showGridDetail(south+dy/2,west+dx/2));
+    const rect=L.rectangle(bounds,{color:'#152b22',weight:.5,fillColor:color,fillOpacity:score===null?.20:.67,interactive:true,bubblingMouseEvents:false});
+    rect.on('click',e=>showMapPoint(e.latlng.lat,e.latlng.lng));
     fragment.push(rect);
    }
   }
@@ -1422,7 +1447,7 @@ drawFlora=function(){importedOldDrawFlora();redrawVerifiedForest();drawVerifiedP
   oldDraw();control.style.display=tab==='pred'?'block':'none';
   if(tab!=='pred'||divisions===1)return;
   // Un solo componente para dibujar la subdivisión visible.
-  window.VeraSetasVisualGrid.draw({map,L,gridCells,gridLayer,divisions,gridScore,markerColor,showGridDetail});
+  window.VeraSetasVisualGrid.draw({map,L,gridCells,gridLayer,divisions,gridScore,markerColor,showMapPoint});
   const missing=gridCells.filter(c=>gridScore(c)===null).length;
   const legend=document.getElementById('legend');
   if(legend&&missing&&!legend.textContent.includes('zonas sin índice'))legend.innerHTML+=' · ⚠ '+missing+' zonas sin índice (faltan datos)';
@@ -1482,12 +1507,12 @@ drawFlora=function(){importedOldDrawFlora();redrawVerifiedForest();drawVerifiedP
   const {c,lat,lon,info}=sample,score=adjusted(c,lat,lon,info);
   if(score===null)continue;
   r.setStyle({fillColor:markerColor(score),weight:1.1,color:'#f5f3e8'});
-  r.off('click');r.on('click',()=>showGridDetail(lat,lon));applied++;
+  r.off('click');r.on('click',e=>showMapPoint(e.latlng.lat,e.latlng.lng,{lat,lon}));applied++;
  }
  const legend=document.getElementById('legend');if(legend)legend.innerHTML+=' · '+applied+' casillas con corrección local de relieve/bosque';
  };
  const prevDetail=showGridDetail;
- showGridDetail=function(lat,lon){prevDetail(lat,lon);if(tab!=='pred')return;const info=tileData.get(key(lat,lon));if(!info)return;const c=cellFor(lat,lon),n=adjusted(c,lat,lon,info),el=document.getElementById('detail');if(!el)return;const p=document.createElement('p');p.className='grid-note';p.textContent='Datos locales ('+info.source+'): altitud '+(info.elevation==null?'no disponible':Math.round(info.elevation)+' m')+'; bosque '+(info.forest||'no identificado')+'. Índice ajustado de esta subcasilla: '+(n==null?'sin datos':n+'/100')+'. La lluvia y temperatura siguen siendo regionales. La corrección local es experimental.';el.appendChild(p)};
+ showGridDetail=function(lat,lon,localSample){prevDetail(lat,lon);if(tab!=='pred'||!localSample)return;const info=tileData.get(key(localSample.lat,localSample.lon));if(!info)return;const c=cellFor(lat,lon),n=adjusted(c,localSample.lat,localSample.lon,info),el=document.getElementById('detail');if(!el)return;const p=document.createElement('p');p.className='grid-note';p.textContent='Datos locales ('+info.source+'): altitud '+(info.elevation==null?'no disponible':Math.round(info.elevation)+' m')+'; bosque '+(info.forest||'no identificado')+'. Índice ajustado de esta subcasilla: '+(n==null?'sin datos':n+'/100')+'. La lluvia y temperatura siguen siendo regionales. La corrección local es experimental.';el.appendChild(p)};
  gridDraw();
 })();
 
