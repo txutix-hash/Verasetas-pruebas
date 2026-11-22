@@ -196,10 +196,10 @@ async function loadForests(){
  for(const url of servers){
   try{const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),25000);
    let response;try{response=await fetch(url,{method:'POST',body:new URLSearchParams({data:query}),signal:controller.signal})}finally{clearTimeout(timeout)}
-   if(!response.ok)throw Error('HTTP '+response.status);data=await response.json();if(!Array.isArray(data.elements))throw Error('Respuesta inválida');break
+   if(!response.ok)throw Error('HTTP '+response.status);const result=await response.json();if(!Array.isArray(result?.elements))throw Error('Respuesta inválida');data=result;break
   }catch(err){lastError=err;console.warn('OSM Overpass',url,err)}
  }
- if(!data){report('❌ No se pudieron consultar bosques OSM. Comprueba Internet o prueba más tarde.');return false}
+ if(!data){report('OpenStreetMap: no se pudieron consultar los bosques. Prueba más tarde. La capa oficial MFE25 se carga por separado en Flora.');return false}
  const features=data.elements.filter(x=>x.geometry?.length>=4&&x.geometry[0].lat===x.geometry[x.geometry.length-1].lat&&x.geometry[0].lon===x.geometry[x.geometry.length-1].lon).slice(0,2500).map(x=>({type:'Feature',properties:{kind:forestKind(x.tags||{}),detail:Object.entries(x.tags||{}).filter(([k])=>['species','genus','name','leaf_type','landuse','natural'].includes(k)).map(([k,v])=>k+': '+v).join(' · ')||'Sin identificación de especie'},geometry:{type:'Polygon',coordinates:[x.geometry.map(c=>[c.lon,c.lat])]}}));
  forestData={type:'FeatureCollection',features};
  renderForests();renderMap();
@@ -628,7 +628,7 @@ function drawFlora(){forestLayer.clearLayers();if(tab!=='flora'){map.removeLayer
 }
 const oldFloraPanel=renderPanel;
 renderPanel=function(){oldFloraPanel();if(tab!=='flora')return;
- $('panelBody').innerHTML=`<p class="muted">Arbolado identificado en OpenStreetMap, no cartografía forestal oficial. Cobertura parcial. Puedes encender varios tipos y desplegar sus especies; solo se dibujan las identificables.</p><h3>ARBOLADO</h3><div id="floraGroups"></div><button class="primary" id="loadForest">Cargar bosques de la zona visible</button><p class="notice" id="forestStatus">${esc(forestStatus)}</p><p class="muted">El pH necesita una capa georreferenciada y no se representa sin datos reales.</p>`;
+ $('panelBody').innerHTML=`<p class="muted">Arbolado identificado en OpenStreetMap, no cartografía forestal oficial. Cobertura parcial. Puedes encender varios tipos y desplegar sus especies; solo se dibujan las identificables.</p><h3>ARBOLADO</h3><div id="floraGroups"></div><button class="primary" id="loadForest">Cargar bosques de OpenStreetMap</button><p class="notice" id="forestStatus">${esc(forestStatus)}</p><p class="muted">El pH necesita una capa georreferenciada y no se representa sin datos reales.</p>`;
  const wrap=$('floraGroups');wrap.innerHTML=FLORA_GROUPS.map(([k,name,color,sp])=>`<div class="flora-group"><div class="flora-row"><input type="checkbox" data-group="${k}" ${floraActive.has(k)?'checked':''}><span class="flora-dot" style="background:${color}"></span><details style="flex:1"><summary>${name} <small id="status-${k}"></small></summary><div class="flora-sub">${sp.map((s,i)=>`<label><input type="checkbox" data-specgroup="${k}" data-specindex="${i}" ${floraSelection.get(k).has(s)?'checked':''}> ${s}</label>`).join('')}</div></details></div></div>`).join('');
  function status(){for(let [k,,,sp] of FLORA_GROUPS){let n=floraSelection.get(k).size;$('status-'+k).textContent=!floraActive.has(k)?'○':n===sp.length?'●':n?'◐':'○'}}
  wrap.querySelectorAll('[data-group]').forEach(el=>el.onchange=()=>{el.checked?floraActive.add(el.dataset.group):floraActive.delete(el.dataset.group);status();drawFlora()});
@@ -692,7 +692,7 @@ renderPanel=function(){
 /* Verified offline geospatial inputs. Does not silently treat OSM as MFE25. */
 var mfeFeatures=[],mfeLayer=L.geoJSON(null),mfeImportName='',phSamples=[],phByCell=new Map();
 const officialForestLayer=L.geoJSON(null,{attribution:'© Ministerio para la Transición Ecológica y el Reto Demográfico · Límites: IGN/CNIG (CC BY 4.0)'});
-let officialForestFeatures=[],showOfficialForest=true,useOfficialForest=true;
+let officialForestFeatures=[],showOfficialForest=true;
 let officialForestStatus='Cargando cartografía MFE25 de La Vera…';
 const mfeNames={
  'pinus sylvestris':['pino','Pino silvestre'],'pinus halepensis':['pino','Pino carrasco'],
@@ -713,14 +713,6 @@ function speciesFromProps(props){
  const values=fields.map(k=>props[k]).filter(v=>typeof v==='string').map(v=>v.toLowerCase().trim());
  for(const v of values)for(const [name,pair] of Object.entries(mfeNames))if(v===name||v.startsWith(name+' '))return pair;
  return null;
-}
-function insidePolygon(point,geom){if(!geom)return false;
- function ringHit(ring){let inside=false;for(let i=0,j=ring.length-1;i<ring.length;j=i++){
- const [xi,yi]=ring[i],[xj,yj]=ring[j],x=point[0],y=point[1];
- if((yi>y)!==(yj>y)&&x<(xj-xi)*(y-yi)/(yj-yi)+xi)inside=!inside;
- }return inside}
- function polyHit(rings){return rings?.length&&ringHit(rings[0])&&!rings.slice(1).some(ringHit)}
- return geom.type==='Polygon'?polyHit(geom.coordinates):geom.type==='MultiPolygon'?geom.coordinates.some(polyHit):false;
 }
 function forestPolygons(obj,official=false){
  if(obj?.type!=='FeatureCollection'||!Array.isArray(obj.features))throw Error('Se requiere un GeoJSON FeatureCollection');
@@ -784,10 +776,10 @@ function drawVerifiedPh(){phFilterLayer.clearLayers();if(tab!=='flora'||!$('phEn
 const importedOldPanel=renderPanel;
 renderPanel=function(){importedOldPanel();if(!['flora','pred'].includes(tab))return;
  const block=document.createElement('div');block.id='verifiedForestBox';
- block.innerHTML=`<h3>Mapa Forestal de España · MFE25</h3>
+ block.innerHTML=`${tab==='flora'?`<h3>Mapa Forestal de España · MFE25</h3>
+ <p>Capa oficial solo visual. No modifica la predicción y no incluye pH.</p>
  <p id="officialForestStatus" role="status"></p>
- ${tab==='flora'?'<label><input type="checkbox" id="showOfficialForest"> Mostrar MFE25 en el mapa</label>':''}
- <label><input type="checkbox" id="useOfficialForest"> Usar MFE25 en predicciones</label>
+ <label><input type="checkbox" id="showOfficialForest"> Mostrar MFE25 en el mapa</label>`:''}
  <h3>Importaciones locales</h3>
  <p>Importa un GeoJSON <b>en EPSG:4326</b> con polígonos y un campo de nombre científico. Los códigos MFE no se interpretan automáticamente: sin diccionario verificado se omiten para evitar clasificaciones falsas.</p>
  <label>Polígonos forestales GeoJSON <input id="mfeGeoInput" type="file" accept=".geojson,.json,application/geo+json"></label>
@@ -796,17 +788,13 @@ renderPanel=function(){importedOldPanel();if(!['flora','pred'].includes(tab))ret
  <p id="phImportStatus">${phSamples.length} muestras · ${phByCell.size} cuadrículas. pH en escala 0–14, no pH×10.</p>
  <p>Para SoilGrids, exporta los valores numéricos de 0–5 cm y divide entre diez los valores codificados como pH×10. No se imputan cuadrículas sin datos.</p>`;
  $('panelBody').prepend(block);
- $('officialForestStatus').textContent=officialForestStatus;
  const drawing=$('showOfficialForest');
  if(drawing){
+  $('officialForestStatus').textContent=officialForestStatus;
   drawing.checked=showOfficialForest;
   drawing.disabled=!officialForestFeatures.length;
   drawing.onchange=()=>{showOfficialForest=drawing.checked;redrawVerifiedForest()};
  }
- const prediction=$('useOfficialForest');
- prediction.checked=useOfficialForest;
- prediction.disabled=!officialForestFeatures.length;
- prediction.onchange=()=>{useOfficialForest=prediction.checked;gridDraw()};
  $('mfeGeoInput').onchange=async e=>{try{const f=e.target.files[0];if(!f)return;const r=importMfeGeojson(JSON.parse(await f.text()),f.name);$('mfeImportStatus').textContent=`${r.recognized} de ${r.total} polígonos reconocidos por nombre científico. Fuente no autenticada.`}catch(err){$('mfeImportStatus').textContent='Error: '+err.message}};
  $('phCsvInput').onchange=async e=>{try{const f=e.target.files[0];if(!f)return;const r=parsePhCsv(await f.text());$('phImportStatus').textContent=`${r.samples} muestras, ${r.cells} cuadrículas con datos.`}catch(err){$('phImportStatus').textContent='Error: '+err.message}};
 };
@@ -1124,70 +1112,7 @@ drawFlora=function(){importedOldDrawFlora();redrawVerifiedForest();drawVerifiedP
 })();
 
 </script>
-<style>
-#vsMfeStatus{margin:8px 0;padding:10px;background:#234737;border-radius:10px;font-size:12px;line-height:1.5}
-</style>
-<script>
 
-/* v3.1: official MFE polygon evidence only when verified taxon names are available.
-   No unverified MFE numeric codes are mapped to species. */
-(function(){
- if(typeof forestEvidence!=='function'||typeof insidePolygon!=='function'||typeof mfeFeatures==='undefined')return;
- const oldEvidence=forestEvidence;
- const habitat={
-  'Boletus edulis':['roble','castano','pino'],
-  'Boletus aereus':['encina','alcornoque','roble'],
-  'Boletus pinophilus':['pino','castano'],
-  'Boletus reticulatus':['roble','castano','encina'],
-  'Lactarius deliciosus':['pino'],
-  'Cantharellus cibarius':['roble','castano','haya','abedul'],
-  'Amanita caesarea':['roble','encina'],
-  'Craterellus cornucopioides':['roble','castano']
- };
- const forestSamples=new WeakMap();
- function sampleOfficialForest(cell){
-   if(forestSamples.has(cell))return forestSamples.get(cell);
-   const [[south,west],[north,east]]=cell.bounds;
-   const candidates=officialForestFeatures.filter(f=>{
-     const [minX,minY,maxX,maxY]=f.bbox;
-     return minX<=east&&maxX>=west&&minY<=north&&maxY>=south;
-   });
-   const samples=[];
-   for(const dy of [.2,.5,.8])for(const dx of [.2,.5,.8]){
-     const point=[west+(east-west)*dx,south+(north-south)*dy];
-     const kinds=new Set();
-     for(const feature of candidates){
-       if(feature.properties._veraKind!=='otro'&&insidePolygon(point,feature.geometry))kinds.add(feature.properties._veraKind);
-     }
-     samples.push(kinds);
-   }
-   forestSamples.set(cell,samples);
-   return samples;
- }
- function officialEvidence(c){
-   if(!c||!useOfficialForest||!officialForestFeatures.length)return null;
-   const wants=habitat[species[selected]?.name]||[];
-   if(!wants.length)return {state:'neutral',source:'MFE25',reason:'Sin ajuste por grupos de arbolado para esta especie'};
-   let matched=0,identified=0;
-   for(const kinds of sampleOfficialForest(c)){
-     if(kinds.size)identified++;
-     if(wants.some(kind=>kinds.has(kind)))matched++;
-   }
-   if(matched)return {state:'match',matched,identified,source:'MFE25',reason:'MFE25: '+matched+'/9 muestras con especie compatible'};
-   if(identified===9)return {state:'different',matched:0,identified,source:'MFE25',reason:'MFE25: '+identified+'/9 muestras identificadas, ninguna compatible'};
-   return {state:'unknown',source:'MFE25',reason:'MFE25: cobertura insuficiente para descartar hábitat compatible'};
- }
- forestEvidence=function(c){const official=officialEvidence(c);if(official&&official.state!=='unknown')return official;const osm=oldEvidence(c);return {...osm,source:'OpenStreetMap',reason:official&&osm.state==='unknown'?official.reason+'. OSM: '+osm.reason:osm.reason}};
- const oldDetail=showGridDetail;
- showGridDetail=function(lat,lon){oldDetail(lat,lon);if(tab!=='pred')return;
-   const c=cellFor(lat,lon),ev=forestEvidence(c),root=document.getElementById('detail');if(!root)return;
-   const block=document.createElement('p');block.id='vsMfeStatus';
-   block.textContent='🌳 Fuente forestal: '+ev.source+'. '+ev.reason+'.';
-   root.appendChild(block);
- };
-})();
-
-</script>
 
 <style>
 .vs-explain{margin:12px 0;padding:12px;border:1px solid #6d927b;border-radius:12px;background:#18382c;color:#f3f7f0}
@@ -1366,25 +1291,16 @@ drawFlora=function(){importedOldDrawFlora();redrawVerifiedForest();drawVerifiedP
   const weatherOK=!!d&&Number.isFinite(d.max)&&Number.isFinite(d.min)&&Number.isFinite(rain);
   const altitudeOK=Number.isFinite(alt);
   // The underlying grid is regional and unvalidated, so do not present 'high confidence'.
-  let source='Sin vegetación identificada',forestOK=false,official=false;
-  if(useOfficialForest&&officialForestFeatures.length){
-   const ev=forestEvidence(c);
-   if(ev.source==='MFE25'&&['match','different'].includes(ev.state)){
-    official=true;forestOK=true;source='MFE25 · MITECO';
-   }
-  }
-  if(!forestOK&&typeof forestData!=='undefined'&&forestData){
-   const ev=forestEvidence(c);
-   if(['match','different'].includes(ev.state)){forestOK=true;source='OpenStreetMap (cobertura parcial)'}
-  }
+  const ev=forestEvidence(c);
+  const forestOK=Boolean(forestData)&&['match','different'].includes(ev.state);
+  const source=forestOK?'OpenStreetMap (cobertura parcial)':'Sin vegetación identificada';
   const issues=[];
   if(!weatherOK)issues.push('Faltan temperatura o lluvia acumulada completas para la fecha seleccionada.');
   if(!altitudeOK)issues.push('No hay altitud válida para la celda.');
   if(!forestOK)issues.push('No se ha identificado vegetación arbórea para esta celda.');
-  else if(!official)issues.push('La identificación forestal procede de OSM, con cobertura incompleta.');
+  else issues.push('La identificación forestal procede de OSM, con cobertura incompleta.');
   if(weatherOK&&altitudeOK)issues.push('Meteorología modelizada y resolución regional (~8–12 km), no mediciones en el setal.');
-  const level=(!weatherOK||!altitudeOK)?'Baja':official?'Media':'Baja';
-  return {level,weatherOK,altitudeOK,forestOK,source,issues};
+  return {level:'Baja',weatherOK,altitudeOK,forestOK,source,issues};
  }
  function redraw(){
   layer.clearLayers();if(tab!=='pred'||map.getZoom()<11)return;
@@ -1398,7 +1314,7 @@ drawFlora=function(){importedOldDrawFlora();redrawVerifiedForest();drawVerifiedP
  }
  const oldDraw=gridDraw;
  gridDraw=function(){oldDraw();redraw();if(tab==='pred'){
-  const el=document.getElementById('legend');if(el)el.innerHTML+=' · Datos: baja/media = cobertura de fuentes, no certeza de hallar setas';
+  const el=document.getElementById('legend');if(el)el.innerHTML+=' · Datos: cobertura de fuentes, no certeza de hallar setas';
  }};
  const oldDetail=showGridDetail;
  showGridDetail=function(lat,lon){oldDetail(lat,lon);if(tab!=='pred')return;

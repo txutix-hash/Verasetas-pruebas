@@ -13,9 +13,9 @@ No se ha ejecutado Safari real ni validado Open-Meteo en producción. Quedan 15 
 ## Cartografía forestal de La Vera
 
 Flora carga `data/mfe_vera.geojson` desde el mismo servidor de VeraSetas. Los filtros
-de especies y la visualización del MFE25 se controlan en Flora. La opción «Usar MFE25
-en predicciones» es independiente y está activada al cargar el archivo. Si el archivo
-falta, la aplicación informa del estado y conserva la vía de OpenStreetMap.
+de especies y la visualización del MFE25 se controlan en Flora. La cartografía
+oficial es una referencia visual independiente de la consulta de OpenStreetMap.
+No modifica la predicción y no incluye pH.
 
 - **Datos forestales.** Fuente: «© Ministerio para la Transición Ecológica y el Reto
   Demográfico». [MFE25 de Extremadura](https://www.miteco.gob.es/es/cartografia-y-sig/ide/descargas/biodiversidad/mfe_extremadura.html).
@@ -40,8 +40,3 @@ falta, la aplicación informa del estado y conserva la vía de OpenStreetMap.
   ligeramente los bordes de las teselas. Un fragmento del recorte quedó sin superficie
   a esa precisión y se descartó. El resultado contiene 1.268 teselas
   arboladas y 19 valores de especie principal.
-- **Predicción.** El índice experimental compara los grupos de arbolado compatibles
-  con la especie elegida en nueve puntos de cada celda. Una ausencia solo se usa
-  como evidencia desfavorable cuando hay grupos identificados en las nueve
-  muestras. Los grupos sin equivalencia y las importaciones manuales quedan fuera
-  de la evidencia oficial. La capa no contiene pH ni ubicaciones de setales.

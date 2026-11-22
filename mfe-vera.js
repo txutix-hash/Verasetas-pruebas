@@ -17,15 +17,14 @@
    if(!bounds.every(Number.isFinite)||bounds[0]<-7||bounds[1]<39||bounds[2]>-4||bounds[3]>41){
     throw Error('Geometría fuera del ámbito regional o en otro sistema de coordenadas');
    }
-   feature.bbox=bounds;
   }
   officialForestFeatures=features;
   officialForestStatus=`MFE25 de La Vera · ${features.length} teselas arboladas. Fuente: © Ministerio para la Transición Ecológica y el Reto Demográfico.`;
  }catch(error){
-  officialForestStatus='Cartografía MFE25 de La Vera no disponible. La predicción no incorpora esta fuente.';
+  officialForestStatus='Cartografía MFE25 de La Vera no disponible.';
   console.info('MFE25 de La Vera:',error.message);
  }
- if(['flora','pred'].includes(tab)){
+ if(tab==='flora'){
   renderPanel();
   renderMap();
  }
